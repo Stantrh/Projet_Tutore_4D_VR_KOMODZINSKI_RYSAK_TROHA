@@ -9,4 +9,4 @@
 
 Nous avons décidé de créer une branche différente pour chaque phase du projet.  
 
-La première phase, composée du premier document et de la première présentation est disponible sur cette [branche](https://github.com/Stantrh/Projet_Tutore_4D_VR_KOMODZINSKI_RYSAK_TROHA/tree/main).
+La première phase, composée du premier document et de la première présentation est disponible sur cette [branche](https://github.com/Stantrh/Projet_Tutore_4D_VR_KOMODZINSKI_RYSAK_TROHA/tree/premier_document).

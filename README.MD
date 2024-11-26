@@ -5,8 +5,8 @@
 - RYSAK Hugo        : hugo.rysak4@etu.univ-lorraine.fr
 - TROHA Stanislas   : stanislas.troha8@etu.univ-lorraine.fr
 
-## Structure du dépôt
+## Etude Préalable
 
-Nous avons décidé de créer une branche différente pour chaque phase du projet.  
+Pour cette partie du projet, nous avons rédigé un document PDF disponible [ici](doc/Etude_Préalable_KOMODZINSKI_RYSAK_TROHA.pdf).
 
-La première phase, composée du premier document et de la première présentation est disponible sur cette [branche](https://github.com/Stantrh/Projet_Tutore_4D_VR_KOMODZINSKI_RYSAK_TROHA/tree/main).
+Une présentation en lien avec cette partie du projet va également être disponible dans [doc/](doc/)

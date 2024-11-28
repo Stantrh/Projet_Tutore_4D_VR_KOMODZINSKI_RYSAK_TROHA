@@ -1,0 +1,26 @@
+[gd_scene load_steps=4 format=3 uid="uid://cx8dacfjm0b4x"]
+
+[ext_resource type="Script" path="res://scripts/magic_area.gd" id="1_72ek5"]
+[ext_resource type="PackedScene" uid="uid://dr8i7mjdxtfeu" path="res://scenes/magic.tscn" id="1_txsmw"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_og54a"]
+radius = 87.023
+
+[node name="MagicArea" type="Area2D"]
+collision_layer = 9
+collision_mask = 9
+script = ExtResource("1_72ek5")
+
+[node name="Magic" parent="." instance=ExtResource("1_txsmw")]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-11, 1)
+shape = SubResource("CircleShape2D_og54a")
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 2.0
+one_shot = true
+autostart = true
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

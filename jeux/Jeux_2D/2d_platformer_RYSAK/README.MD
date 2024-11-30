@@ -46,7 +46,7 @@ Cela m'a permit de comprendre comment faire pour faire interagire les éléments
 
 Les particules, projectiles et effets sonores ajoutent de l'immersion. Il peut être intéressant de rajouter des ambiances sonores dans le projet mais pas primordiale. De même pour les particules
 
-#Interface Utilisateur
+### Interface Utilisateur
 
 Puisque nous devons mettre au point une interface utilisateur dans notre projet, même si ce tutoriel n'enseigne que les bases des bases, i lest important de savoir comment avec godot, i lest possible de créer une UI
 

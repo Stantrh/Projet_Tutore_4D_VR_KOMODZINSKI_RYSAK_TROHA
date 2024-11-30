@@ -2,7 +2,7 @@
 
 Dans le cadre de cette première itération, j'ai suivi un tutoriel pour développé un jeu 3D avec le moteur Godot, ce qui m'a permis d'en apprendre plus sur Godot et me familiariser avec son interface 3D. Voici les points principaux que j'ai abordés :
 
-1. Création et gestion du monde 3D
+## 1. Création et gestion du monde 3D
 
 ### Points abordés :
 
@@ -15,7 +15,7 @@ Torch & VFX : Ajout d'effets visuels tels que des lumières dynamiques et des pa
 
 Puisque nous travaillerons dans la 3 ème dimensions (pour représenter la 4 ème) nous pourrions utilsier ces gridmap pour Représenter différents hyperplans 3D d’un espace 4D. Chaque hyperplan peut être conçu comme un GridMap distinct, avec des environnements spécifiques.
 
-2. Contrôle et interaction du joueur
+## 2. Contrôle et interaction du joueur
 
 ### Points abordés :
 
@@ -29,7 +29,7 @@ Player Animation : Synchronisation des animations avec les actions du joueur.
 Il est important de savoir comment controler la caméra et le joueur, puisque nous en implémenterons un dans notre projet, ces connaisances sont donc essentielles et nous faciliterons grandemant la tâche le moment de l'impémentation venu.
 
 
-3. IA et interactions dynamiques
+## 3. IA et interactions dynamiques
 
 ### Points abordés :
 
@@ -43,7 +43,7 @@ Bien qu'il ne soit pas prévu d'ajouter quelconque NPC à l'application, savoir 
 
 
 
-4. Interface utilisateur et ressources
+## 4. Interface utilisateur et ressources
 
 ### Points abordés :
 
@@ -56,7 +56,7 @@ Game Over Overlay : Gestion des écrans de fin de partie.
 Puisque nous allons concevoir une interface utilisateur nottament pour démarrer le jeu, changer de forme, de vue ect... les connaisances que m'a procurer ce tutoriel font surement s'avérer très utile pour l'implémentation d'une future UI
 
 
-5. Effets visuels et sonores
+## 5. Effets visuels et sonores
 
 ### Points abordés :
 
@@ -70,7 +70,7 @@ Les effets visuels peuvent être utilse et rajouter une sensation d'immersion au
 
 
 
-6. Progression et personnalisation
+## 6. Progression et personnalisation
 
 ### Points abordés :
 

@@ -1,0 +1,19 @@
+[gd_scene load_steps=2 format=3 uid="uid://dswolatfky7cb"]
+
+[ext_resource type="Script" path="res://Scripts/player/GUI/profile.gd" id="1_dtjrd"]
+
+[node name="profile" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 64.0
+offset_top = 16.0
+offset_right = 104.0
+offset_bottom = 56.0
+script = ExtResource("1_dtjrd")
+
+[node name="stats_label" type="Label" parent="."]
+layout_mode = 0
+offset_left = 552.0
+offset_top = 200.0
+offset_right = 592.0
+offset_bottom = 220.0

@@ -1,0 +1,65 @@
+[gd_scene load_steps=6 format=3 uid="uid://db5cri1qol7mb"]
+
+[ext_resource type="Script" path="res://Scripts/player/GUI/gui.gd" id="1_lbok3"]
+[ext_resource type="Texture2D" uid="uid://cjid80mokonss" path="res://Assets/ui_big_pieces.png" id="2_24h1y"]
+[ext_resource type="PackedScene" uid="uid://kxch4ep1annk" path="res://Scenes/Player/GUI/inventory/inventory.tscn" id="2_pfds0"]
+[ext_resource type="PackedScene" uid="uid://dswolatfky7cb" path="res://Scenes/Player/GUI/profile.tscn" id="3_6os80"]
+[ext_resource type="PackedScene" uid="uid://ddg06l750oiv" path="res://Scenes/Player/GUI/shop.tscn" id="5_msph6"]
+
+[node name="GUI" type="CanvasLayer"]
+process_mode = 3
+script = ExtResource("1_lbok3")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(49.5, 32)
+scale = Vector2(1.26389, 1)
+texture = ExtResource("2_24h1y")
+region_enabled = true
+region_rect = Rect2(260, 40, 72, 20)
+
+[node name="hp_bar" type="ProgressBar" parent="."]
+offset_left = 15.0
+offset_top = 25.0
+offset_right = 84.0
+offset_bottom = 39.0
+max_value = 10.0
+value = 10.0
+show_percentage = false
+
+[node name="container" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 23.0
+
+[node name="BG" type="Panel" parent="container"]
+layout_mode = 0
+offset_left = 64.0
+offset_top = 64.0
+offset_right = 1088.0
+offset_bottom = 576.0
+
+[node name="inventory" parent="container" instance=ExtResource("2_pfds0")]
+
+[node name="profile" parent="container" instance=ExtResource("3_6os80")]
+
+[node name="VBoxContainer" type="VBoxContainer" parent="container"]
+layout_mode = 0
+offset_left = 112.0
+offset_top = 144.0
+offset_right = 285.0
+offset_bottom = 222.0
+
+[node name="inventory_button" type="Button" parent="container/VBoxContainer"]
+layout_mode = 2
+text = "inventory"
+
+[node name="profile_button" type="Button" parent="container/VBoxContainer"]
+layout_mode = 2
+text = "profile"
+
+[node name="shop" parent="." instance=ExtResource("5_msph6")]
+visible = false
+
+[connection signal="pressed" from="container/VBoxContainer/inventory_button" to="." method="_on_inventory_button_pressed"]
+[connection signal="pressed" from="container/VBoxContainer/profile_button" to="." method="_on_profile_button_pressed"]

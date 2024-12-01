@@ -1,3 +1,0 @@
-# Compte rendu
-
-## Notions abordées

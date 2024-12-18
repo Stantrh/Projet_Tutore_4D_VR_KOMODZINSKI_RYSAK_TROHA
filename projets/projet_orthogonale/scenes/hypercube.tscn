@@ -1,6 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://c42ax666padqr"]
-
-[ext_resource type="Script" path="res://scripts/hypercube.gd" id="1_0d2yl"]
-
-[node name="Hypercube" type="Node3D"]
-script = ExtResource("1_0d2yl")

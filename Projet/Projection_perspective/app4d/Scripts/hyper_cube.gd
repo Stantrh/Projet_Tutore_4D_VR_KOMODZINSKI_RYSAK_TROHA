@@ -12,6 +12,17 @@ const CUBE_FACES = [
 	[2, 3, 7, 6], [0, 2, 6, 4], [1, 3, 7, 5]
 ]
 
+const CUBES = [
+		[0, 1, 2, 3, 4, 5, 6, 7],
+		[8, 9, 10, 11, 12, 13, 14, 15],
+		[0, 1, 4, 5, 8, 9, 12, 13],
+		[2, 3, 6, 7, 10, 11, 14, 15],
+		[0, 2, 4, 6, 8, 10, 12, 14],
+		[1, 3, 5, 7, 9, 11, 13, 15],
+		[0, 1, 2, 3, 8, 9, 10, 11],
+		[4, 5, 6, 7, 12, 13, 14, 15]
+	]
+
 @export var is_rotate = false  # Activer la rotation
 @export var rotation_angle = 90  # Angle de rotation
 @export var is_solid = false  # Affichage plein ou filaire
@@ -69,13 +80,14 @@ func build_solid_hypercube_mesh(vertices) -> Mesh:
 	# Créer un matériau non éclairé
 	var material = StandardMaterial3D.new()
 	material.cull_mode = BaseMaterial3D.CULL_DISABLED
+	material.albedo_color = Color(0, 0, 0)
 	material.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED  # Mode non éclairé
 
 	# Appliquer ce matériau
 	surface_tool.set_material(material)
 
 	# Construire chaque face pour chaque cube
-	for cube in get_hypercube_cubes():
+	for cube in CUBES:
 		for face in CUBE_FACES:
 			var p1 = project_to_3d(vertices[cube[face[0]]])
 			var p2 = project_to_3d(vertices[cube[face[1]]])
@@ -101,19 +113,6 @@ func get_hypercube_edges() -> Array:
 			if (HYPERCUBE_VERTICES[i] - HYPERCUBE_VERTICES[j]).length() == 2:
 				edges.append([i, j])
 	return edges
-
-func get_hypercube_cubes() -> Array:
-	# Un hypercube a 8 cubes, chacun avec 8 sommets
-	return [
-		[0, 1, 2, 3, 4, 5, 6, 7],
-		[8, 9, 10, 11, 12, 13, 14, 15],
-		[0, 1, 4, 5, 8, 9, 12, 13],
-		[2, 3, 6, 7, 10, 11, 14, 15],
-		[0, 2, 4, 6, 8, 10, 12, 14],
-		[1, 3, 5, 7, 9, 11, 13, 15],
-		[0, 1, 2, 3, 8, 9, 10, 11],
-		[4, 5, 6, 7, 12, 13, 14, 15]
-	]
 
 
 func project_to_3d(point_4d: Vector4) -> Vector3:

@@ -80,10 +80,6 @@ func visualize_hypercube():
 		add_child(instance)
 
 	# Puis on affiche les arêtes avec une méthode
-	for edge in edges:
-		var start = projected_vertices[edge[0]]
-		var end = projected_vertices[edge[1]]
-		
 	draw_edges(vertices_4d)
 	
 func draw_edges(vertices):

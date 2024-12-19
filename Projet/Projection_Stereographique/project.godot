@@ -14,6 +14,12 @@ config/name="Application_4D_VR"
 config/features=PackedStringArray("4.3", "Forward Plus")
 config/icon="res://icon.svg"
 
+[file_customization]
+
+folder_colors={
+"res://Scenes/": "purple"
+}
+
 [input]
 
 move_right={

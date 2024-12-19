@@ -15,6 +15,13 @@ run/main_scene="res://Scenes/world.tscn"
 config/features=PackedStringArray("4.3", "Forward Plus")
 config/icon="res://icon.svg"
 
+[file_customization]
+
+folder_colors={
+"res://Scenes/": "green",
+"res://Scripts/": "yellow"
+}
+
 [input]
 
 move_forward={

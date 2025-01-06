@@ -1,9 +1,3 @@
 Fonctionnalités réalisées : 
-Déplacement de la caméra : L'utilisateur peut déplacer la caméra pour visualiser différents endroit d'un espace 3D. Réalisée par Jawad Komodzinski
-Modélisation Hypercube : L'utilisateur peut visualiser un hypercube projeté en 3D grâce à différents modes de projection. Réalisée par tout le groupe
-Projection orthogonale : Projection qui consiste pour chaque point de l'hypercube à le projeter en fonction de ses coordonnées x y z en oubliant w. Réalisée Par Hugo Rysak
-Projection perspective : Projection qui consiste à utiliser la perspective pour modéliser l'hypercube, ça permet d'imiter la façon dont l'œil humain perçoit le monde. Réalisée par Jawad Komodzinski
-Projection stéréographique : Projection qui permet de modéliser l'objet 4D en 3D, à partir d'un point de l'axe qu'on ne souhaite pas projeter en 3D. Dans notre cas l'axe w. Réalisée par Stanislas Troha
-
 
 

@@ -34,73 +34,62 @@ size = Vector3(5000, 0.2, 5000)
 
 [node name="HyperCubeO" parent="." instance=ExtResource("1_gh55x")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 5, 0)
-is_rotate = false
-rotation_angle = 90
-is_solid = false
 projection_mode = 2
+is_translate = true
 
 [node name="HyperCubeOR" parent="." instance=ExtResource("1_gh55x")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 5, -10)
+visible = false
 is_rotate = true
-rotation_angle = 90
-is_solid = false
+is_double_rotate = true
 projection_mode = 2
 
 [node name="HyperCubeOT" parent="." instance=ExtResource("1_gh55x")]
+visible = false
 is_rotate = true
-rotation_angle = 90
-is_solid = false
 projection_mode = 2
 is_translate = true
 vect_translate = Vector4(-10, 5, -20, 0)
 
 [node name="HyperCubeP" parent="." instance=ExtResource("1_gh55x")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, 0)
-is_rotate = false
-rotation_angle = 90
-is_solid = false
-projection_mode = 0
+visible = false
 
 [node name="HyperCubePR" parent="." instance=ExtResource("1_gh55x")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, -10)
+visible = false
 is_rotate = true
-rotation_angle = 90
-is_solid = false
-projection_mode = 0
+is_double_rotate = true
 
 [node name="HyperCubePT" parent="." instance=ExtResource("1_gh55x")]
+visible = false
 is_rotate = true
-rotation_angle = 90
-is_solid = false
-projection_mode = 0
 is_translate = true
 vect_translate = Vector4(0, 5, -20, 0)
 
 [node name="HyperCubeS" parent="." instance=ExtResource("1_gh55x")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 5, 0)
-is_rotate = false
-rotation_angle = 90
-is_solid = false
+visible = false
 projection_mode = 1
 
 [node name="HyperCubeSR" parent="." instance=ExtResource("1_gh55x")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 5, -10)
+visible = false
 is_rotate = true
-rotation_angle = 90
-is_solid = false
+is_double_rotate = true
 projection_mode = 1
 
 [node name="HyperCubeST" parent="." instance=ExtResource("1_gh55x")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 5, -20)
+visible = false
 is_rotate = true
-rotation_angle = 90
-is_solid = false
 projection_mode = 1
 is_translate = true
 vect_translate = Vector4(0.5, 0.5, 0.5, 0)
 
 [node name="CharacterView" parent="." instance=ExtResource("2_wfvje")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, 10)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 5, 20)
+visible = false
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 

@@ -1,17 +1,17 @@
-[gd_scene load_steps=3 format=3 uid="uid://ds5cp4u5hsjak"]
+[gd_scene load_steps=4 format=3 uid="uid://ds5cp4u5hsjak"]
 
 [ext_resource type="Script" path="res://Scripts/hyper_cube.gd" id="1_v1v16"]
+[ext_resource type="Script" path="res://Scripts/zone_affichage.gd" id="2_2qdoe"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_o0t87"]
 
 [node name="HyperCube" type="Node3D" groups=["Hyperfigure"]]
 script = ExtResource("1_v1v16")
-is_rotate = null
-rotation_angle = null
-is_solid = null
-projection_mode = null
 
 [node name="Area3D" type="Area3D" parent="."]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
 shape = SubResource("BoxShape3D_o0t87")
+
+[node name="ZoneAffichage" type="Node3D" parent="."]
+script = ExtResource("2_2qdoe")

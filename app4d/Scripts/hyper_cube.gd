@@ -48,15 +48,18 @@ var translation4D = preload("res://Scripts/translation_4d.gd")
 @export var is_translate = false # Activer la translation
 @export var vect_translate = Vector4(0, 0, 0, 0) # Vecteur de translation
 
+
 @onready var camera = $"../CharacterView/Camera3D"
 @onready var translater = "res://Scenes/translation_4d.tscn"
-
+@onready var area = $ZoneAffichage
 
 var mesh_instance: MeshInstance3D
 
 func _ready():
 	mesh_instance = MeshInstance3D.new()
 	add_child(mesh_instance)
+	var bounds_mesh = area.create_area_mesh(area.area_min, area.area_max)
+	add_child(bounds_mesh)
 	update_hypercube()
 	
 
@@ -72,7 +75,6 @@ func update_hypercube():
 	if is_translate:
 		for vertex in dynamic_vertices:
 			var new_vect = translation4D.translate_4d(vertex, vect_translate)
-			print("Vecteur : " + str(vertex) + " new vecteur : " + str(new_vect))
 			new_vertices.append(new_vect)
 		dynamic_vertices = new_vertices
 	elif is_rotate:
@@ -81,6 +83,12 @@ func update_hypercube():
 	else :
 		for vertex in dynamic_vertices:
 			new_vertices.append(vertex)
+	
+	if not is_hypercube_visible(new_vertices):
+		mesh_instance.visible = false
+		return
+	else:
+		mesh_instance.visible = true
 	
 	# Générer le maillage
 	var mesh
@@ -92,7 +100,13 @@ func update_hypercube():
 	
 	if is_translate:
 		is_translate = false
-	
+
+func is_hypercube_visible(vertices: Array) -> bool:
+	for vertex in vertices:
+		var projected_point = apply_projection(vertex)
+		if area.is_point_in_area(projected_point):
+			return true
+	return false
 
 func build_wireframe_hypercube_mesh(vertices) -> Mesh:
 	var mesh = ArrayMesh.new()
@@ -103,8 +117,11 @@ func build_wireframe_hypercube_mesh(vertices) -> Mesh:
 	for edge in get_hypercube_edges():
 		var p1 = apply_projection(vertices[edge[0]])
 		var p2 = apply_projection(vertices[edge[1]])
-		surface_tool.add_vertex(p1)
-		surface_tool.add_vertex(p2)
+		var clipped_points = area.clip_edge(p1, p2)
+		
+		if clipped_points.size() == 2:
+			surface_tool.add_vertex(clipped_points[0])
+			surface_tool.add_vertex(clipped_points[1])
 
 	surface_tool.commit(mesh)
 	return mesh

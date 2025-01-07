@@ -23,7 +23,9 @@ const CUBES = [
 		[0, 1, 2, 3, 8, 9, 10, 11],
 		[4, 5, 6, 7, 12, 13, 14, 15]
 	]
+
 	
+
 enum ProjectionMode {
 	PERSPECTIVE,
 	STEREOGRAPHIC,
@@ -49,12 +51,14 @@ var translation4D = preload("res://Scripts/translation_4d.gd")
 @onready var camera = $"../CharacterView/Camera3D"
 @onready var translater = "res://Scenes/translation_4d.tscn"
 
+
 var mesh_instance: MeshInstance3D
 
 func _ready():
 	mesh_instance = MeshInstance3D.new()
 	add_child(mesh_instance)
 	update_hypercube()
+	
 
 func _process(delta):
 	if rotation_angle:

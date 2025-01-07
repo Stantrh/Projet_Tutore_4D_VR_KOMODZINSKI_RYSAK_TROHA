@@ -1,7 +1,9 @@
-[gd_scene load_steps=6 format=3 uid="uid://bknykvuwm3pla"]
+[gd_scene load_steps=8 format=3 uid="uid://bknykvuwm3pla"]
 
+[ext_resource type="Script" path="res://Scripts/world.gd" id="1_1maet"]
 [ext_resource type="PackedScene" uid="uid://ds5cp4u5hsjak" path="res://Scenes/hyper_cube.tscn" id="1_gh55x"]
 [ext_resource type="PackedScene" uid="uid://i2l7p16xiufn" path="res://Scenes/character_view.tscn" id="2_wfvje"]
+[ext_resource type="PackedScene" path="res://Scenes/ui.tscn" id="3_x60an"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_4yftq"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -17,6 +19,7 @@ tonemap_mode = 2
 glow_enabled = true
 
 [node name="World" type="Node3D"]
+script = ExtResource("1_1maet")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_63k1r")
@@ -31,46 +34,77 @@ size = Vector3(5000, 0.2, 5000)
 
 [node name="HyperCubeO" parent="." instance=ExtResource("1_gh55x")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 5, 0)
+is_rotate = false
+rotation_angle = 90
+is_solid = false
 projection_mode = 2
 
 [node name="HyperCubeOR" parent="." instance=ExtResource("1_gh55x")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 5, -10)
 is_rotate = true
+rotation_angle = 90
+is_solid = false
 projection_mode = 2
 
 [node name="HyperCubeOT" parent="." instance=ExtResource("1_gh55x")]
 is_rotate = true
+rotation_angle = 90
+is_solid = false
 projection_mode = 2
 is_translate = true
 vect_translate = Vector4(-10, 5, -20, 0)
 
 [node name="HyperCubeP" parent="." instance=ExtResource("1_gh55x")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, 0)
+is_rotate = false
+rotation_angle = 90
+is_solid = false
+projection_mode = 0
 
 [node name="HyperCubePR" parent="." instance=ExtResource("1_gh55x")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, -10)
 is_rotate = true
+rotation_angle = 90
+is_solid = false
+projection_mode = 0
 
 [node name="HyperCubePT" parent="." instance=ExtResource("1_gh55x")]
 is_rotate = true
+rotation_angle = 90
+is_solid = false
+projection_mode = 0
 is_translate = true
 vect_translate = Vector4(0, 5, -20, 0)
 
 [node name="HyperCubeS" parent="." instance=ExtResource("1_gh55x")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 5, 0)
+is_rotate = false
+rotation_angle = 90
+is_solid = false
 projection_mode = 1
 
 [node name="HyperCubeSR" parent="." instance=ExtResource("1_gh55x")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 5, -10)
 is_rotate = true
+rotation_angle = 90
+is_solid = false
 projection_mode = 1
 
 [node name="HyperCubeST" parent="." instance=ExtResource("1_gh55x")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 5, -20)
 is_rotate = true
+rotation_angle = 90
+is_solid = false
 projection_mode = 1
 is_translate = true
 vect_translate = Vector4(0.5, 0.5, 0.5, 0)
 
 [node name="CharacterView" parent="." instance=ExtResource("2_wfvje")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, 10)
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="UI" parent="CanvasLayer" instance=ExtResource("3_x60an")]
+visible = false
+
+[connection signal="object_selected" from="CharacterView" to="." method="_on_character_view_object_selected"]

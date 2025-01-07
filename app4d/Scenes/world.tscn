@@ -66,10 +66,11 @@ is_rotate = true
 projection_mode = 1
 
 [node name="HyperCubeST" parent="." instance=ExtResource("1_gh55x")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 5, -20)
 is_rotate = true
 projection_mode = 1
 is_translate = true
-vect_translate = Vector4(10, 5, -20, 0)
+vect_translate = Vector4(0.5, 0.5, 0.5, 0)
 
 [node name="CharacterView" parent="." instance=ExtResource("2_wfvje")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, 10)

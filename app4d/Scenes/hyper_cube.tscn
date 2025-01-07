@@ -6,6 +6,10 @@
 
 [node name="HyperCube" type="Node3D" groups=["Hyperfigure"]]
 script = ExtResource("1_v1v16")
+is_rotate = null
+rotation_angle = null
+is_solid = null
+projection_mode = null
 
 [node name="Area3D" type="Area3D" parent="."]
 

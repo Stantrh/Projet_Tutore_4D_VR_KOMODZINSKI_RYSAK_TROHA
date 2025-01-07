@@ -178,7 +178,8 @@ custom_minimum_size = Vector2(125, 0)
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 4
-min_value = -100.0
+min_value = -10.0
+max_value = 10.0
 
 [node name="Rotation" type="Control" parent="ReferenceRect/ColorRect"]
 layout_mode = 1
@@ -422,9 +423,13 @@ texture_normal = ExtResource("1_05trw")
 ignore_texture_size = true
 stretch_mode = 5
 
+[connection signal="drag_ended" from="ReferenceRect/ColorRect/Translation/HBoxContainer/translation_x_slider" to="." method="_on_translation_x_slider_drag_ended"]
 [connection signal="value_changed" from="ReferenceRect/ColorRect/Translation/HBoxContainer/translation_x_slider" to="." method="_on_translation_x_slider_value_changed"]
+[connection signal="drag_ended" from="ReferenceRect/ColorRect/Translation/HBoxContainer2/translation_y_slider" to="." method="_on_translation_y_slider_drag_ended"]
 [connection signal="value_changed" from="ReferenceRect/ColorRect/Translation/HBoxContainer2/translation_y_slider" to="." method="_on_translation_y_slider_value_changed"]
+[connection signal="drag_ended" from="ReferenceRect/ColorRect/Translation/HBoxContainer3/translation_z_slider" to="." method="_on_translation_z_slider_drag_ended"]
 [connection signal="value_changed" from="ReferenceRect/ColorRect/Translation/HBoxContainer3/translation_z_slider" to="." method="_on_translation_z_slider_value_changed"]
+[connection signal="drag_ended" from="ReferenceRect/ColorRect/Translation/HBoxContainer4/translation_w_slider" to="." method="_on_translation_w_slider_drag_ended"]
 [connection signal="value_changed" from="ReferenceRect/ColorRect/Translation/HBoxContainer4/translation_w_slider" to="." method="_on_translation_w_slider_value_changed"]
 [connection signal="pressed" from="ReferenceRect/ColorRect/Rotation/close_button" to="." method="_on_close_button_pressed"]
 [connection signal="pressed" from="ReferenceRect/ColorRect/Rotation/HBoxContainer/VBoxContainer/HBoxContainer5/HBoxContainer/xy_rotation_reset_button" to="." method="_on_xy_rotation_reset_button_pressed"]

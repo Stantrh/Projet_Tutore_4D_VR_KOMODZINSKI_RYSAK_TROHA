@@ -134,7 +134,7 @@ func build_solid_hypercube_mesh(vertices) -> Mesh:
 	# Créer un matériau non éclairé
 	var material = StandardMaterial3D.new()
 	material.cull_mode = BaseMaterial3D.CULL_DISABLED
-	material.albedo_color = Color(0, 0, 0)
+	material.albedo_color = Color(0.1, 0.2, 0.8)
 	material.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED  # Mode non éclairé
 
 	# Appliquer ce matériau

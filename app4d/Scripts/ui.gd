@@ -10,6 +10,11 @@ extends Control
 	$ReferenceRect/ColorRect/Rotation/HBoxContainer/VBoxContainer2/HBoxContainer6/HBoxContainer5/yw_rotation_slider,
 	$ReferenceRect/ColorRect/Rotation/HBoxContainer/VBoxContainer2/HBoxContainer7/HBoxContainer6/zw_rotation_slider
 ]
+
+# Pour les sliders, on garde les positions des sliders précédents dans un tableau qu'on actualise
+var prev_translation_pos_slider = [0.0, 0.0, 0.0, 0.0] 
+
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	pass # Replace with function body.
@@ -20,22 +25,50 @@ func _process(delta):
 	pass
 
 
-func _on_translation_w_slider_value_changed(value):
-	pass # Replace with function body.
-
-
-func _on_translation_z_slider_value_changed(value):
-	pass # Replace with function body.
-
+func _on_translation_x_slider_value_changed(value):
+	# on utilise node_controlled pour accéder au node3D représentant l'hypercube
+	# à partir de la propriété value du slider, on crée un vecteur de translation
+	print("X : " + str(value))
+	var delta_x = value - prev_translation_pos_slider[0] # le delta, pour savoir si on avance ou recule
+	prev_translation_pos_slider[0] = value
+	print("Objet : " + str(object_controlled))
+	if object_controlled != null:
+		object_controlled.vect_translate = Vector4(delta_x, 0, 0, 0)
+		object_controlled.is_translate = true
 
 func _on_translation_y_slider_value_changed(value):
-	pass # Replace with function body.
+	# on utilise node_controlled pour accéder au node3D représentant l'hypercube
+	# à partir de la propriété value du slider, on crée un vecteur de translation
+	print("Y : " + str(value))
+	var delta_y = value - prev_translation_pos_slider[1]
+	prev_translation_pos_slider[1] = value
+		
+	if object_controlled != null:
+		object_controlled.vect_translate = Vector4(0, delta_y, 0, 0)
+		object_controlled.is_translate = true
 
+func _on_translation_z_slider_value_changed(value):
+	# on utilise node_controlled pour accéder au node3D représentant l'hypercube
+	# à partir de la propriété value du slider, on crée un vecteur de translation
+	print("Z : " + str(value))
+	var delta_z = value - prev_translation_pos_slider[2]
+	prev_translation_pos_slider[2] = value
+	
+	if object_controlled != null:
+		object_controlled.vect_translate = Vector4(0, 0, delta_z, 0)
+		object_controlled.is_translate = true
 
-func _on_translation_x_slider_value_changed(value):
-	pass # Replace with function body.
-
-
+func _on_translation_w_slider_value_changed(value):
+	# on utilise node_controlled pour accéder au node3D représentant l'hypercube
+	# à partir de la propriété value du slider, on crée un vecteur de translation
+	print("W : " + str(value))
+	var delta_w = value - prev_translation_pos_slider[3]
+	prev_translation_pos_slider[3] = value
+	
+	if object_controlled != null:
+		object_controlled.vect_translate = Vector4(0, 0, 0, delta_w)
+		object_controlled.is_translate = true
+	
 func _on_close_button_pressed():
 	object_controlled = null 
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)

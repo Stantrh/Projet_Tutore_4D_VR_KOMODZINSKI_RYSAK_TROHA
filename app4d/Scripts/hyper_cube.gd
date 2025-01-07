@@ -72,7 +72,7 @@ func update_hypercube():
 	if is_translate:
 		for vertex in dynamic_vertices:
 			var new_vect = translation4D.translate_4d(vertex, vect_translate)
-			print("Vecteur : " + str(vertex) + " new vecteur : " + str(new_vect))
+			#print("Vecteur : " + str(vertex) + " new vecteur : " + str(new_vect))
 			new_vertices.append(new_vect)
 		dynamic_vertices = new_vertices
 	elif is_rotate:

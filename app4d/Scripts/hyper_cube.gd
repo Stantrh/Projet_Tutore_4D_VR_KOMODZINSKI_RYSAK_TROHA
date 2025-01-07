@@ -1,6 +1,6 @@
 extends Node3D
 
-const HYPERCUBE_VERTICES = [
+var dynamic_vertices = [
 	Vector4(-1, -1, -1, -1), Vector4(-1, -1, -1,  1), Vector4(-1, -1,  1, -1), Vector4(-1, -1,  1,  1),
 	Vector4(-1,  1, -1, -1), Vector4(-1,  1, -1,  1), Vector4(-1,  1,  1, -1), Vector4(-1,  1,  1,  1),
 	Vector4( 1, -1, -1, -1), Vector4( 1, -1, -1,  1), Vector4( 1, -1,  1, -1), Vector4( 1, -1,  1,  1),
@@ -22,20 +22,27 @@ const CUBES = [
 		[0, 1, 2, 3, 8, 9, 10, 11],
 		[4, 5, 6, 7, 12, 13, 14, 15]
 	]
-
-@export var is_rotate = false  # Activer la rotation
-@export var rotation_angle = 90  # Angle de rotation
-@export var is_solid = false  # Affichage plein ou filaire
-@export var projection_mode: int = 0  # 0: Perspective, 1: Stéréographique, 2: Orthogonale
-
+	
 enum ProjectionMode {
 	PERSPECTIVE,
 	STEREOGRAPHIC,
 	ORTHOGONAL
 }
 
-@onready var camera = $"../CharacterView/Camera3D"
+@export var is_rotate = false  # Activer la rotation
+@export var rotation_angle = 90  # Angle de rotation
 
+
+@export var is_solid = false  # Affichage plein ou filaire
+@export var projection_mode: int = 0  # 0: Perspective, 1: Stéréographique, 2: Orthogonale
+
+# on importe la fonction de translation
+var translation4D = preload("res://Scripts/translation_4d.gd")
+@export var is_translate = false # Activer la translation
+@export var vect_translate = Vector4(0, 0, 0, 0) # Vecteur de translation
+
+@onready var camera = $"../CharacterView/Camera3D"
+@onready var translater = "res://Scenes/translation_4d.tscn"
 
 var mesh_instance: MeshInstance3D
 
@@ -49,22 +56,34 @@ func _process(delta):
 		rotation_angle+=delta
 	update_hypercube()
 
+
 func update_hypercube():
 	# Transformer les sommets
-	var transformed_vertices = []
-	for vertex in HYPERCUBE_VERTICES:
-		if is_rotate:
-			transformed_vertices.append(rotate_4d(vertex, rotation_angle, 0, 3))
-		else:
-			transformed_vertices.append(vertex)
-
+	if is_translate:
+		var new_vertices = []
+		for vertex in dynamic_vertices:
+			var new_vect = translation4D.translate_4d(vertex, vect_translate)
+			print("Vecteur : " + str(vertex) + " new vecteur : " + str(new_vect))
+			new_vertices.append(new_vect)
+		dynamic_vertices = new_vertices
+	if is_rotate:
+		var new_vertices = []
+		for vertex in dynamic_vertices:
+			new_vertices.append(rotate_4d(vertex, rotation_angle, 0, 3))
+		dynamic_vertices = new_vertices
+	
+	
 	# Générer le maillage
 	var mesh
 	if is_solid:
-		mesh = build_solid_hypercube_mesh(transformed_vertices)
+		mesh = build_solid_hypercube_mesh(dynamic_vertices)
 	else:
-		mesh = build_wireframe_hypercube_mesh(transformed_vertices)
+		mesh = build_wireframe_hypercube_mesh(dynamic_vertices)
 	mesh_instance.mesh = mesh
+	
+	if is_translate:
+		is_translate = false
+	
 
 func build_wireframe_hypercube_mesh(vertices) -> Mesh:
 	var mesh = ArrayMesh.new()
@@ -119,7 +138,7 @@ func get_hypercube_edges() -> Array:
 	var edges = []
 	for i in range(16):
 		for j in range(i + 1, 16):
-			if (HYPERCUBE_VERTICES[i] - HYPERCUBE_VERTICES[j]).length() == 2:
+			if (dynamic_vertices[i] - dynamic_vertices[j]).length() == 2:
 				edges.append([i, j])
 	return edges
 
@@ -130,7 +149,7 @@ func apply_projection(point_4d: Vector4) -> Vector3:
 		ProjectionMode.STEREOGRAPHIC:
 			return project_stereographically(point_4d)
 		ProjectionMode.ORTHOGONAL:
-			return projeter_orthogonale(point_4d)
+			return project_orthogonally(point_4d)
 		_:
 			return project_perspective(point_4d)
 
@@ -151,8 +170,8 @@ func project_stereographically(point_4d: Vector4):
 	# puis on projette x y et z en 3D avec le facteur de projection
 	return Vector3(t * point_4d.x, t * point_4d.y, t * point_4d.z)
 
-
-func projeter_orthogonale(point_4d: Vector4)->Vector3:
+# à rajouter plus tard, possibilité de choisir la coordonnée à exclure
+func project_orthogonally(point_4d: Vector4)->Vector3:
 	return Vector3(point_4d.x, point_4d.y, point_4d.z)
 
 

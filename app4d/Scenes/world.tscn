@@ -29,30 +29,17 @@ shadow_enabled = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.1929, -0.747417, 0.570654)
 size = Vector3(100, 0.2, 100)
 
-[node name="HyperCube3O" parent="." instance=ExtResource("1_gh55x")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 5, 0)
-projection_mode = 2
-
-[node name="HyperCube4OR" parent="." instance=ExtResource("1_gh55x")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 5, -20)
-is_rotate = true
-projection_mode = 2
-
-[node name="HyperCubeP" parent="." instance=ExtResource("1_gh55x")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, 0)
-
-[node name="HyperCube2PR" parent="." instance=ExtResource("1_gh55x")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, -20)
-is_rotate = true
-
-[node name="HyperCube5S" parent="." instance=ExtResource("1_gh55x")]
+[node name="HyperCubeT" parent="." instance=ExtResource("1_gh55x")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 5, 0)
+is_solid = true
 projection_mode = 1
-
-[node name="HyperCube6SR" parent="." instance=ExtResource("1_gh55x")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 5, -20)
-is_rotate = true
-projection_mode = 1
+is_translate = true
+vect_translate = Vector4(10, 5, 9, 5)
 
 [node name="CharacterView" parent="." instance=ExtResource("2_wfvje")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, 10)
+
+[node name="HyperCubeTR" parent="." instance=ExtResource("1_gh55x")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.03789, 3.04754, -3.18594)
+is_rotate = true
+projection_mode = 1

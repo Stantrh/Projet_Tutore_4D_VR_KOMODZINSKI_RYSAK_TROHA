@@ -28,6 +28,8 @@ const CUBES = [
 @export var is_solid = false  # Affichage plein ou filaire
 @export var projection_mode: int = 0  # 0: Perspective, 1: Stéréographique, 2: Orthogonale
 
+var user_interaction : bool = false
+
 enum ProjectionMode {
 	PERSPECTIVE,
 	STEREOGRAPHIC,
@@ -36,13 +38,13 @@ enum ProjectionMode {
 
 @onready var camera = $"../CharacterView/Camera3D"
 
-
 var mesh_instance: MeshInstance3D
 
 func _ready():
 	mesh_instance = MeshInstance3D.new()
 	add_child(mesh_instance)
 	update_hypercube()
+	
 
 func _process(delta):
 	if rotation_angle:

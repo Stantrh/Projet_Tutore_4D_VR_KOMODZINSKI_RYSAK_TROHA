@@ -1,6 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://dl4umyklgy5u4"]
-
-[ext_resource type="Script" path="res://Scripts/translation_4d.gd" id="1_5e2bq"]
-
-[node name="Translation4D" type="Node3D"]
-script = ExtResource("1_5e2bq")

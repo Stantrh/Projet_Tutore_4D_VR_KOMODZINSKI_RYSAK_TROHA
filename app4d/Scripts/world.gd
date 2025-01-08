@@ -12,6 +12,7 @@ func _process(delta):
 
 
 func _on_character_view_object_selected(object):
-	$CanvasLayer/UI.visible = true
-	$CanvasLayer/UI.object_controlled = object
-	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+	# on déploie l'interface en initialisant l'objet
+	$CanvasLayer/UI.open_interface(object)
+	
+	

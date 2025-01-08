@@ -43,26 +43,28 @@ enum ProjectionMode {
 @export var is_solid = false  # Affichage plein ou filaire
 @export var projection_mode: int = 0  # 0: Perspective, 1: Stéréographique, 2: Orthogonale
 
-# on importe la fonction de translation
-var translation4D = preload("res://Scripts/translation_4d.gd")
+# pour la translation
 @export var is_translate = false # Activer la translation
 @export var vect_translate = Vector4(0, 0, 0, 0) # Vecteur de translation
+var collision_shape = Node
 
 @onready var camera = $"../CharacterView/Camera3D"
-@onready var translater = "res://Scenes/translation_4d.tscn"
 
 
 var mesh_instance: MeshInstance3D
 
 func _ready():
+	collision_shape = $Area3D/CollisionShape3D
 	mesh_instance = MeshInstance3D.new()
 	add_child(mesh_instance)
 	update_hypercube()
 	
 
 func _process(delta):
-	if rotation_angle:
-		rotation_angle+=delta
+	if is_rotate:
+		rotation_angle += delta
+		if is_double_rotate:
+			rotation_angle2 += delta
 	update_hypercube()
 
 
@@ -70,11 +72,12 @@ func update_hypercube():
 	# Transformer les sommets
 	var new_vertices = []
 	if is_translate:
+		print("Position actuelle du Node3D : " + str(global_position))
 		for vertex in dynamic_vertices:
-			var new_vect = translation4D.translate_4d(vertex, vect_translate)
-			#print("Vecteur : " + str(vertex) + " new vecteur : " + str(new_vect))
+			var new_vect = translate_4d(vertex, vect_translate)
 			new_vertices.append(new_vect)
-		dynamic_vertices = new_vertices
+		dynamic_vertices = new_vertices	
+		apply_translation(vect_translate)
 	elif is_rotate:
 		for vertex in dynamic_vertices:
 			new_vertices.append(rotate_4d(vertex, rotation_angle, axe_a, axe_b, rotation_angle2, axe2_a, axe2_b))
@@ -89,7 +92,10 @@ func update_hypercube():
 	else:
 		mesh = build_wireframe_hypercube_mesh(new_vertices)
 	mesh_instance.mesh = mesh
-	
+	if is_translate:
+		print("Vecteur de translation : " + str(vect_translate))
+		print("Position après transformation : " + str(global_position))
+		
 	if is_translate:
 		is_translate = false
 	
@@ -183,6 +189,16 @@ func project_stereographically(point_4d: Vector4):
 func project_orthogonally(point_4d: Vector4)->Vector3:
 	return Vector3(point_4d.x, point_4d.y, point_4d.z)
 
+
+func translate_4d(vect: Vector4, vect_translation: Vector4) -> Vector4:
+	return vect + vect_translation
+
+# on utilise cette méthode pour déplacer le node3d de sorte à ce qu'il soit au même endroit dans l'espace 3D
+# que la projection de l'hypercube
+func apply_translation(vect: Vector4):
+	var vect_3d = Vector3(vect.x, vect.y, vect.z)
+	collision_shape.global_transform.origin += vect_3d
+	
 
 func rotate_4d(point: Vector4, angle1: float, axis1_a: int, axis1_b: int, angle2: float, axis2_a: int, axis2_b: int) -> Vector4:
 	var cos_theta1 = cos(angle1)

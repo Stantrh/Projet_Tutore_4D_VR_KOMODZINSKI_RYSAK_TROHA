@@ -66,6 +66,8 @@ func _ready():
 func _process(delta):
 	if rotation_angle:
 		rotation_angle+=delta
+		if rotation_angle2:
+			rotation_angle2+=delta
 	update_hypercube()
 
 
@@ -134,8 +136,9 @@ func build_solid_hypercube_mesh(vertices) -> Mesh:
 	# Créer un matériau non éclairé
 	var material = StandardMaterial3D.new()
 	material.cull_mode = BaseMaterial3D.CULL_DISABLED
-	material.albedo_color = Color(0.1, 0.2, 0.8)
+	material.albedo_color = Color(0.1, 0.2, 0.8, 0.3)
 	material.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED  # Mode non éclairé
+	material.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
 
 	# Appliquer ce matériau
 	surface_tool.set_material(material)
@@ -143,19 +146,26 @@ func build_solid_hypercube_mesh(vertices) -> Mesh:
 	# Construire chaque face pour chaque cube
 	for cube in CUBES:
 		for face in CUBE_FACES:
-			var p1 = apply_projection(vertices[cube[face[0]]])
-			var p2 = apply_projection(vertices[cube[face[1]]])
-			var p3 = apply_projection(vertices[cube[face[2]]])
-			var p4 = apply_projection(vertices[cube[face[3]]])
+			var projected_vertices = [
+				apply_projection(vertices[cube[face[0]]]),
+				apply_projection(vertices[cube[face[1]]]),
+				apply_projection(vertices[cube[face[2]]]),
+				apply_projection(vertices[cube[face[3]]])
+			]
 
-			# Deux triangles pour une face
-			surface_tool.add_vertex(p1)
-			surface_tool.add_vertex(p2)
-			surface_tool.add_vertex(p3)
+			var clipped_face = []
+			for i in range(4):
+				var start = projected_vertices[i]
+				var end = projected_vertices[(i + 1) % 4]
+				clipped_face += area.clip_edge(start, end)
 
-			surface_tool.add_vertex(p3)
-			surface_tool.add_vertex(p4)
-			surface_tool.add_vertex(p1)
+			clipped_face = clipped_face.duplicate()
+
+			if clipped_face.size() >= 3:
+				for i in range(1, clipped_face.size() - 1):
+					surface_tool.add_vertex(clipped_face[0])
+					surface_tool.add_vertex(clipped_face[i])
+					surface_tool.add_vertex(clipped_face[i + 1])
 
 	surface_tool.commit(mesh)
 	return mesh

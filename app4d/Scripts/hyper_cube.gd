@@ -41,13 +41,59 @@ enum MeshMode {
 @export var is_rotate = false  # Activer la rotation
 @export var is_double_rotate = false  # Activer la rotation double
 @export var rotation_angle = 90  # Angle de rotation
-@export var axe_a = 0 # x, y, z, x = 0, 1, 2, 3
-@export var axe_b = 3 # x, y, z, x = 0, 1, 2, 3
+@export var axe_a = 0 # x, y, z, w = 0, 1, 2, 3
+@export var axe_b = 3 # x, y, z, w = 0, 1, 2, 3
 @export var rotation_angle2 = 90
 @export var axe2_a = 1
 @export var axe2_b = 3
 @export var mesh_mode: int = 0  # 0: Plein, 1: stylisé, 2: Filaire
 @export var projection_mode: int = 0  # 0: Perspective, 1: Stéréographique, 2: Orthogonale
+
+func set_rotate_plan(plan: String, single_rotate: bool):
+	match plan:
+		"XY":
+			if single_rotate:
+				axe_a = 0
+				axe_b = 1
+			else:
+				axe2_a = 0
+				axe2_b = 1
+		"XZ":
+			if single_rotate:
+				axe_a = 0
+				axe_b = 2
+			else:
+				axe2_a = 0
+				axe2_b = 2
+		"YZ":
+			if single_rotate:
+				axe_a = 1
+				axe_b = 2
+			else:
+				axe2_a = 1
+				axe2_b = 2
+		"XW":
+			if single_rotate:
+				axe_a = 0
+				axe_b = 3
+			else:
+				axe2_a = 0
+				axe2_b = 3
+		"YW":
+			if single_rotate:
+				axe_a = 1
+				axe_b = 3
+			else:
+				axe2_a = 1
+				axe2_b = 3
+		"ZW":
+			if single_rotate:
+				axe_a = 2
+				axe_b = 3
+			else:
+				axe2_a = 2
+				axe2_b = 3
+		
 
 # pour la translation
 @export var is_translate = false # Activer la translation

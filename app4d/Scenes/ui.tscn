@@ -258,13 +258,8 @@ label_settings = SubResource("LabelSettings_aibw1")
 [node name="HBoxContainer" type="HBoxContainer" parent="ReferenceRect/ColorRect/Rotation/HBoxContainer/VBoxContainer/HBoxContainer5"]
 layout_mode = 2
 
-[node name="xy_rotation_slider" type="HSlider" parent="ReferenceRect/ColorRect/Rotation/HBoxContainer/VBoxContainer/HBoxContainer5/HBoxContainer"]
-custom_minimum_size = Vector2(125, 0)
+[node name="xy_rotation_button" type="CheckButton" parent="ReferenceRect/ColorRect/Rotation/HBoxContainer/VBoxContainer/HBoxContainer5/HBoxContainer"]
 layout_mode = 2
-size_flags_horizontal = 8
-size_flags_vertical = 4
-min_value = -180.0
-max_value = 180.0
 
 [node name="xy_rotation_reset_button" type="TextureButton" parent="ReferenceRect/ColorRect/Rotation/HBoxContainer/VBoxContainer/HBoxContainer5/HBoxContainer"]
 custom_minimum_size = Vector2(16, 24)
@@ -288,13 +283,8 @@ label_settings = SubResource("LabelSettings_aibw1")
 [node name="HBoxContainer2" type="HBoxContainer" parent="ReferenceRect/ColorRect/Rotation/HBoxContainer/VBoxContainer/HBoxContainer6"]
 layout_mode = 2
 
-[node name="xz_rotation_slider" type="HSlider" parent="ReferenceRect/ColorRect/Rotation/HBoxContainer/VBoxContainer/HBoxContainer6/HBoxContainer2"]
-custom_minimum_size = Vector2(125, 0)
+[node name="xz_rotation_button" type="CheckButton" parent="ReferenceRect/ColorRect/Rotation/HBoxContainer/VBoxContainer/HBoxContainer6/HBoxContainer2"]
 layout_mode = 2
-size_flags_horizontal = 8
-size_flags_vertical = 4
-min_value = -180.0
-max_value = 180.0
 
 [node name="xz_rotation_reset_button" type="TextureButton" parent="ReferenceRect/ColorRect/Rotation/HBoxContainer/VBoxContainer/HBoxContainer6/HBoxContainer2"]
 custom_minimum_size = Vector2(16, 24)
@@ -318,13 +308,8 @@ label_settings = SubResource("LabelSettings_aibw1")
 [node name="HBoxContainer3" type="HBoxContainer" parent="ReferenceRect/ColorRect/Rotation/HBoxContainer/VBoxContainer/HBoxContainer7"]
 layout_mode = 2
 
-[node name="yz_rotation_slider" type="HSlider" parent="ReferenceRect/ColorRect/Rotation/HBoxContainer/VBoxContainer/HBoxContainer7/HBoxContainer3"]
-custom_minimum_size = Vector2(125, 0)
+[node name="yz_rotation_button" type="CheckButton" parent="ReferenceRect/ColorRect/Rotation/HBoxContainer/VBoxContainer/HBoxContainer7/HBoxContainer3"]
 layout_mode = 2
-size_flags_horizontal = 8
-size_flags_vertical = 4
-min_value = -180.0
-max_value = 180.0
 
 [node name="yz_rotation_reset_button" type="TextureButton" parent="ReferenceRect/ColorRect/Rotation/HBoxContainer/VBoxContainer/HBoxContainer7/HBoxContainer3"]
 custom_minimum_size = Vector2(16, 24)
@@ -351,13 +336,8 @@ label_settings = SubResource("LabelSettings_aibw1")
 [node name="HBoxContainer4" type="HBoxContainer" parent="ReferenceRect/ColorRect/Rotation/HBoxContainer/VBoxContainer2/HBoxContainer5"]
 layout_mode = 2
 
-[node name="xw_rotation_slider" type="HSlider" parent="ReferenceRect/ColorRect/Rotation/HBoxContainer/VBoxContainer2/HBoxContainer5/HBoxContainer4"]
-custom_minimum_size = Vector2(125, 0)
+[node name="xw_rotation_button" type="CheckButton" parent="ReferenceRect/ColorRect/Rotation/HBoxContainer/VBoxContainer2/HBoxContainer5/HBoxContainer4"]
 layout_mode = 2
-size_flags_horizontal = 8
-size_flags_vertical = 4
-min_value = -180.0
-max_value = 180.0
 
 [node name="xw_rotation_reset_button" type="TextureButton" parent="ReferenceRect/ColorRect/Rotation/HBoxContainer/VBoxContainer2/HBoxContainer5/HBoxContainer4"]
 custom_minimum_size = Vector2(16, 24)
@@ -381,13 +361,8 @@ label_settings = SubResource("LabelSettings_aibw1")
 [node name="HBoxContainer5" type="HBoxContainer" parent="ReferenceRect/ColorRect/Rotation/HBoxContainer/VBoxContainer2/HBoxContainer6"]
 layout_mode = 2
 
-[node name="yw_rotation_slider" type="HSlider" parent="ReferenceRect/ColorRect/Rotation/HBoxContainer/VBoxContainer2/HBoxContainer6/HBoxContainer5"]
-custom_minimum_size = Vector2(125, 0)
+[node name="yw_rotation_button" type="CheckButton" parent="ReferenceRect/ColorRect/Rotation/HBoxContainer/VBoxContainer2/HBoxContainer6/HBoxContainer5"]
 layout_mode = 2
-size_flags_horizontal = 8
-size_flags_vertical = 4
-min_value = -180.0
-max_value = 180.0
 
 [node name="yw_rotation_reset_button" type="TextureButton" parent="ReferenceRect/ColorRect/Rotation/HBoxContainer/VBoxContainer2/HBoxContainer6/HBoxContainer5"]
 custom_minimum_size = Vector2(16, 24)
@@ -411,13 +386,8 @@ label_settings = SubResource("LabelSettings_aibw1")
 [node name="HBoxContainer6" type="HBoxContainer" parent="ReferenceRect/ColorRect/Rotation/HBoxContainer/VBoxContainer2/HBoxContainer7"]
 layout_mode = 2
 
-[node name="zw_rotation_slider" type="HSlider" parent="ReferenceRect/ColorRect/Rotation/HBoxContainer/VBoxContainer2/HBoxContainer7/HBoxContainer6"]
-custom_minimum_size = Vector2(125, 0)
+[node name="zw_rotation_button" type="CheckButton" parent="ReferenceRect/ColorRect/Rotation/HBoxContainer/VBoxContainer2/HBoxContainer7/HBoxContainer6"]
 layout_mode = 2
-size_flags_horizontal = 8
-size_flags_vertical = 4
-min_value = -180.0
-max_value = 180.0
 
 [node name="zw_rotation_reset_button" type="TextureButton" parent="ReferenceRect/ColorRect/Rotation/HBoxContainer/VBoxContainer2/HBoxContainer7/HBoxContainer6"]
 custom_minimum_size = Vector2(16, 24)

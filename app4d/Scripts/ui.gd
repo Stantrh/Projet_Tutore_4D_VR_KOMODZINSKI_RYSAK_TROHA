@@ -21,12 +21,11 @@ func _ready():
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
+func _process(_delta):
 	pass
 
 
 func _on_translation_x_slider_value_changed(value):
-	# on vérifie si l'objet actuellement sélectionné n'est pas nul (cas où on ferme l'interface)
 	if object_controlled != null:
 		
 		print("X : " + str(value))
@@ -44,7 +43,6 @@ func _on_translation_x_slider_value_changed(value):
 
 
 func _on_translation_y_slider_value_changed(value):
-	# on vérifie si l'objet actuellement sélectionné n'est pas nul (cas où on ferme l'interface)
 	if object_controlled != null:
 		
 		print("Y : " + str(value))
@@ -61,7 +59,6 @@ func _on_translation_y_slider_value_changed(value):
 
 
 func _on_translation_z_slider_value_changed(value):
-	# on vérifie si l'objet actuellement sélectionné n'est pas nul (cas où on ferme l'interface)
 	if object_controlled != null:
 		print("Z : " + str(value))
 		if not prev_translation_pos.has(object_controlled): # si c'est la première fois qu'on touche à cette hypercube
@@ -76,7 +73,6 @@ func _on_translation_z_slider_value_changed(value):
 		object_controlled.is_translate = true
 
 func _on_translation_w_slider_value_changed(value):
-	# on vérifie si l'objet actuellement sélectionné n'est pas nul (cas où on ferme l'interface)
 	if object_controlled != null:
 		print("W : " + str(value))
 		if not prev_translation_pos.has(object_controlled): # si c'est la première fois qu'on touche à cette hypercube

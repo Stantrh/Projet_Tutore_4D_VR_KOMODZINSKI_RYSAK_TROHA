@@ -58,7 +58,7 @@ var mesh_instance: MeshInstance3D
 func _ready():
 	mesh_instance = MeshInstance3D.new()
 	add_child(mesh_instance)
-	var bounds_mesh = area.create_area_mesh(area.area_min, area.area_max)
+	var bounds_mesh = area.create_area_mesh()
 	add_child(bounds_mesh)
 	update_hypercube()
 	
@@ -72,6 +72,8 @@ func _process(delta):
 
 
 func update_hypercube():
+	for child in mesh_instance.get_children():
+		child.queue_free()
 	# Transformer les sommets
 	var new_vertices = []
 	if is_translate:
@@ -96,9 +98,10 @@ func update_hypercube():
 	var mesh
 	if is_solid:
 		mesh = build_solid_hypercube_mesh(new_vertices)
+		mesh_instance.mesh = mesh
 	else:
 		mesh = build_wireframe_hypercube_mesh(new_vertices)
-	mesh_instance.mesh = mesh
+		mesh_instance.add_child(mesh)
 	
 	if is_translate:
 		is_translate = false
@@ -110,23 +113,68 @@ func is_hypercube_visible(vertices: Array) -> bool:
 			return true
 	return false
 
-func build_wireframe_hypercube_mesh(vertices) -> Mesh:
-	var mesh = ArrayMesh.new()
-	var surface_tool = SurfaceTool.new()
-	surface_tool.begin(Mesh.PRIMITIVE_LINES)
+func build_wireframe_hypercube_mesh(vertices) -> Node3D:
+	var parent_node = Node3D.new()
 
-	# Ajouter les arêtes
+	# Créer des points pour chaque sommet
+	for vertex in vertices:
+		var point = MeshInstance3D.new()
+		point.mesh = SphereMesh.new()
+		point.scale = Vector3(0.2, 0.2, 0.2)
+		point.transform.origin = apply_projection(vertex)
+		var material = StandardMaterial3D.new()
+		material.albedo_color = Color.BLUE
+		material.roughness = 0.1
+		material.metallic = 0.9
+		point.mesh.material = material
+		parent_node.add_child(point)
+
+	# Créer des cylindres pour chaque arête
 	for edge in get_hypercube_edges():
 		var p1 = apply_projection(vertices[edge[0]])
 		var p2 = apply_projection(vertices[edge[1]])
 		var clipped_points = area.clip_edge(p1, p2)
 		
 		if clipped_points.size() == 2:
-			surface_tool.add_vertex(clipped_points[0])
-			surface_tool.add_vertex(clipped_points[1])
+			var cylinder = MeshInstance3D.new()
+			cylinder.mesh = CylinderMesh.new()
+			cylinder.mesh.bottom_radius = 0.05
+			cylinder.mesh.top_radius = 0.05
+			cylinder.mesh.height = (clipped_points[0] - clipped_points[1]).length()
+			
+			# Positionner le cylindre entre les deux points
+			var mid_point = (clipped_points[0] + clipped_points[1]) / 2.0
+			cylinder.transform.origin = mid_point
+			
+			# Orienter le cylindre dans la bonne direction
+			var direction = (clipped_points[1] - clipped_points[0]).normalized()
+			
+			# Calculer l'axe de rotation
+			var axis = Vector3.UP.cross(direction).normalized()
+			if axis.length() == 0:
+				# Si les points sont parfaitement alignés avec l'axe Y
+				axis = Vector3(1, 0, 0)
 
-	surface_tool.commit(mesh)
-	return mesh
+			# Calculer l'angle de rotation
+			var angle = acos(Vector3.UP.dot(direction))
+			
+			# Créer la transformation
+			var cylinder_transform = Transform3D()
+			cylinder_transform.origin = mid_point
+			cylinder_transform.basis = Basis(axis, angle) * cylinder_transform.basis
+
+			# Appliquer la transformation au cylindre
+			cylinder.transform = cylinder_transform
+
+			# Ajouter un matériau
+			var material = StandardMaterial3D.new()
+			material.albedo_color = Color.WHITE
+			material.roughness = 0.1
+			material.metallic = 0.9
+			cylinder.mesh.material = material
+
+			parent_node.add_child(cylinder)
+	return parent_node
 
 func build_solid_hypercube_mesh(vertices) -> Mesh:
 	var mesh = ArrayMesh.new()

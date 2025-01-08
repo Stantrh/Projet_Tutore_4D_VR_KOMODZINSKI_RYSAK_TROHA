@@ -5,7 +5,7 @@ extends Node3D
 @export var area_max = Vector3(5, 5, 5)
 
 # Créer une zone de taille area_min - area_max
-func create_area_mesh(area_min: Vector3, area_max: Vector3) -> MeshInstance3D:
+func create_area_mesh() -> MeshInstance3D:
 	var mesh_instance = MeshInstance3D.new()
 	var cube_mesh = BoxMesh.new()
 	var size = area_max - area_min

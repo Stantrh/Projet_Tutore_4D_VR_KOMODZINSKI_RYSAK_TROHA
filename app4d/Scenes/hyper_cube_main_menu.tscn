@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3 uid="uid://leikcvluxlgk"]
+
+[ext_resource type="Script" path="res://Scripts/hyper_cube_main_menu.gd" id="1_6chn4"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_o0t87"]
+
+[node name="HyperCube_main_menu" type="Node3D" groups=["Hyperfigure"]]
+script = ExtResource("1_6chn4")
+
+[node name="Area3D" type="Area3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+shape = SubResource("BoxShape3D_o0t87")

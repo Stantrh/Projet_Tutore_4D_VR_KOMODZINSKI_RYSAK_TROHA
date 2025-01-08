@@ -1,0 +1,322 @@
+[gd_scene load_steps=6 format=3 uid="uid://bjlr0nmlfkq7y"]
+
+[ext_resource type="Script" path="res://Scripts/main_menu.gd" id="1_sbbay"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_k2s5t"]
+font_size = 64
+font_color = Color(0, 0, 0, 1)
+outline_size = 3
+
+[sub_resource type="LabelSettings" id="LabelSettings_h67gq"]
+font_size = 32
+font_color = Color(0, 0, 0, 1)
+outline_size = 8
+
+[sub_resource type="LabelSettings" id="LabelSettings_vcpta"]
+font_color = Color(0, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_fuvd2"]
+font_size = 29
+
+[node name="Main_menu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_sbbay")
+
+[node name="start" type="Control" parent="."]
+visible = false
+layout_mode = 1
+anchor_left = 0.224
+anchor_right = 0.776
+anchor_bottom = 1.0
+offset_left = -0.548004
+offset_right = 0.547974
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="start"]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.102
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -0.0960007
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 150
+
+[node name="Label" type="Label" parent="start/VBoxContainer"]
+layout_mode = 2
+text = "4d Project"
+label_settings = SubResource("LabelSettings_k2s5t")
+horizontal_alignment = 1
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="start/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 8
+theme_override_constants/separation = 25
+
+[node name="start_button" type="Button" parent="start/VBoxContainer/VBoxContainer2"]
+custom_minimum_size = Vector2(200, 100)
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Start"
+
+[node name="exit_button" type="Button" parent="start/VBoxContainer/VBoxContainer2"]
+custom_minimum_size = Vector2(200, 100)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+text = "Exit"
+
+[node name="choix_figure" type="Control" parent="."]
+visible = false
+layout_mode = 1
+anchor_left = 0.088
+anchor_right = 0.912
+anchor_bottom = 0.846
+offset_left = 0.123993
+offset_right = -0.124023
+offset_bottom = -0.208008
+grow_horizontal = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="choix_figure"]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.099
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -0.252003
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 50
+
+[node name="Label" type="Label" parent="choix_figure/VBoxContainer"]
+layout_mode = 2
+text = "Choisissez la Figure que vous souhaitez visualiser"
+label_settings = SubResource("LabelSettings_h67gq")
+horizontal_alignment = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="choix_figure/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 40
+
+[node name="GridContainer" type="GridContainer" parent="choix_figure/VBoxContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_constants/h_separation = 60
+theme_override_constants/v_separation = 40
+columns = 3
+
+[node name="hyper_cube" type="Button" parent="choix_figure/VBoxContainer/VBoxContainer/GridContainer"]
+custom_minimum_size = Vector2(200, 100)
+layout_mode = 2
+tooltip_text = "Equivalent du cube mais en 4ème dimension"
+text = "HyperCube"
+
+[node name="hyper_sphère" type="Button" parent="choix_figure/VBoxContainer/VBoxContainer/GridContainer"]
+custom_minimum_size = Vector2(200, 100)
+layout_mode = 2
+tooltip_text = "Equivalent d'une sphère mais en 4ème dimension"
+disabled = true
+text = "HyperSphère"
+
+[node name="Button3" type="Button" parent="choix_figure/VBoxContainer/VBoxContainer/GridContainer"]
+custom_minimum_size = Vector2(200, 100)
+layout_mode = 2
+tooltip_text = "16 hypercube empilés entre eux qui forment un hypercube"
+disabled = true
+text = "HyperCube Empilé"
+
+[node name="Button4" type="Button" parent="choix_figure/VBoxContainer/VBoxContainer/GridContainer"]
+custom_minimum_size = Vector2(200, 100)
+layout_mode = 2
+tooltip_text = "Une Maison composée d'hypercube"
+disabled = true
+text = "Maison 4D"
+
+[node name="Button5" type="Button" parent="choix_figure/VBoxContainer/VBoxContainer/GridContainer"]
+custom_minimum_size = Vector2(200, 100)
+layout_mode = 2
+tooltip_text = "Arbre composé d'un hypercube et d'une hypersphère "
+disabled = true
+text = "Arbre 4D  "
+
+[node name="Button6" type="Button" parent="choix_figure/VBoxContainer/VBoxContainer/GridContainer"]
+custom_minimum_size = Vector2(200, 100)
+layout_mode = 2
+tooltip_text = "Equivalent d'une pyramide mais en 4D"
+disabled = true
+text = "Pentachore"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="choix_figure/VBoxContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_constants/separation = 35
+alignment = 1
+
+[node name="back_button" type="Button" parent="choix_figure/VBoxContainer/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(200, 100)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+text = "Retour"
+
+[node name="Button2" type="Button" parent="choix_figure/VBoxContainer/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(200, 100)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+disabled = true
+text = "Mode Libre"
+
+[node name="Popup" type="Popup" parent="choix_figure"]
+size = Vector2i(251, 301)
+always_on_top = true
+
+[node name="ReferenceRect" type="ReferenceRect" parent="choix_figure/Popup"]
+custom_minimum_size = Vector2(250, 300)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+border_color = Color(0, 0, 0, 1)
+border_width = 5.0
+editor_only = false
+
+[node name="ColorRect" type="ColorRect" parent="choix_figure/Popup/ReferenceRect"]
+show_behind_parent = true
+custom_minimum_size = Vector2(250, 300)
+layout_mode = 0
+offset_right = 250.0
+offset_bottom = 300.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="choix_figure/Popup/ReferenceRect/ColorRect"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -72.0
+offset_right = 72.0
+offset_bottom = 127.0
+grow_horizontal = 2
+theme_override_constants/separation = 30
+
+[node name="Label" type="Label" parent="choix_figure/Popup/ReferenceRect/ColorRect/VBoxContainer"]
+layout_mode = 2
+text = "Combien (max = 6)"
+label_settings = SubResource("LabelSettings_vcpta")
+horizontal_alignment = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="choix_figure/Popup/ReferenceRect/ColorRect/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 17
+
+[node name="TextEdit" type="TextEdit" parent="choix_figure/Popup/ReferenceRect/ColorRect/VBoxContainer/VBoxContainer"]
+custom_minimum_size = Vector2(50, 100)
+layout_mode = 2
+text = "1"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="choix_figure/Popup/ReferenceRect/ColorRect/VBoxContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Confirm_button" type="Button" parent="choix_figure/Popup/ReferenceRect/ColorRect/VBoxContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+text = "Confirmer"
+
+[node name="Retour_Button" type="Button" parent="choix_figure/Popup/ReferenceRect/ColorRect/VBoxContainer/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(87, -0.1)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+text = "Retour"
+
+[node name="choix_projection" type="Control" parent="."]
+custom_minimum_size = Vector2(948, 548)
+layout_mode = 1
+anchor_left = 0.089
+anchor_top = 0.077
+anchor_right = 0.911
+anchor_bottom = 0.923
+offset_left = -0.528
+offset_top = 0.103996
+offset_right = 0.527954
+offset_bottom = -0.104004
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="choix_projection"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.141
+anchor_top = 0.053
+anchor_right = 0.859
+anchor_bottom = 0.806
+offset_left = 0.332001
+offset_top = -0.0440025
+offset_right = -0.332031
+offset_bottom = 0.312012
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 50
+
+[node name="Label" type="Label" parent="choix_projection/VBoxContainer"]
+layout_mode = 2
+text = "Choisissez le Type de projection"
+label_settings = SubResource("LabelSettings_h67gq")
+horizontal_alignment = 1
+
+[node name="Label_figure" type="Label" parent="choix_projection/VBoxContainer"]
+layout_mode = 2
+text = "Hypercube n°1"
+label_settings = SubResource("LabelSettings_fuvd2")
+horizontal_alignment = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="choix_projection/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 40
+
+[node name="HBoxContainer" type="HBoxContainer" parent="choix_projection/VBoxContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 40
+alignment = 1
+
+[node name="orthogonale" type="Button" parent="choix_projection/VBoxContainer/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(200, 100)
+layout_mode = 2
+text = "Orthogonale"
+
+[node name="perspective" type="Button" parent="choix_projection/VBoxContainer/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(200, 100)
+layout_mode = 2
+text = "Perspective"
+
+[node name="stéréographique" type="Button" parent="choix_projection/VBoxContainer/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(200, 100)
+layout_mode = 2
+text = "Stéréographique"
+
+[node name="retour" type="Button" parent="choix_projection/VBoxContainer/VBoxContainer"]
+custom_minimum_size = Vector2(200, 100)
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Retour"
+
+[connection signal="pressed" from="start/VBoxContainer/VBoxContainer2/start_button" to="." method="_on_start_button_pressed"]
+[connection signal="pressed" from="start/VBoxContainer/VBoxContainer2/exit_button" to="." method="_on_exit_button_pressed"]
+[connection signal="pressed" from="choix_figure/VBoxContainer/VBoxContainer/GridContainer/hyper_cube" to="." method="_on_hyper_cube_pressed"]
+[connection signal="pressed" from="choix_figure/VBoxContainer/VBoxContainer/HBoxContainer/back_button" to="." method="_on_back_button_pressed"]
+[connection signal="text_changed" from="choix_figure/Popup/ReferenceRect/ColorRect/VBoxContainer/VBoxContainer/TextEdit" to="." method="_on_text_edit_text_changed"]
+[connection signal="pressed" from="choix_figure/Popup/ReferenceRect/ColorRect/VBoxContainer/VBoxContainer/HBoxContainer/Confirm_button" to="." method="_on_confirm_button_pressed"]
+[connection signal="pressed" from="choix_figure/Popup/ReferenceRect/ColorRect/VBoxContainer/VBoxContainer/HBoxContainer/Retour_Button" to="." method="_on_retour_button_pressed"]
+[connection signal="pressed" from="choix_projection/VBoxContainer/VBoxContainer/HBoxContainer/orthogonale" to="." method="_on_orthogonale_pressed"]
+[connection signal="pressed" from="choix_projection/VBoxContainer/VBoxContainer/HBoxContainer/perspective" to="." method="_on_perspective_pressed"]
+[connection signal="pressed" from="choix_projection/VBoxContainer/VBoxContainer/HBoxContainer/stéréographique" to="." method="_on_stéréographique_pressed"]
+[connection signal="button_down" from="choix_projection/VBoxContainer/VBoxContainer/retour" to="." method="_on_retour_button_down"]

@@ -1,0 +1,84 @@
+[gd_scene load_steps=7 format=3 uid="uid://dyhusyvbypi4q"]
+
+[ext_resource type="PackedScene" uid="uid://leikcvluxlgk" path="res://Scenes/hyper_cube_main_menu.tscn" id="1_c7hhm"]
+[ext_resource type="Script" path="res://Scripts/camera_3d.gd" id="1_ctio8"]
+[ext_resource type="PackedScene" uid="uid://bjlr0nmlfkq7y" path="res://Scenes/main_menu.tscn" id="2_p8jpg"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_4yftq"]
+sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+ground_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+
+[sub_resource type="Sky" id="Sky_h4l28"]
+sky_material = SubResource("ProceduralSkyMaterial_4yftq")
+
+[sub_resource type="Environment" id="Environment_63k1r"]
+background_mode = 2
+sky = SubResource("Sky_h4l28")
+tonemap_mode = 2
+glow_enabled = true
+
+[node name="Main_menu_world" type="Node3D"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_63k1r")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.866025, -0.433013, 0.25, 0, 0.5, 0.866025, -0.5, 0.75, -0.433013, 0, 0, 0)
+shadow_enabled = true
+
+[node name="CSGBox3D" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.1929, -0.747417, 0.570654)
+size = Vector3(5000, 0.2, 5000)
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.89323, 0.4496, 0, -0.4496, 0.89323, 0, 1.03388, 2.39219)
+script = ExtResource("1_ctio8")
+
+[node name="HyperCube_main_menu" parent="." instance=ExtResource("1_c7hhm")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17.3542, 9.10406, 7.71048)
+
+[node name="HyperCube_main_menu2" parent="." instance=ExtResource("1_c7hhm")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.37479, 2, 7.54101)
+is_rotate = true
+projection_mode = 2
+
+[node name="HyperCube_main_menu3" parent="." instance=ExtResource("1_c7hhm")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11.4549, 5, -20.2032)
+is_rotate = true
+projection_mode = 2
+
+[node name="HyperCube_main_menu4" parent="." instance=ExtResource("1_c7hhm")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.68391, 1, -4.30562)
+is_rotate = true
+projection_mode = 1
+
+[node name="HyperCube_main_menu5" parent="." instance=ExtResource("1_c7hhm")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20.118, 1, -17.589)
+is_rotate = true
+projection_mode = 2
+
+[node name="HyperCube_main_menu6" parent="." instance=ExtResource("1_c7hhm")]
+transform = Transform3D(0.996465, -0.0840083, 0, 0.0840083, 0.996465, 0, 0, 0, 1, 31.0802, 4, -40.3488)
+
+[node name="HyperCube_main_menu7" parent="." instance=ExtResource("1_c7hhm")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.49152, 1, 9.98323)
+is_rotate = true
+projection_mode = 2
+
+[node name="HyperCube_main_menu8" parent="." instance=ExtResource("1_c7hhm")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16.2976, 5, 6.85468)
+projection_mode = 1
+
+[node name="HyperCube_main_menu9" parent="." instance=ExtResource("1_c7hhm")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 1, -8)
+
+[node name="HyperCube_main_menu10" parent="." instance=ExtResource("1_c7hhm")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -33.1572, 2, -42.1467)
+
+[node name="HyperCube_main_menu11" parent="." instance=ExtResource("1_c7hhm")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0101128, 24.21, -101.939)
+is_rotate = true
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Main_menu" parent="CanvasLayer" instance=ExtResource("2_p8jpg")]

@@ -118,16 +118,18 @@ func build_wireframe_hypercube_mesh(vertices) -> Node3D:
 
 	# Créer des points pour chaque sommet
 	for vertex in vertices:
-		var point = MeshInstance3D.new()
-		point.mesh = SphereMesh.new()
-		point.scale = Vector3(0.2, 0.2, 0.2)
-		point.transform.origin = apply_projection(vertex)
-		var material = StandardMaterial3D.new()
-		material.albedo_color = Color.BLUE
-		material.roughness = 0.1
-		material.metallic = 0.9
-		point.mesh.material = material
-		parent_node.add_child(point)
+		var projected_vertex = apply_projection(vertex)
+		if area.is_point_in_area(projected_vertex):
+			var point = MeshInstance3D.new()
+			point.mesh = SphereMesh.new()
+			point.scale = Vector3(0.2, 0.2, 0.2)
+			point.transform.origin = apply_projection(vertex)
+			var material = StandardMaterial3D.new()
+			material.albedo_color = Color.BLUE
+			material.roughness = 0.1
+			material.metallic = 0.9
+			point.mesh.material = material
+			parent_node.add_child(point)
 
 	# Créer des cylindres pour chaque arête
 	for edge in get_hypercube_edges():

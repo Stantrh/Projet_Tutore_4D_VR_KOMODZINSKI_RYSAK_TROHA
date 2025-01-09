@@ -351,6 +351,7 @@ func translate_4d(vect: Vector4, vect_translation: Vector4) -> Vector4:
 func apply_translation(vect: Vector4):
 	var vect_3d = Vector3(vect.x, vect.y, vect.z)
 	collision_shape.global_transform.origin += vect_3d
+	global_transform.origin += vect_3d
 	
 
 func rotate_4d(point: Vector4, angle1: float, axis1_a: int, axis1_b: int, angle2: float, axis2_a: int, axis2_b: int) -> Vector4:

@@ -129,9 +129,11 @@ func update_hypercube():
 	# Transformer les sommets
 	var new_vertices = []
 	if is_translate:
+		print("ARRAY : " + str(dynamic_vertices))
 		for vertex in dynamic_vertices:
 			var new_vect = translate_4d(vertex, vect_translate)
 			new_vertices.append(new_vect)
+		print("NEW ARRAY : " + str(new_vertices))
 		dynamic_vertices = new_vertices	
 		apply_translation(vect_translate)
 	elif is_rotate:
@@ -351,7 +353,8 @@ func translate_4d(vect: Vector4, vect_translation: Vector4) -> Vector4:
 func apply_translation(vect: Vector4):
 	var vect_3d = Vector3(vect.x, vect.y, vect.z)
 	collision_shape.global_transform.origin += vect_3d
-	global_transform.origin += vect_3d
+	#global_transform.origin += vect_3d 
+	#position += vect_3d
 	
 
 func rotate_4d(point: Vector4, angle1: float, axis1_a: int, axis1_b: int, angle2: float, axis2_a: int, axis2_b: int) -> Vector4:

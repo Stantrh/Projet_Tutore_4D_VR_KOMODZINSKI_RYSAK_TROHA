@@ -1,8 +1,8 @@
 extends Node3D
 
 # Variables qui définies la taille de la zone d'affichage
-@export var area_min = Vector3(-50, -50, -50)
-@export var area_max = Vector3(50, 50, 50)
+@export var area_min = Vector3(-3, -3, -3)
+@export var area_max = Vector3(3, 3, 3)
 
 # Créer une zone de taille area_min - area_max
 func create_area_mesh() -> MeshInstance3D:

@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://dik77har2dd4m"]
+[gd_scene load_steps=7 format=3 uid="uid://dik77har2dd4m"]
 
 [ext_resource type="Texture2D" uid="uid://cf0urlceo257r" path="res://Assets/UI/Button/replay.png" id="1_05trw"]
 [ext_resource type="Script" path="res://Scripts/ui.gd" id="1_wl4su"]
@@ -9,6 +9,9 @@ font_color = Color(0, 0, 0, 1)
 
 [sub_resource type="LabelSettings" id="LabelSettings_aibw1"]
 font_color = Color(0, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_5e1nt"]
+font_size = 15
 
 [node name="UI" type="Control"]
 layout_mode = 3
@@ -105,6 +108,30 @@ size_flags_vertical = 4
 min_value = -10.0
 max_value = 10.0
 
+[node name="Panel" type="Panel" parent="ReferenceRect/ColorRect/Translation/HBoxContainer/HBoxContainer"]
+self_modulate = Color(0, 0, 0, 1)
+custom_minimum_size = Vector2(30, 20)
+layout_mode = 2
+size_flags_vertical = 4
+
+[node name="Label" type="Label" parent="ReferenceRect/ColorRect/Translation/HBoxContainer/HBoxContainer/Panel"]
+custom_minimum_size = Vector2(28, 23)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -14.0
+offset_top = -11.5
+offset_right = 14.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "0"
+label_settings = SubResource("LabelSettings_5e1nt")
+horizontal_alignment = 1
+
 [node name="x_translation_reset" type="TextureButton" parent="ReferenceRect/ColorRect/Translation/HBoxContainer/HBoxContainer"]
 custom_minimum_size = Vector2(16, 24)
 layout_mode = 2
@@ -141,6 +168,30 @@ size_flags_horizontal = 4
 size_flags_vertical = 4
 min_value = -10.0
 max_value = 10.0
+
+[node name="Panel" type="Panel" parent="ReferenceRect/ColorRect/Translation/HBoxContainer2/HBoxContainer"]
+self_modulate = Color(0, 0, 0, 1)
+custom_minimum_size = Vector2(30, 20)
+layout_mode = 2
+size_flags_vertical = 4
+
+[node name="Label" type="Label" parent="ReferenceRect/ColorRect/Translation/HBoxContainer2/HBoxContainer/Panel"]
+custom_minimum_size = Vector2(28, 23)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -14.0
+offset_top = -11.5
+offset_right = 14.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "0"
+label_settings = SubResource("LabelSettings_5e1nt")
+horizontal_alignment = 1
 
 [node name="y_translation_reset" type="TextureButton" parent="ReferenceRect/ColorRect/Translation/HBoxContainer2/HBoxContainer"]
 custom_minimum_size = Vector2(16, 24)
@@ -180,6 +231,30 @@ size_flags_vertical = 4
 min_value = -10.0
 max_value = 10.0
 
+[node name="Panel" type="Panel" parent="ReferenceRect/ColorRect/Translation/HBoxContainer3/HBoxContainer"]
+self_modulate = Color(0, 0, 0, 1)
+custom_minimum_size = Vector2(30, 20)
+layout_mode = 2
+size_flags_vertical = 4
+
+[node name="Label" type="Label" parent="ReferenceRect/ColorRect/Translation/HBoxContainer3/HBoxContainer/Panel"]
+custom_minimum_size = Vector2(28, 23)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -14.0
+offset_top = -11.5
+offset_right = 14.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "0"
+label_settings = SubResource("LabelSettings_5e1nt")
+horizontal_alignment = 1
+
 [node name="z_translation_reset" type="TextureButton" parent="ReferenceRect/ColorRect/Translation/HBoxContainer3/HBoxContainer"]
 custom_minimum_size = Vector2(16, 24)
 layout_mode = 2
@@ -216,6 +291,30 @@ size_flags_horizontal = 0
 size_flags_vertical = 4
 min_value = -10.0
 max_value = 10.0
+
+[node name="Panel" type="Panel" parent="ReferenceRect/ColorRect/Translation/HBoxContainer4/HBoxContainer"]
+self_modulate = Color(0, 0, 0, 1)
+custom_minimum_size = Vector2(30, 20)
+layout_mode = 2
+size_flags_vertical = 4
+
+[node name="Label" type="Label" parent="ReferenceRect/ColorRect/Translation/HBoxContainer4/HBoxContainer/Panel"]
+custom_minimum_size = Vector2(28, 23)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -14.0
+offset_top = -11.5
+offset_right = 14.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "0"
+label_settings = SubResource("LabelSettings_5e1nt")
+horizontal_alignment = 1
 
 [node name="w_translation_reset" type="TextureButton" parent="ReferenceRect/ColorRect/Translation/HBoxContainer4/HBoxContainer"]
 custom_minimum_size = Vector2(16, 24)

@@ -5,7 +5,12 @@ extends Control
 $ReferenceRect/ColorRect/Translation/HBoxContainer2/HBoxContainer/translation_y_slider,
 $ReferenceRect/ColorRect/Translation/HBoxContainer3/HBoxContainer/translation_z_slider,
 $ReferenceRect/ColorRect/Translation/HBoxContainer4/HBoxContainer/translation_w_slider]
-
+@onready var sliders_label : Array[Label] = [
+	$ReferenceRect/ColorRect/Translation/HBoxContainer/HBoxContainer/Panel/Label,
+	$ReferenceRect/ColorRect/Translation/HBoxContainer2/HBoxContainer/Panel/Label,
+	$ReferenceRect/ColorRect/Translation/HBoxContainer3/HBoxContainer/Panel/Label,
+	$ReferenceRect/ColorRect/Translation/HBoxContainer4/HBoxContainer/Panel/Label
+]
 
 # Pour les sliders, on garde les positions des sliders précédents dans un dictionnaire qu'on actualise
 var prev_translation_pos = {} # translations
@@ -157,6 +162,7 @@ func _on_translation_x_slider_value_changed(value):
 		
 		object_controlled.vect_translate = Vector4(delta_x, 0, 0, 0)
 		object_controlled.is_translate = true
+		sliders_label[0].text = str(value)
 
 
 func _on_translation_y_slider_value_changed(value):
@@ -173,7 +179,7 @@ func _on_translation_y_slider_value_changed(value):
 		
 		object_controlled.vect_translate = Vector4(0, delta_y, 0, 0)
 		object_controlled.is_translate = true
-
+		sliders_label[1].text = str(value)
 
 func _on_translation_z_slider_value_changed(value):
 	if object_controlled != null:
@@ -188,7 +194,7 @@ func _on_translation_z_slider_value_changed(value):
 		
 		object_controlled.vect_translate = Vector4(0, 0, delta_z, 0)
 		object_controlled.is_translate = true
-
+		sliders_label[2].text = str(value)
 func _on_translation_w_slider_value_changed(value):
 	if object_controlled != null:
 		print("W : " + str(value))
@@ -202,7 +208,7 @@ func _on_translation_w_slider_value_changed(value):
 		
 		object_controlled.vect_translate = Vector4(0, 0, 0, delta_w)
 		object_controlled.is_translate = true
-
+		sliders_label[3].text = str(value)
 	
 	
 func open_interface(object):
@@ -212,11 +218,14 @@ func open_interface(object):
 		var indice = 0
 		for translation_slider in translation_sliders:
 			translation_slider.value = slider_pos_array[indice]
+			sliders_label[indice].text = str(slider_pos_array[indice])
 			indice += 1
 	else:
 		#print("HEYYYY C'EST DU 0. Vide ? : " + str(prev_translation_pos.size()))
 		for translation_slider in translation_sliders:
 			translation_slider.value = 0
+		for slider_label in sliders_label :
+			slider_label.text = "0"
 	
 	if prev_rotation_pos.has(object):
 		var button_pos_dict = prev_rotation_pos[object] # on récupère le dictionnaire de l'hypercube courant

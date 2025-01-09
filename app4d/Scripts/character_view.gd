@@ -24,7 +24,7 @@ func _ready():
 	$RayCast3D.enabled = true
 func _input(event):
 	# Gestion des mouvements de la souris
-	if Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
+	if Input.mouse_mode == Input.MOUSE_MODE_CAPTURED or Input.is_action_pressed("rotate"):
 		if event is InputEventMouseMotion:
 			yaw -= event.relative.x * mouse_sensitivity.x
 			pitch -= event.relative.y * mouse_sensitivity.y

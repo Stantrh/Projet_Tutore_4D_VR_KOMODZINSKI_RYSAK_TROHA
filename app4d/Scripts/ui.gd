@@ -52,55 +52,75 @@ func _ready():
 
 
 func _on_check_button_toggled(button_pressed: bool, axis_pair: String):
-	# au cas où c'est la première fois qu'on souhaite transformer la forme courante
-	if not object_controlled in prev_rotation_pos:
-		prev_rotation_pos[object_controlled] = {
-			"XY": {"toggled": false, "disabled": false},
-			"XZ": {"toggled": false, "disabled": false},
-			"YZ": {"toggled": false, "disabled": false},
-			"XW": {"toggled": false, "disabled": false},
-			"YW": {"toggled": false, "disabled": false},
-			"ZW": {"toggled": false, "disabled": false}
-		}
+	if object_controlled:
+		# au cas où c'est la première fois qu'on souhaite transformer la forme courante
+		if not object_controlled in prev_rotation_pos:
+			prev_rotation_pos[object_controlled] = {
+				"XY": {"toggled": false, "disabled": false},
+				"XZ": {"toggled": false, "disabled": false},
+				"YZ": {"toggled": false, "disabled": false},
+				"XW": {"toggled": false, "disabled": false},
+				"YW": {"toggled": false, "disabled": false},
+				"ZW": {"toggled": false, "disabled": false}
+			}
+			
+		# on met à jour la valeur toggled du plan choisi
+		prev_rotation_pos[object_controlled][axis_pair]["toggled"] = button_pressed
 		
-	# on met à jour la valeur toggled du plan choisi
-	prev_rotation_pos[object_controlled][axis_pair]["toggled"] = button_pressed
-	
-	# On vérifie combien de plans sont activés pour la rotation
-	var active_rotations = []
-	for plan in prev_rotation_pos[object_controlled]:
-		if prev_rotation_pos[object_controlled][plan]["toggled"]: # si plan a true, donc actif
-			active_rotations.append(plan)
-			
-	# si on est dans le cas d'une activation, on doit vérifier le nombre total de boutons enabled pour désactiver les autres
-	if button_pressed:
-		print("TAB ACTIVATION : " + str(active_rotations))
-		# si on en a 2, on désactive la possibilité d'en choisir + 
-		if active_rotations.size() == 2:
-			for plan in prev_rotation_pos[object_controlled]:
-				if plan not in active_rotations:
-					rotation_buttons[plan].disabled = true
-					prev_rotation_pos[object_controlled][plan]["disabled"] = true
-			
-			# donc si 2 rotations sont activées, alors on enable la double rotation
-			object_controlled.is_double_rotate = true
-			object_controlled.set_rotate_plan(axis_pair, false) # et on passe l'axe
-			# et on reporte les axes concernés par la rotation
-		elif active_rotations.size() == 1:
-			object_controlled.is_rotate = true
-			object_controlled.set_rotate_plan(axis_pair, true)
-	else: # si on est sur une désactivation
-		print("TAB DESACTIVATION: " + str(active_rotations))
-		if active_rotations.size() <= 1:
-			for plan in prev_rotation_pos[object_controlled]:
-				if plan not in active_rotations:
-					rotation_buttons[plan].disabled = false
-					prev_rotation_pos[object_controlled][plan]["disabled"] = false
-			# et si on est à 1, on vérifie que la double rotation est bien désactivée
-			if active_rotations.size() == 1:
-				object_controlled.is_double_rotate = false
-			elif active_rotations.size() == 0:
-				object_controlled.is_rotate = false
+		# On vérifie combien de plans sont activés pour la rotation
+		var active_rotations = []
+		for plan in prev_rotation_pos[object_controlled]:
+			if prev_rotation_pos[object_controlled][plan]["toggled"]: # si plan a true, donc actif
+				active_rotations.append(plan)
+				
+		# si on est dans le cas d'une activation, on doit vérifier le nombre total de boutons enabled pour désactiver les autres
+		if button_pressed:
+			# si on en a 2, on désactive la possibilité d'en choisir + 
+			if active_rotations.size() == 2:
+				for plan in prev_rotation_pos[object_controlled]:
+					if plan not in active_rotations:
+						rotation_buttons[plan].disabled = true
+						prev_rotation_pos[object_controlled][plan]["disabled"] = true
+				
+				# donc si 2 rotations sont activées, alors on enable la double rotation
+				object_controlled.is_double_rotate = true
+				object_controlled.set_rotate_plan(axis_pair, false) # et on passe l'axe
+				var axe_a = object_controlled.axe_a
+				var axe_b = object_controlled.axe_b
+				var axe2_a = object_controlled.axe2_a
+				var axe2_b = object_controlled.axe2_b
+				#print("axe_a : " + str(axe_a))
+				#print("axe_b : " + str(axe_b))
+				#print("axe2_a : " + str(axe2_a))
+				#print("axe2_b : " + str(axe2_b))
+				# et on reporte les axes concernés par la rotation
+			elif active_rotations.size() == 1:
+				object_controlled.is_rotate = true
+				object_controlled.set_rotate_plan(axis_pair, true)
+		else: # si on est sur une désactivation
+			if active_rotations.size() <= 1:
+				for plan in prev_rotation_pos[object_controlled]:
+					if plan not in active_rotations:
+						rotation_buttons[plan].disabled = false
+						prev_rotation_pos[object_controlled][plan]["disabled"] = false
+				# et si on est à 1, on vérifie que la double rotation est bien désactivée
+				if active_rotations.size() == 1:
+					object_controlled.is_double_rotate = false
+					# et on reporte le plan de rotation actif sur le premier plan de rotation 
+					object_controlled.set_rotate_plan(active_rotations[0], true)
+
+					
+					var axe_a = object_controlled.axe_a
+					var axe_b = object_controlled.axe_b
+					var axe2_a = object_controlled.axe2_a
+					var axe2_b = object_controlled.axe2_b
+					print("POUR : " + str(axis_pair))
+					print("axe_a : " + str(axe_a))
+					print("axe_b : " + str(axe_b))
+					print("axe2_a : " + str(axe2_a))
+					print("axe2_b : " + str(axe2_b))
+				elif active_rotations.size() == 0:
+					object_controlled.is_rotate = false
 				
 		
 	

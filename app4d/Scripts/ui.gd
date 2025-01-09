@@ -1,7 +1,10 @@
 extends Control
 
 @export var object_controlled : Node
-@onready var translation_sliders : Array = [$ReferenceRect/ColorRect/Translation/HBoxContainer/translation_x_slider,$ReferenceRect/ColorRect/Translation/HBoxContainer2/translation_y_slider,$ReferenceRect/ColorRect/Translation/HBoxContainer3/translation_z_slider,$ReferenceRect/ColorRect/Translation/HBoxContainer4/translation_w_slider]
+@onready var translation_sliders : Array[HSlider] = [$ReferenceRect/ColorRect/Translation/HBoxContainer/HBoxContainer/translation_x_slider,
+$ReferenceRect/ColorRect/Translation/HBoxContainer2/HBoxContainer/translation_y_slider,
+$ReferenceRect/ColorRect/Translation/HBoxContainer3/HBoxContainer/translation_z_slider,
+$ReferenceRect/ColorRect/Translation/HBoxContainer4/HBoxContainer/translation_w_slider]
 
 
 # Pour les sliders, on garde les positions des sliders précédents dans un dictionnaire qu'on actualise
@@ -17,7 +20,10 @@ var xw_rotation_button
 var yw_rotation_button
 var zw_rotation_button
 
-
+var x_translation_reset_button : TextureButton
+var y_translation_reset_button : TextureButton
+var z_translation_reset_button : TextureButton
+var w_translation_reset_button : TextureButton
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	# On associe aux boutons d'activation de rotation leur noeud
@@ -42,8 +48,18 @@ func _ready():
 	rotation_buttons["XW"] = xw_rotation_button
 	rotation_buttons["YW"] = yw_rotation_button
 	rotation_buttons["ZW"] = zw_rotation_button
-
-
+	
+	# On associe aux boutons de réinitialisation de la translation leurs noeuds 
+	x_translation_reset_button = $ReferenceRect/ColorRect/Translation/HBoxContainer/HBoxContainer/x_translation_reset
+	y_translation_reset_button = $ReferenceRect/ColorRect/Translation/HBoxContainer2/HBoxContainer/y_translation_reset
+	z_translation_reset_button = $ReferenceRect/ColorRect/Translation/HBoxContainer3/HBoxContainer/z_translation_reset
+	w_translation_reset_button = $ReferenceRect/ColorRect/Translation/HBoxContainer4/HBoxContainer/w_translation_reset
+	
+	x_translation_reset_button.connect("pressed", Callable(self,"_on_translation_reset_button_pressed").bind(0))
+	y_translation_reset_button.connect("pressed", Callable(self,"_on_translation_reset_button_pressed").bind(1))
+	z_translation_reset_button.connect("pressed", Callable(self,"_on_translation_reset_button_pressed").bind(2))
+	w_translation_reset_button.connect("pressed", Callable(self,"_on_translation_reset_button_pressed").bind(3))
+	
 func _on_check_button_toggled(button_pressed: bool, axis_pair: String):
 	if object_controlled:
 		# au cas où c'est la première fois qu'on souhaite transformer la forme courante
@@ -222,3 +238,7 @@ func _on_close_button_pressed():
 	object_controlled = null
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	visible = false
+
+
+func _on_translation_reset_button_pressed(i : int):
+	translation_sliders[i].value = 0

@@ -94,13 +94,23 @@ size_flags_horizontal = 4
 text = "X"
 label_settings = SubResource("LabelSettings_aibw1")
 
-[node name="translation_x_slider" type="HSlider" parent="ReferenceRect/ColorRect/Translation/HBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="ReferenceRect/ColorRect/Translation/HBoxContainer"]
+layout_mode = 2
+
+[node name="translation_x_slider" type="HSlider" parent="ReferenceRect/ColorRect/Translation/HBoxContainer/HBoxContainer"]
 custom_minimum_size = Vector2(125, 0)
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 4
 min_value = -10.0
 max_value = 10.0
+
+[node name="x_translation_reset" type="TextureButton" parent="ReferenceRect/ColorRect/Translation/HBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(16, 24)
+layout_mode = 2
+texture_normal = ExtResource("1_05trw")
+ignore_texture_size = true
+stretch_mode = 5
 
 [node name="HBoxContainer2" type="HBoxContainer" parent="ReferenceRect/ColorRect/Translation"]
 layout_mode = 2
@@ -121,13 +131,23 @@ size_flags_horizontal = 4
 text = "Y"
 label_settings = SubResource("LabelSettings_aibw1")
 
-[node name="translation_y_slider" type="HSlider" parent="ReferenceRect/ColorRect/Translation/HBoxContainer2"]
+[node name="HBoxContainer" type="HBoxContainer" parent="ReferenceRect/ColorRect/Translation/HBoxContainer2"]
+layout_mode = 2
+
+[node name="translation_y_slider" type="HSlider" parent="ReferenceRect/ColorRect/Translation/HBoxContainer2/HBoxContainer"]
 custom_minimum_size = Vector2(125, 0)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 min_value = -10.0
 max_value = 10.0
+
+[node name="y_translation_reset" type="TextureButton" parent="ReferenceRect/ColorRect/Translation/HBoxContainer2/HBoxContainer"]
+custom_minimum_size = Vector2(16, 24)
+layout_mode = 2
+texture_normal = ExtResource("1_05trw")
+ignore_texture_size = true
+stretch_mode = 5
 
 [node name="HBoxContainer3" type="HBoxContainer" parent="ReferenceRect/ColorRect/Translation"]
 layout_mode = 2
@@ -149,13 +169,23 @@ size_flags_horizontal = 0
 text = "Z"
 label_settings = SubResource("LabelSettings_aibw1")
 
-[node name="translation_z_slider" type="HSlider" parent="ReferenceRect/ColorRect/Translation/HBoxContainer3"]
+[node name="HBoxContainer" type="HBoxContainer" parent="ReferenceRect/ColorRect/Translation/HBoxContainer3"]
+layout_mode = 2
+
+[node name="translation_z_slider" type="HSlider" parent="ReferenceRect/ColorRect/Translation/HBoxContainer3/HBoxContainer"]
 custom_minimum_size = Vector2(125, 0)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 min_value = -10.0
 max_value = 10.0
+
+[node name="z_translation_reset" type="TextureButton" parent="ReferenceRect/ColorRect/Translation/HBoxContainer3/HBoxContainer"]
+custom_minimum_size = Vector2(16, 24)
+layout_mode = 2
+texture_normal = ExtResource("1_05trw")
+ignore_texture_size = true
+stretch_mode = 5
 
 [node name="HBoxContainer4" type="HBoxContainer" parent="ReferenceRect/ColorRect/Translation"]
 layout_mode = 2
@@ -176,13 +206,23 @@ size_flags_horizontal = 4
 text = "W"
 label_settings = SubResource("LabelSettings_aibw1")
 
-[node name="translation_w_slider" type="HSlider" parent="ReferenceRect/ColorRect/Translation/HBoxContainer4"]
+[node name="HBoxContainer" type="HBoxContainer" parent="ReferenceRect/ColorRect/Translation/HBoxContainer4"]
+layout_mode = 2
+
+[node name="translation_w_slider" type="HSlider" parent="ReferenceRect/ColorRect/Translation/HBoxContainer4/HBoxContainer"]
 custom_minimum_size = Vector2(125, 0)
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 4
 min_value = -10.0
 max_value = 10.0
+
+[node name="w_translation_reset" type="TextureButton" parent="ReferenceRect/ColorRect/Translation/HBoxContainer4/HBoxContainer"]
+custom_minimum_size = Vector2(16, 24)
+layout_mode = 2
+texture_normal = ExtResource("1_05trw")
+ignore_texture_size = true
+stretch_mode = 5
 
 [node name="Rotation" type="Control" parent="ReferenceRect/ColorRect"]
 layout_mode = 1
@@ -261,13 +301,6 @@ layout_mode = 2
 [node name="xy_rotation_button" type="CheckButton" parent="ReferenceRect/ColorRect/Rotation/HBoxContainer/VBoxContainer/HBoxContainer5/HBoxContainer"]
 layout_mode = 2
 
-[node name="xy_rotation_reset_button" type="TextureButton" parent="ReferenceRect/ColorRect/Rotation/HBoxContainer/VBoxContainer/HBoxContainer5/HBoxContainer"]
-custom_minimum_size = Vector2(16, 24)
-layout_mode = 2
-texture_normal = ExtResource("1_05trw")
-ignore_texture_size = true
-stretch_mode = 5
-
 [node name="HBoxContainer6" type="HBoxContainer" parent="ReferenceRect/ColorRect/Rotation/HBoxContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 0
@@ -286,13 +319,6 @@ layout_mode = 2
 [node name="xz_rotation_button" type="CheckButton" parent="ReferenceRect/ColorRect/Rotation/HBoxContainer/VBoxContainer/HBoxContainer6/HBoxContainer2"]
 layout_mode = 2
 
-[node name="xz_rotation_reset_button" type="TextureButton" parent="ReferenceRect/ColorRect/Rotation/HBoxContainer/VBoxContainer/HBoxContainer6/HBoxContainer2"]
-custom_minimum_size = Vector2(16, 24)
-layout_mode = 2
-texture_normal = ExtResource("1_05trw")
-ignore_texture_size = true
-stretch_mode = 5
-
 [node name="HBoxContainer7" type="HBoxContainer" parent="ReferenceRect/ColorRect/Rotation/HBoxContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 0
@@ -310,13 +336,6 @@ layout_mode = 2
 
 [node name="yz_rotation_button" type="CheckButton" parent="ReferenceRect/ColorRect/Rotation/HBoxContainer/VBoxContainer/HBoxContainer7/HBoxContainer3"]
 layout_mode = 2
-
-[node name="yz_rotation_reset_button" type="TextureButton" parent="ReferenceRect/ColorRect/Rotation/HBoxContainer/VBoxContainer/HBoxContainer7/HBoxContainer3"]
-custom_minimum_size = Vector2(16, 24)
-layout_mode = 2
-texture_normal = ExtResource("1_05trw")
-ignore_texture_size = true
-stretch_mode = 5
 
 [node name="VBoxContainer2" type="VBoxContainer" parent="ReferenceRect/ColorRect/Rotation/HBoxContainer"]
 layout_mode = 2
@@ -339,13 +358,6 @@ layout_mode = 2
 [node name="xw_rotation_button" type="CheckButton" parent="ReferenceRect/ColorRect/Rotation/HBoxContainer/VBoxContainer2/HBoxContainer5/HBoxContainer4"]
 layout_mode = 2
 
-[node name="xw_rotation_reset_button" type="TextureButton" parent="ReferenceRect/ColorRect/Rotation/HBoxContainer/VBoxContainer2/HBoxContainer5/HBoxContainer4"]
-custom_minimum_size = Vector2(16, 24)
-layout_mode = 2
-texture_normal = ExtResource("1_05trw")
-ignore_texture_size = true
-stretch_mode = 5
-
 [node name="HBoxContainer6" type="HBoxContainer" parent="ReferenceRect/ColorRect/Rotation/HBoxContainer/VBoxContainer2"]
 layout_mode = 2
 size_flags_vertical = 0
@@ -363,13 +375,6 @@ layout_mode = 2
 
 [node name="yw_rotation_button" type="CheckButton" parent="ReferenceRect/ColorRect/Rotation/HBoxContainer/VBoxContainer2/HBoxContainer6/HBoxContainer5"]
 layout_mode = 2
-
-[node name="yw_rotation_reset_button" type="TextureButton" parent="ReferenceRect/ColorRect/Rotation/HBoxContainer/VBoxContainer2/HBoxContainer6/HBoxContainer5"]
-custom_minimum_size = Vector2(16, 24)
-layout_mode = 2
-texture_normal = ExtResource("1_05trw")
-ignore_texture_size = true
-stretch_mode = 5
 
 [node name="HBoxContainer7" type="HBoxContainer" parent="ReferenceRect/ColorRect/Rotation/HBoxContainer/VBoxContainer2"]
 layout_mode = 2
@@ -389,20 +394,12 @@ layout_mode = 2
 [node name="zw_rotation_button" type="CheckButton" parent="ReferenceRect/ColorRect/Rotation/HBoxContainer/VBoxContainer2/HBoxContainer7/HBoxContainer6"]
 layout_mode = 2
 
-[node name="zw_rotation_reset_button" type="TextureButton" parent="ReferenceRect/ColorRect/Rotation/HBoxContainer/VBoxContainer2/HBoxContainer7/HBoxContainer6"]
-custom_minimum_size = Vector2(16, 24)
-layout_mode = 2
-texture_normal = ExtResource("1_05trw")
-ignore_texture_size = true
-stretch_mode = 5
-
-[connection signal="drag_ended" from="ReferenceRect/ColorRect/Translation/HBoxContainer/translation_x_slider" to="." method="_on_translation_x_slider_drag_ended"]
-[connection signal="value_changed" from="ReferenceRect/ColorRect/Translation/HBoxContainer/translation_x_slider" to="." method="_on_translation_x_slider_value_changed"]
-[connection signal="drag_ended" from="ReferenceRect/ColorRect/Translation/HBoxContainer2/translation_y_slider" to="." method="_on_translation_y_slider_drag_ended"]
-[connection signal="value_changed" from="ReferenceRect/ColorRect/Translation/HBoxContainer2/translation_y_slider" to="." method="_on_translation_y_slider_value_changed"]
-[connection signal="drag_ended" from="ReferenceRect/ColorRect/Translation/HBoxContainer3/translation_z_slider" to="." method="_on_translation_z_slider_drag_ended"]
-[connection signal="value_changed" from="ReferenceRect/ColorRect/Translation/HBoxContainer3/translation_z_slider" to="." method="_on_translation_z_slider_value_changed"]
-[connection signal="drag_ended" from="ReferenceRect/ColorRect/Translation/HBoxContainer4/translation_w_slider" to="." method="_on_translation_w_slider_drag_ended"]
-[connection signal="value_changed" from="ReferenceRect/ColorRect/Translation/HBoxContainer4/translation_w_slider" to="." method="_on_translation_w_slider_value_changed"]
+[connection signal="drag_ended" from="ReferenceRect/ColorRect/Translation/HBoxContainer/HBoxContainer/translation_x_slider" to="." method="_on_translation_x_slider_drag_ended"]
+[connection signal="value_changed" from="ReferenceRect/ColorRect/Translation/HBoxContainer/HBoxContainer/translation_x_slider" to="." method="_on_translation_x_slider_value_changed"]
+[connection signal="drag_ended" from="ReferenceRect/ColorRect/Translation/HBoxContainer2/HBoxContainer/translation_y_slider" to="." method="_on_translation_y_slider_drag_ended"]
+[connection signal="value_changed" from="ReferenceRect/ColorRect/Translation/HBoxContainer2/HBoxContainer/translation_y_slider" to="." method="_on_translation_y_slider_value_changed"]
+[connection signal="drag_ended" from="ReferenceRect/ColorRect/Translation/HBoxContainer3/HBoxContainer/translation_z_slider" to="." method="_on_translation_z_slider_drag_ended"]
+[connection signal="value_changed" from="ReferenceRect/ColorRect/Translation/HBoxContainer3/HBoxContainer/translation_z_slider" to="." method="_on_translation_z_slider_value_changed"]
+[connection signal="drag_ended" from="ReferenceRect/ColorRect/Translation/HBoxContainer4/HBoxContainer/translation_w_slider" to="." method="_on_translation_w_slider_drag_ended"]
+[connection signal="value_changed" from="ReferenceRect/ColorRect/Translation/HBoxContainer4/HBoxContainer/translation_w_slider" to="." method="_on_translation_w_slider_value_changed"]
 [connection signal="pressed" from="ReferenceRect/ColorRect/Rotation/close_button" to="." method="_on_close_button_pressed"]
-[connection signal="pressed" from="ReferenceRect/ColorRect/Rotation/HBoxContainer/VBoxContainer/HBoxContainer5/HBoxContainer/xy_rotation_reset_button" to="." method="_on_xy_rotation_reset_button_pressed"]

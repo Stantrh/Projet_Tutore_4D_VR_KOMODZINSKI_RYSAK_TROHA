@@ -34,6 +34,12 @@ size = Vector3(5000, 0.2, 5000)
 
 [node name="HyperCubeS" parent="." instance=ExtResource("1_gh55x")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 5, 0)
+mesh_mode = 2
+projection_mode = 1
+
+[node name="HyperCubeS2" parent="." instance=ExtResource("1_gh55x")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, 0)
+mesh_mode = 1
 projection_mode = 1
 
 [node name="CharacterView" parent="." instance=ExtResource("2_wfvje")]

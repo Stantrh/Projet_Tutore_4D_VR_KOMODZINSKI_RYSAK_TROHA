@@ -51,7 +51,7 @@ theme_override_constants/separation = 150
 
 [node name="Label" type="Label" parent="start/VBoxContainer"]
 layout_mode = 2
-text = "4d Project"
+text = "4D Project"
 label_settings = SubResource("LabelSettings_k2s5t")
 horizontal_alignment = 1
 

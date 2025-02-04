@@ -11,11 +11,40 @@ $ReferenceRect/ColorRect/Translation/HBoxContainer4/HBoxContainer/translation_w_
 	$ReferenceRect/ColorRect/Translation/HBoxContainer3/HBoxContainer/Panel/Label,
 	$ReferenceRect/ColorRect/Translation/HBoxContainer4/HBoxContainer/Panel/Label
 ]
-
+@onready var dimension_check_box : OptionButton = $ReferenceRect/ColorRect/Fez/OptionButton
 # Pour les sliders, on garde les positions des sliders précédents dans un dictionnaire qu'on actualise
 var prev_translation_pos = {} # translations
 var prev_rotation_pos = {} # rotations
 var rotation_buttons = {} # tableau des boutons de l'interface pour modifier leur état
+
+var dimensions = [
+	"XYZ", 
+	"XYW", 
+	"XZW", 
+	"XWY", 
+	"XWZ", 
+	"XZY", 
+	"YZW", 
+	"YZX", 
+	"YXW", 
+	"YXZ", 
+	"YWX", 
+	"YWZ", 
+	"ZXY", 
+	"ZXW", 
+	"ZYX", 
+	"ZYW", 
+	"ZWX", 
+	"ZWY", 
+	"WXY", 
+	"WXZ", 
+	"WYX", 
+	"WYZ", 
+	"WZY", 
+	"WZX"
+]
+
+
 
 # boutons à toggle pour les rotations
 var xy_rotation_button
@@ -65,6 +94,9 @@ func _ready():
 	z_translation_reset_button.connect("pressed", Callable(self,"_on_translation_reset_button_pressed").bind(2))
 	w_translation_reset_button.connect("pressed", Callable(self,"_on_translation_reset_button_pressed").bind(3))
 	
+	for i in range(dimensions.size()):
+		dimension_check_box.add_item(dimensions[i],i)
+	dimension_check_box.selected = 0
 func _on_check_button_toggled(button_pressed: bool, axis_pair: String):
 	if object_controlled:
 		# au cas où c'est la première fois qu'on souhaite transformer la forme courante
@@ -241,7 +273,7 @@ func open_interface(object):
 	visible = true
 	object_controlled = object
 	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
-
+	dimension_check_box.selected = object_controlled.dimension_selected
 	
 func _on_close_button_pressed():
 	object_controlled = null
@@ -251,3 +283,7 @@ func _on_close_button_pressed():
 
 func _on_translation_reset_button_pressed(i : int):
 	translation_sliders[i].value = 0
+
+
+func _on_option_button_item_selected(index):
+	object_controlled.change_dimension(index)

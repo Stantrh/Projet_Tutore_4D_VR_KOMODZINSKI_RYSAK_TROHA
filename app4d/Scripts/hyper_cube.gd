@@ -49,7 +49,155 @@ enum MeshMode {
 @export var axe2_b = 3
 @export var mesh_mode: int = 0  # 0: Plein, 1: stylisé, 2: Filaire
 @export var projection_mode: int = 0  # 0: Perspective, 1: Stéréographique, 2: Orthogonale
+@export var dimension_selected : int = 0 #pour savoir quel est la dimension actuelle 
+var is_up_to_date = true
+var dimensions = [{
+	"x" : 0, #Dimension XYZ
+	"y":1,
+	"z":2,
+	"w":3,
+	},
+	{
+	"x" : 0, #Dimension XYW
+	"y":1,
+	"z":3,
+	"w":2,
+	},
+	{
+	"x" : 0, #Dimensions XZW
+	"y":2,
+	"z":3,
+	"w":1,
+	},
+	{
+	"x" : 0, #Dimensions XWY
+	"y":3,
+	"z":1,
+	"w":2,
+	},
+	{
+	"x" : 0, #Dimensions XWZ
+	"y":3,
+	"z":2,
+	"w":1,
+	},
+	{
+	"x" : 0, #Dimensions XZY
+	"y":2,
+	"z":1,
+	"w":3,
+	},
+	{
+	"x" : 1, #Dimension YZW
+	"y":2,
+	"z":3,
+	"w":0,
+	},
+	{
+	"x" : 1, #Dimension YZX
+	"y":2,
+	"z":0,
+	"w":3,
+	},
+	{
+	"x" : 1, #Dimension YXW
+	"y":0,
+	"z":3,
+	"w":2,
+	},
+	{
+	"x" : 1, #Dimension YXZ
+	"y": 0,
+	"z":2,
+	"w":3,
+	},
+	{
+	"x" : 1,  #Dimension YWX
+	"y":3,
+	"z":0,
+	"w":2,
+	},
+		{    #Dimension YWZ
+	"x" : 1,
+	"y":3,
+	"z":2,
+	"w":0,
+	},
+			{    #Dimension ZXY
+	"x" : 2,
+	"y":0,
+	"z":1,
+	"w":3,
+	},
+			{    #Dimension ZXW
+	"x" : 2,
+	"y":0,
+	"z":3,
+	"w":1,
+	},
+			{    #Dimension ZYX
+	"x" : 2,
+	"y":1,
+	"z":0,
+	"w":3,
+	},
+			{    #Dimension ZYW
+	"x" : 2,
+	"y":1,
+	"z":3,
+	"w":0,
+	},
+			{    #Dimension ZWX
+	"x" : 2,
+	"y":3,
+	"z":0,
+	"w":1,
+	},
+			{    #Dimension ZWY
+	"x" : 2,
+	"y":3,
+	"z":1,
+	"w":0,
+	},
+	{   	 #Dimension WXY
+	"x" : 3,
+	"y":0,
+	"z":1,
+	"w":2,
+	},
+		{   	 #Dimension WXZ
+	"x" : 3,
+	"y":0,
+	"z":2,
+	"w":1,
+	},
+	{   	 #Dimension WYX
+	"x" : 3,
+	"y":1,
+	"z":0,
+	"w":2,
+	},
+	{   	 #Dimension WYZ
+	"x" : 3,
+	"y":1,
+	"z":2,
+	"w":0,
+	},
+	{   	 #Dimension WZY
+	"x" : 3,
+	"y":2,
+	"z":1,
+	"w":0,
+	},
+	{   	 #Dimension WZX
+	"x" : 3,
+	"y":2,
+	"z":0,
+	"w":1,
+	},
 
+
+]
 func set_rotate_plan(plan: String, single_rotate: bool):
 	match plan:
 		"XY":
@@ -123,6 +271,8 @@ func _ready():
 	
 
 func _process(delta):
+	if !is_up_to_date:
+		return
 	# On incrémente l'angle de rotation pour avoir une figur qui tourne en continu
 	if is_rotate:
 		rotation_angle += delta
@@ -378,27 +528,30 @@ func apply_projection(point_4d: Vector4) -> Vector3:
 
 # Méthode de la projection perspective=
 func project_perspective(point_4d: Vector4) -> Vector3:
+	#print(ignored_axis)
 	# On calcule la distance entre la caméra et la position de l'hypercube
 	var d = camera.global_position.distance_to(global_position)
-	var w = point_4d.w + d # Plus w est grand, plus il est loin dans la quatrième dimension
-	if abs(w) < 0.01: # Sécurité contre la division par zéro
-		w = 0.01
-	# On return les points projetés
-	return Vector3(point_4d.x * d / w, point_4d.y * d / w, point_4d.z * d / w)
+	return Vector3(point_4d[dimensions[dimension_selected].x]* d /(point_4d[dimensions[dimension_selected].w]+d),
+	point_4d[dimensions[dimension_selected].y]* d /(point_4d[dimensions[dimension_selected].w]+d),
+	point_4d[dimensions[dimension_selected].z]* d /(point_4d[dimensions[dimension_selected].w]+d))
 
 
 # On crée une fonction pour la projection stéréographique
 func project_stereographically(point_4d: Vector4):
-	# On choisit le point de projection
-	var projection_center = Vector4(0, 0, 0, 2)
-	# on calcule le facteur de projection
-	var t = 1.0 / (projection_center.w - point_4d.w)
-	# puis on projette x y et z en 3D avec le facteur de projection
-	return Vector3(t * point_4d.x, t * point_4d.y, t * point_4d.z)
+	var projection_center : Vector4 = Vector4(0,0,0,0)
+	projection_center[dimensions[dimension_selected].w]=2
+	var t = 1.0 /(projection_center[dimensions[dimension_selected].w] - point_4d[dimensions[dimension_selected].w])
+	return Vector3(t * point_4d[dimensions[dimension_selected].x],t*point_4d[dimensions[dimension_selected].y],t*point_4d[dimensions[dimension_selected].z])
 
 # à rajouter plus tard, possibilité de choisir la coordonnée à exclure
 func project_orthogonally(point_4d: Vector4)->Vector3:
-	return Vector3(point_4d.x, point_4d.y, point_4d.z)
+	return Vector3(point_4d[dimensions[dimension_selected].x],point_4d[dimensions[dimension_selected].y],point_4d[dimensions[dimension_selected].z])
+	#match  ignored_axis :
+		#0 : return Vector3(point_4d.y, point_4d.z, point_4d.w)
+		#1 : return Vector3(point_4d.x, point_4d.z, point_4d.w)
+		#2 : return Vector3(point_4d.x, point_4d.y, point_4d.w)
+		#3 : return Vector3(point_4d.x, point_4d.y, point_4d.z)
+		#_ : return Vector3(point_4d.x, point_4d.y, point_4d.z)
 
 
 func translate_4d(vect: Vector4, vect_translation: Vector4) -> Vector4:
@@ -435,3 +588,10 @@ func rotate_4d(point: Vector4, angle1: float, axis1_a: int, axis1_b: int, angle2
 		rotated_point[axis2_a] = temp_a * cos_theta2 - temp_b * sin_theta2
 		rotated_point[axis2_b] = temp_a * sin_theta2 + temp_b * cos_theta2
 	return rotated_point
+
+#fonction pour changer le point qu'on ne projette pas
+func change_dimension(new_dimension : int):
+	is_up_to_date = false
+	dimension_selected = new_dimension
+	is_up_to_date = true
+	

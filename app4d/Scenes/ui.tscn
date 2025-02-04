@@ -323,25 +323,62 @@ texture_normal = ExtResource("1_05trw")
 ignore_texture_size = true
 stretch_mode = 5
 
+[node name="Fez" type="Control" parent="ReferenceRect/ColorRect"]
+custom_minimum_size = Vector2(10, 10)
+layout_mode = 1
+anchor_left = 0.399
+anchor_right = 0.561
+anchor_bottom = 1.0
+offset_left = -0.297028
+offset_right = 0.416962
+offset_bottom = -6.10352e-05
+grow_horizontal = 2
+
+[node name="Label" type="Label" parent="ReferenceRect/ColorRect/Fez"]
+layout_mode = 2
+anchor_top = 0.077
+anchor_right = 1.0
+anchor_bottom = 0.287
+offset_left = 4.5
+offset_top = -0.0150013
+offset_right = -0.5
+offset_bottom = 0.0349998
+text = "Dimension"
+label_settings = SubResource("LabelSettings_jygnu")
+horizontal_alignment = 1
+
+[node name="OptionButton" type="OptionButton" parent="ReferenceRect/ColorRect/Fez"]
+custom_minimum_size = Vector2(125, 20)
+layout_mode = 2
+anchor_left = 0.099
+anchor_top = 0.267
+anchor_right = 0.949
+anchor_bottom = 0.41
+offset_left = -0.0530014
+offset_top = -3.06494
+offset_right = -0.00300598
+offset_bottom = 0.0500565
+
 [node name="Rotation" type="Control" parent="ReferenceRect/ColorRect"]
 layout_mode = 1
-anchor_left = 0.346
+anchor_left = 0.547
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -0.438019
+offset_left = 0.05896
 offset_right = 3.0
+offset_bottom = -6.10352e-05
 grow_horizontal = 2
 grow_vertical = 2
 
 [node name="close_button" type="TextureButton" parent="ReferenceRect/ColorRect/Rotation"]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.956
+anchor_left = 0.896
 anchor_right = 1.0
 anchor_bottom = 0.195
-offset_left = -15.864
+offset_left = -0.152008
 offset_right = -2.0
-offset_bottom = 1.97499
+offset_bottom = 1.975
 texture_normal = ExtResource("2_x0jtq")
 texture_pressed = ExtResource("2_x0jtq")
 texture_hover = ExtResource("2_x0jtq")
@@ -501,4 +538,5 @@ layout_mode = 2
 [connection signal="value_changed" from="ReferenceRect/ColorRect/Translation/HBoxContainer3/HBoxContainer/translation_z_slider" to="." method="_on_translation_z_slider_value_changed"]
 [connection signal="drag_ended" from="ReferenceRect/ColorRect/Translation/HBoxContainer4/HBoxContainer/translation_w_slider" to="." method="_on_translation_w_slider_drag_ended"]
 [connection signal="value_changed" from="ReferenceRect/ColorRect/Translation/HBoxContainer4/HBoxContainer/translation_w_slider" to="." method="_on_translation_w_slider_value_changed"]
+[connection signal="item_selected" from="ReferenceRect/ColorRect/Fez/OptionButton" to="." method="_on_option_button_item_selected"]
 [connection signal="pressed" from="ReferenceRect/ColorRect/Rotation/close_button" to="." method="_on_close_button_pressed"]

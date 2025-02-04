@@ -1,3 +1,8 @@
 Fonctionnalités réalisées : 
-
-
+Interface Utilisateur : L'utilisateur peut initialiser le monde et interagir avec celui-ci en utilisant une interface réactive et intuitive
+Réalisée par RYSAK Hugo
+Rotation (Double Rotation) : L'utilisateur peut faire tourner l'hypercube selon deux plans choisis. Réalisée par KOMODZINSKI Jawad
+Mode d'affichage : L'utilisateur peut visualiser l'hypercube sous mode wireframe, full et marvelous. Réalisée par KOMODZINSKI Jawad
+Translation : L'utilisateur peut déplacer l'hypercube dans l'espace visible selon 4 axes. Réalisée par TROHA Stanislas 
+Interaction Back-End UI : Liaison entre le Front et la Back End. Réalisée par TROHA Stanislas
+Les Zones : les hypercubes sont délimités par des sous-espaces 3D. Réalisée par KOMODZINSKI Jawad

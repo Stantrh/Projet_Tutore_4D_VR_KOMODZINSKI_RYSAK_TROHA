@@ -328,44 +328,104 @@ custom_minimum_size = Vector2(10, 10)
 layout_mode = 1
 anchor_left = 0.399
 anchor_right = 0.561
-anchor_bottom = 1.0
-offset_left = -0.297028
-offset_right = 0.416962
-offset_bottom = -6.10352e-05
+anchor_bottom = 0.421
+offset_left = -11.7971
+offset_top = 6.10352e-05
+offset_right = -11.083
+offset_bottom = -0.0949707
 grow_horizontal = 2
 
 [node name="Label" type="Label" parent="ReferenceRect/ColorRect/Fez"]
 layout_mode = 2
-anchor_top = 0.077
-anchor_right = 1.0
-anchor_bottom = 0.287
-offset_left = 4.5
-offset_top = -0.0150013
-offset_right = -0.5
-offset_bottom = 0.0349998
+anchor_left = 0.235
+anchor_top = 0.183
+anchor_right = 0.806
+anchor_bottom = 0.463
+offset_left = -0.045002
+offset_top = -0.00594044
+offset_right = 0.0179901
+offset_bottom = 0.0340576
 text = "Dimension"
 label_settings = SubResource("LabelSettings_jygnu")
 horizontal_alignment = 1
 
 [node name="OptionButton" type="OptionButton" parent="ReferenceRect/ColorRect/Fez"]
-custom_minimum_size = Vector2(125, 20)
+custom_minimum_size = Vector2(100, 15)
 layout_mode = 2
-anchor_left = 0.099
-anchor_top = 0.267
-anchor_right = 0.949
-anchor_bottom = 0.41
-offset_left = -0.0530014
-offset_top = -3.06494
-offset_right = -0.00300598
-offset_bottom = 0.0500565
+anchor_left = 0.235
+anchor_top = 0.646
+anchor_right = 0.908
+anchor_bottom = 0.89
+offset_left = -0.545002
+offset_top = 0.0279961
+offset_right = 0.523987
+offset_bottom = 0.0199966
+
+[node name="Point_de_vue" type="Control" parent="ReferenceRect/ColorRect"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -131.0
+offset_top = -102.0
+offset_right = 89.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="Label" type="Label" parent="ReferenceRect/ColorRect/Point_de_vue"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.284
+anchor_top = 0.069
+anchor_right = 0.73
+anchor_bottom = 0.294
+offset_left = 0.0199966
+offset_top = -0.0379395
+offset_right = -0.100006
+offset_bottom = 0.0120602
+text = "Point de Vue"
+label_settings = SubResource("LabelSettings_jygnu")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="ReferenceRect/ColorRect/Point_de_vue"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = -0.216
+anchor_top = 0.348
+anchor_right = 1.206
+anchor_bottom = 0.652
+offset_left = 0.0200005
+offset_top = 0.0039978
+offset_right = 2.17999
+offset_bottom = -0.0039978
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="face_view_button" type="Button" parent="ReferenceRect/ColorRect/Point_de_vue/HBoxContainer"]
+custom_minimum_size = Vector2(92, 31)
+layout_mode = 2
+text = "Vue Face"
+
+[node name="fugue_vie_button" type="Button" parent="ReferenceRect/ColorRect/Point_de_vue/HBoxContainer"]
+custom_minimum_size = Vector2(92, 31)
+layout_mode = 2
+text = "Vue Fuite"
+
+[node name="point_view_button" type="Button" parent="ReferenceRect/ColorRect/Point_de_vue/HBoxContainer"]
+z_index = 3
+custom_minimum_size = Vector2(92, 32)
+layout_mode = 2
+text = "Vue Pointe"
 
 [node name="Rotation" type="Control" parent="ReferenceRect/ColorRect"]
 layout_mode = 1
 anchor_left = 0.547
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 0.05896
-offset_right = 3.0
+offset_left = 47.059
+offset_right = 4.0
 offset_bottom = -6.10352e-05
 grow_horizontal = 2
 grow_vertical = 2
@@ -373,12 +433,14 @@ grow_vertical = 2
 [node name="close_button" type="TextureButton" parent="ReferenceRect/ColorRect/Rotation"]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.896
-anchor_right = 1.0
-anchor_bottom = 0.195
-offset_left = -0.152008
-offset_right = -2.0
-offset_bottom = 1.975
+anchor_left = 0.881
+anchor_right = 0.989
+anchor_bottom = 0.205
+offset_left = 0.0539856
+offset_top = 6.10352e-05
+offset_right = 0.526001
+offset_bottom = 0.0250587
+grow_horizontal = 0
 texture_normal = ExtResource("2_x0jtq")
 texture_pressed = ExtResource("2_x0jtq")
 texture_hover = ExtResource("2_x0jtq")
@@ -539,4 +601,7 @@ layout_mode = 2
 [connection signal="drag_ended" from="ReferenceRect/ColorRect/Translation/HBoxContainer4/HBoxContainer/translation_w_slider" to="." method="_on_translation_w_slider_drag_ended"]
 [connection signal="value_changed" from="ReferenceRect/ColorRect/Translation/HBoxContainer4/HBoxContainer/translation_w_slider" to="." method="_on_translation_w_slider_value_changed"]
 [connection signal="item_selected" from="ReferenceRect/ColorRect/Fez/OptionButton" to="." method="_on_option_button_item_selected"]
+[connection signal="pressed" from="ReferenceRect/ColorRect/Point_de_vue/HBoxContainer/face_view_button" to="." method="_on_face_view_button_pressed"]
+[connection signal="pressed" from="ReferenceRect/ColorRect/Point_de_vue/HBoxContainer/fugue_vie_button" to="." method="_on_fugue_vie_button_pressed"]
+[connection signal="pressed" from="ReferenceRect/ColorRect/Point_de_vue/HBoxContainer/point_view_button" to="." method="_on_point_view_button_pressed"]
 [connection signal="pressed" from="ReferenceRect/ColorRect/Rotation/close_button" to="." method="_on_close_button_pressed"]

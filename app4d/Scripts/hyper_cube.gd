@@ -23,7 +23,16 @@ const CUBES = [
 		[0, 1, 2, 3, 8, 9, 10, 11],
 		[4, 5, 6, 7, 12, 13, 14, 15]
 	]
-
+var face_colors = [ #Utilisé pour le mode full
+	Color(1, 0, 0, 1),  # rouge
+	Color(0, 1, 0, 1),  # vert
+	Color(0, 0, 1, 1),  # bleu
+	Color(1, 1, 0, 1),  # jaune
+	Color(1, 0, 1, 1),  # magenta
+	Color(0, 1, 1, 1),  # cyan
+	Color(1, 0.5, 0, 1),# orange
+	Color(0.5, 0, 1, 1), # violet
+]
 	
 # Sert à choisir un mode de projection
 enum ProjectionMode {
@@ -50,154 +59,38 @@ enum MeshMode {
 @export var mesh_mode: int = 0  # 0: Plein, 1: stylisé, 2: Filaire
 @export var projection_mode: int = 0  # 0: Perspective, 1: Stéréographique, 2: Orthogonale
 @export var dimension_selected : int = 0 #pour savoir quel est la dimension actuelle 
+var is_point_of_view_fugue = false
+var is_point_of_view_point = false
+var change_view = false
 var is_up_to_date = true
-var dimensions = [{
-	"x" : 0, #Dimension XYZ
-	"y":1,
-	"z":2,
-	"w":3,
-	},
-	{
-	"x" : 0, #Dimension XYW
-	"y":1,
-	"z":3,
-	"w":2,
-	},
-	{
-	"x" : 0, #Dimensions XZW
-	"y":2,
-	"z":3,
-	"w":1,
-	},
-	{
-	"x" : 0, #Dimensions XWY
-	"y":3,
-	"z":1,
-	"w":2,
-	},
-	{
-	"x" : 0, #Dimensions XWZ
-	"y":3,
-	"z":2,
-	"w":1,
-	},
-	{
-	"x" : 0, #Dimensions XZY
-	"y":2,
-	"z":1,
-	"w":3,
-	},
-	{
-	"x" : 1, #Dimension YZW
-	"y":2,
-	"z":3,
-	"w":0,
-	},
-	{
-	"x" : 1, #Dimension YZX
-	"y":2,
-	"z":0,
-	"w":3,
-	},
-	{
-	"x" : 1, #Dimension YXW
-	"y":0,
-	"z":3,
-	"w":2,
-	},
-	{
-	"x" : 1, #Dimension YXZ
-	"y": 0,
-	"z":2,
-	"w":3,
-	},
-	{
-	"x" : 1,  #Dimension YWX
-	"y":3,
-	"z":0,
-	"w":2,
-	},
-		{    #Dimension YWZ
-	"x" : 1,
-	"y":3,
-	"z":2,
-	"w":0,
-	},
-			{    #Dimension ZXY
-	"x" : 2,
-	"y":0,
-	"z":1,
-	"w":3,
-	},
-			{    #Dimension ZXW
-	"x" : 2,
-	"y":0,
-	"z":3,
-	"w":1,
-	},
-			{    #Dimension ZYX
-	"x" : 2,
-	"y":1,
-	"z":0,
-	"w":3,
-	},
-			{    #Dimension ZYW
-	"x" : 2,
-	"y":1,
-	"z":3,
-	"w":0,
-	},
-			{    #Dimension ZWX
-	"x" : 2,
-	"y":3,
-	"z":0,
-	"w":1,
-	},
-			{    #Dimension ZWY
-	"x" : 2,
-	"y":3,
-	"z":1,
-	"w":0,
-	},
-	{   	 #Dimension WXY
-	"x" : 3,
-	"y":0,
-	"z":1,
-	"w":2,
-	},
-		{   	 #Dimension WXZ
-	"x" : 3,
-	"y":0,
-	"z":2,
-	"w":1,
-	},
-	{   	 #Dimension WYX
-	"x" : 3,
-	"y":1,
-	"z":0,
-	"w":2,
-	},
-	{   	 #Dimension WYZ
-	"x" : 3,
-	"y":1,
-	"z":2,
-	"w":0,
-	},
-	{   	 #Dimension WZY
-	"x" : 3,
-	"y":2,
-	"z":1,
-	"w":0,
-	},
-	{   	 #Dimension WZX
-	"x" : 3,
-	"y":2,
-	"z":0,
-	"w":1,
-	},
+var dimensions = [
+	{"name": "XYZ", "x": 0, "y": 1, "z": 2, "w": 3},
+	{"name": "XYW", "x": 0, "y": 1, "z": 3, "w": 2},
+	{"name": "XZW", "x": 0, "y": 2, "z": 3, "w": 1},
+	{"name": "XWY", "x": 0, "y": 3, "z": 1, "w": 2},
+	{"name": "XWZ", "x": 0, "y": 3, "z": 2, "w": 1},
+	{"name": "XZY", "x": 0, "y": 2, "z": 1, "w": 3},
+	{"name": "YZW", "x": 1, "y": 2, "z": 3, "w": 0},
+	{"name": "YZX", "x": 1, "y": 2, "z": 0, "w": 3},
+	{"name": "YXW", "x": 1, "y": 0, "z": 3, "w": 2},
+	{"name": "YXZ", "x": 1, "y": 0, "z": 2, "w": 3},
+	{"name": "YWX", "x": 1, "y": 3, "z": 0, "w": 2},
+	{"name": "YWZ", "x": 1, "y": 3, "z": 2, "w": 0},
+	{"name": "ZXY", "x": 2, "y": 0, "z": 1, "w": 3},
+	{"name": "ZXW", "x": 2, "y": 0, "z": 3, "w": 1},
+	{"name": "ZYX", "x": 2, "y": 1, "z": 0, "w": 3},
+	{"name": "ZYW", "x": 2, "y": 1, "z": 3, "w": 0},
+	{"name": "ZWX", "x": 2, "y": 3, "z": 0, "w": 1},
+	{"name": "ZWY", "x": 2, "y": 3, "z": 1, "w": 0},
+	{"name": "WXY", "x": 3, "y": 0, "z": 1, "w": 2},
+	{"name": "WXZ", "x": 3, "y": 0, "z": 2, "w": 1},
+	{"name": "WYX", "x": 3, "y": 1, "z": 0, "w": 2},
+	{"name": "WYZ", "x": 3, "y": 1, "z": 2, "w": 0},
+	{"name": "WZY", "x": 3, "y": 2, "z": 1, "w": 0},
+	{"name": "WZX", "x": 3, "y": 2, "z": 0, "w": 1}
+];
 
-
-]
+var accesible_dimensions = []
 func set_rotate_plan(plan: String, single_rotate: bool):
 	match plan:
 		"XY":
@@ -250,7 +143,7 @@ func set_rotate_plan(plan: String, single_rotate: bool):
 var collision_shape = Node
 
 
-@onready var camera = $"../CharacterView/Camera3D"
+@onready var camera : Camera3D = $"../CharacterView/Camera3D"
 @onready var area = $ZoneAffichage # La variable de la zone
 
 # Mesh de l'hypercube
@@ -267,7 +160,9 @@ func _ready():
 	var bounds_mesh = area.create_area_mesh()
 	# Et on l'ajoute en enfant du noeud HyperCube
 	add_child(bounds_mesh)
+	bounds_mesh.top_level = true
 	update_hypercube()
+	accesible_dimensions = find_accessible_dimensions(dimensions[dimension_selected],dimensions)
 	
 
 func _process(delta):
@@ -292,20 +187,41 @@ func update_hypercube():
 	# /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	# /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	var new_vertices = []
-	if is_translate: # Transformation pour la translation
-		print("ARRAY : " + str(dynamic_vertices))
-		for vertex in dynamic_vertices:
-			var new_vect = translate_4d(vertex, vect_translate)
-			new_vertices.append(new_vect)
-		print("NEW ARRAY : " + str(new_vertices))
-		dynamic_vertices = new_vertices	
-		apply_translation(vect_translate)
-	elif is_rotate: # Transformation pour la rotation
-		for vertex in dynamic_vertices:
-			new_vertices.append(rotate_4d(vertex, rotation_angle, axe_a, axe_b, rotation_angle2, axe2_a, axe2_b))
-	else : # Transformation pour la projection perspective
-		for vertex in dynamic_vertices:
-			new_vertices.append(vertex)
+	if is_point_of_view_fugue :
+		var axe_1 = dimensions[dimension_selected].x
+		var axe_2 = dimensions[dimension_selected].w
+		for vertex in dynamic_vertices :
+			new_vertices.append(rotate_4d(vertex, 44.83, axe_1, axe_2, 25, axe2_a, axe2_b))
+		is_point_of_view_fugue = false
+		dynamic_vertices = new_vertices
+	elif is_point_of_view_point:
+		#is_double_rotate = true
+		var axe_1 = dimensions[dimension_selected].x
+		var axe_2 = dimensions[dimension_selected].w
+		var axe2_1 = dimensions[dimension_selected].y
+		var axe2_2 = dimensions[dimension_selected].w
+		for vertex in dynamic_vertices :
+			new_vertices.append(rotate_4d(vertex,-120,axe2_1,axe2_2,0,0,0))
+		is_point_of_view_point = false
+		dynamic_vertices = new_vertices
+		is_double_rotate = false
+	else:
+		if is_translate: # Transformation pour la translation
+			print("ARRAY : " + str(dynamic_vertices))
+			for vertex in dynamic_vertices:
+				var new_vect = translate_4d(vertex, vect_translate)
+				new_vertices.append(new_vect)
+			print("NEW ARRAY : " + str(new_vertices))
+			dynamic_vertices = new_vertices	
+			apply_translation(vect_translate)
+		elif is_rotate: # Transformation pour la rotation
+			for vertex in dynamic_vertices:
+				new_vertices.append(rotate_4d(vertex, rotation_angle, axe_a, axe_b, rotation_angle2, axe2_a, axe2_b))
+			print(dynamic_vertices)
+		else : # Transformation pour la projection perspective
+			for vertex in dynamic_vertices:
+				new_vertices.append(vertex)
+		
 	# /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	# /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	
@@ -376,6 +292,24 @@ func build_wireframe_hypercube_mesh(vertices) -> Mesh:
 			surface_tool.add_vertex(clipped_points[0])
 			surface_tool.add_vertex(clipped_points[1])
 
+	surface_tool.commit(mesh)
+	return mesh
+func build_wireframe_hypercube_mesh_Vector_3(vertices: Array) -> Mesh:
+	var mesh = ArrayMesh.new()
+	var surface_tool = SurfaceTool.new()
+	# On commence à construire le maillage en mode lignes
+	surface_tool.begin(Mesh.PRIMITIVE_LINES)
+	
+	# Pour chaque arête de l'hypercube (chaque edge est un tableau [index_sommet1, index_sommet2])
+	for edge in get_hypercube_edges():
+		# On récupère directement les positions 3D des sommets
+		var p1: Vector3 = vertices[edge[0]]
+		var p2: Vector3 = vertices[edge[1]]
+		
+		# On ajoute les deux extrémités de l'arête
+		surface_tool.add_vertex(p1)
+		surface_tool.add_vertex(p2)
+	
 	surface_tool.commit(mesh)
 	return mesh
 
@@ -458,6 +392,84 @@ func build_stylish_hypercube_mesh(vertices) -> Node3D:
 			parent_node.add_child(cylinder)
 	return parent_node
 
+func build_stylish_hypercube_mesh_projected(vertices) -> Node3D:
+	var parent_node = Node3D.new() # On créer le Node3D qui va contenir tout les éléments qui représentent l'hypercube (arêtes et sommets)
+
+	# Ici on créer une sphère pour chaque sommet
+	for vertex in vertices:
+		# On applique la projection
+		var projected_vertex = vertex
+		# Et on continue seulement si le point est toujours dans la zone /// Donc il faut modifier ça si vous souhaitez que la zone soit optionnel
+		if area.is_point_in_area(projected_vertex):
+			# Ensuite c'est seulement visuel, on créer la sphère et son matériau
+			var point = MeshInstance3D.new()
+			point.mesh = SphereMesh.new()
+			point.scale = Vector3(0.2, 0.2, 0.2)
+			point.transform.origin = vertex
+			var material = StandardMaterial3D.new()
+			material.albedo_color = Color.BLUE
+			material.roughness = 0.1
+			material.metallic = 0.9
+			point.mesh.material = material
+			# On ajoute le mesh en enfant du Node3D
+			parent_node.add_child(point)
+
+	# Ici on créer un cylindre pour chaque arête
+	# Pour rappel, get_hypercube_edges est une méthodes qui renvoie les arêtes de l'hypercube
+	# donc edge est un tableau qui contient chaque segment --> [[sommet1, sommet2], [sommet4, sommet6], []]
+	for edge in get_hypercube_edges():
+		# On applique la projection aux sommets
+		var p1 = vertices[edge[0]]
+		var p2 = vertices[edge[1]]
+		# Si vous souhaitez que la zone soit optionnel alors il ne faut pas oublier de modifier ces lignes
+		# Si l'arête est coupé par la zone alors on obtient de nouveaux points grâces à la méthode clip_edge
+		var clipped_points = area.clip_edge(p1, p2)
+		# Si il y a bien deux points alors on créer l'arêtes
+		if clipped_points.size() == 2:
+			var cylinder = MeshInstance3D.new()
+			# On créer le cylindre et on le paramètre correctement
+			cylinder.mesh = CylinderMesh.new()
+			cylinder.mesh.bottom_radius = 0.05
+			cylinder.mesh.top_radius = 0.05
+			# La hauteur du cylindre c'est la distance entre les deux sommets
+			cylinder.mesh.height = (clipped_points[0] - clipped_points[1]).length()
+			
+			# On positionne le cylindre au centre de l'arête
+			var mid_point = (clipped_points[0] + clipped_points[1]) / 2.0 # On calcule le milieu
+			cylinder.transform.origin = mid_point # Et on le positionne
+			
+			# On oriente le cylindre dans la bonne direction
+			var direction = (clipped_points[1] - clipped_points[0]).normalized()
+			
+			# On calcule l'axe de rotation pour qu'on puisse l'applqiuer au cylindre (j'ai pas trouvé d'autre moyen de faire)
+			# Donc on compare le vecteur direction avec le vecteur UP qui est le vecteur de l'axe y
+			# Pour schématiser, si direction ressemble à ça ---, on va calculer l'angle entre | et ---, dans ce cas on devrait trouver 90° puis on va appliquer cette angle au cylindre
+			var axis = Vector3.UP.cross(direction).normalized()
+			if axis.length() == 0:
+				# Si les points sont parfaitement alignés avec l'axe Y
+				axis = Vector3(1, 0, 0)
+
+			# On calcule l'angle de rotation
+			var angle = acos(Vector3.UP.dot(direction))
+			
+			# On créer la transformation
+			var cylinder_transform = Transform3D()
+			cylinder_transform.origin = mid_point
+			cylinder_transform.basis = Basis(axis, angle) * cylinder_transform.basis
+
+			# On applique la transformation au cylindre
+			cylinder.transform = cylinder_transform
+
+			# On créer le matériau
+			var material = StandardMaterial3D.new()
+			material.albedo_color = Color.WHITE
+			material.roughness = 0.1
+			material.metallic = 0.9
+			cylinder.mesh.material = material
+			# On ajoute le cylindre en enfant de Node3D
+			parent_node.add_child(cylinder)
+	return parent_node
+
 # Cette méthode build l'affichage full
 func build_solid_hypercube_mesh(vertices) -> Mesh:
 	var mesh = ArrayMesh.new()
@@ -467,18 +479,22 @@ func build_solid_hypercube_mesh(vertices) -> Mesh:
 	# On créer le matériau
 	var material = StandardMaterial3D.new()
 	material.cull_mode = BaseMaterial3D.CULL_DISABLED # On le désactive pour pas que les faces arrières soient cachées
-	material.albedo_color = Color(0.1, 0.2, 0.8, 0.3)
+	material.albedo_color = Color(1, 1, 1, 0.3)
 	material.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED # On désactive l'effet de lumière
-	material.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA # On active la transparence
-
+	material.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
+	material.vertex_color_use_as_albedo = true
 	# On applique le matériau
 	surface_tool.set_material(material)
-
 	# On construit les faces de l'hypercube
 	# Donc on parcourt chaque cube
+	var iColor = 0;
 	for cube in CUBES:
+		var face_color = face_colors[iColor]
+		iColor+=1
 		# Et chaque face du cube
 		for face in CUBE_FACES:
+
+			#surface_tool.set_material(material)
 			# On applique la projection à chaque sommet de la face
 			var projected_vertices = [
 				apply_projection(vertices[cube[face[0]]]),
@@ -498,11 +514,69 @@ func build_solid_hypercube_mesh(vertices) -> Mesh:
 			# On construit la face s'il y a au moins 3 points
 			if clipped_face.size() >= 3:
 				for i in range(1, clipped_face.size() - 1):
+					surface_tool.set_color(face_color)
 					surface_tool.add_vertex(clipped_face[0])
+					surface_tool.set_color(face_color)
 					surface_tool.add_vertex(clipped_face[i])
+					surface_tool.set_color(face_color)
 					surface_tool.add_vertex(clipped_face[i + 1])
 
-	surface_tool.commit(mesh)
+			surface_tool.commit(mesh)
+	return mesh
+func build_solid_hypercube_mesh_projected(vertices: Array) -> Mesh:
+	var mesh = ArrayMesh.new()
+	var surface_tool = SurfaceTool.new()
+	# On initialise la construction du maillage en triangles
+	surface_tool.begin(Mesh.PRIMITIVE_TRIANGLES)
+	
+	# Création et configuration du matériau
+	var material = StandardMaterial3D.new()
+	material.cull_mode = BaseMaterial3D.CULL_DISABLED         # Désactive le culling pour afficher les faces arrières
+	material.albedo_color = Color(1, 1, 1, 0.3)
+	material.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED # Désactive l'éclairage
+	material.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
+	material.vertex_color_use_as_albedo = true
+	surface_tool.set_material(material)
+	
+	# Construction des faces de l'hypercube
+	var iColor = 0
+	for cube in CUBES:
+		var face_color = face_colors[iColor]
+		iColor += 1
+		# Pour chaque face du cube
+		for face in CUBE_FACES:
+			# Ici, les sommets sont déjà en coordonnées projetées
+			var projected_vertices = [
+				vertices[cube[face[0]]],
+				vertices[cube[face[1]]],
+				vertices[cube[face[2]]],
+				vertices[cube[face[3]]]
+			]
+			
+			# Découpage de la face selon la zone (optionnel)
+			var clipped_face = []
+			for i in range(4):
+				var start = projected_vertices[i]
+				var end = projected_vertices[(i + 1) % 4]
+				clipped_face += area.clip_edge(start, end)
+			
+			# On duplique la face découpée si besoin (pour éviter toute référence inattendue)
+			clipped_face = clipped_face.duplicate()
+			
+			# Si la face possède au moins 3 points, on la triangule
+			if clipped_face.size() >= 3:
+				for i in range(1, clipped_face.size() - 1):
+					surface_tool.set_color(face_color)
+					surface_tool.add_vertex(clipped_face[0])
+					surface_tool.set_color(face_color)
+					surface_tool.add_vertex(clipped_face[i])
+					surface_tool.set_color(face_color)
+					surface_tool.add_vertex(clipped_face[i + 1])
+			
+			# Optionnel : Si vous souhaitez commiter à chaque face, vous pouvez le laisser ici.
+			# Sinon, il est aussi possible de commit une seule fois à la fin.
+			surface_tool.commit(mesh)
+	
 	return mesh
 
 # Cette méthode retoune les arêtes de l'hypercube sous forme de liste --> [[sommet1, sommet4], [], []]
@@ -516,6 +590,7 @@ func get_hypercube_edges() -> Array:
 
 # Cette méthode retourne la projection choisie ou par défaut la projection perspective
 func apply_projection(point_4d: Vector4) -> Vector3:
+	var point : Vector3
 	match projection_mode:
 		ProjectionMode.PERSPECTIVE:
 			return project_perspective(point_4d)
@@ -560,8 +635,9 @@ func translate_4d(vect: Vector4, vect_translation: Vector4) -> Vector4:
 # on utilise cette méthode pour déplacer le node3d de sorte à ce qu'il soit au même endroit dans l'espace 3D
 # que la projection de l'hypercube
 func apply_translation(vect: Vector4):
-	var vect_3d = Vector3(vect.x, vect.y, vect.z)
+	var vect_3d = Vector3(vect[dimensions[dimension_selected].x], vect[dimensions[dimension_selected].x], vect[dimensions[dimension_selected].x])
 	collision_shape.global_transform.origin += vect_3d
+	$RayCast3D.global_transform.origin += vect_3d
 	#global_transform.origin += vect_3d 
 	#position += vect_3d
 	
@@ -590,8 +666,132 @@ func rotate_4d(point: Vector4, angle1: float, axis1_a: int, axis1_b: int, angle2
 	return rotated_point
 
 #fonction pour changer le point qu'on ne projette pas
-func change_dimension(new_dimension : int):
-	is_up_to_date = false
-	dimension_selected = new_dimension
-	is_up_to_date = true
+
+var current_vertices = [] # Stocke les sommets actuels
+var target_vertices = []  # Sommets de la prochaine dimension
+var transitioning = false # Indique si une transition est en cours
+
+func change_dimension(new_dimension: String):
+	current_vertices.clear()
+	target_vertices.clear()
+	if transitioning:
+		return # Empêcher d'enchaîner trop vite
 	
+	is_up_to_date = false
+	var old_dimension = dimensions[dimension_selected] # Dimension actuelle
+	for i in range(dynamic_vertices.size()):
+		current_vertices.append(apply_projection(dynamic_vertices[i]))
+	for i in range(dimensions.size()):
+		if dimensions[i].name == new_dimension:
+			dimension_selected = i
+			break
+	for i in range(dynamic_vertices.size()):
+		target_vertices.append(apply_projection(dynamic_vertices[i]))
+	var new_dim = dimensions[dimension_selected] # Nouvelle dimension sélectionnée
+	accesible_dimensions = find_accessible_dimensions(dimensions[dimension_selected], dimensions)
+
+
+	# Lancer l'animation de transition
+	animate_dimension_transition()
+
+	
+
+func animate_dimension_transition():
+	transitioning = true
+
+	var duration = 0.8 # Durée de la transition en secondes
+	var steps = 20 # Nombre d'étapes d'interpolation
+	var step_time = duration / steps
+	var start_vertices = current_vertices.duplicate()	
+	for i in range(steps):
+		await get_tree().create_timer(step_time).timeout
+		var t = float(i + 1) / steps # Progression entre 0 et 1
+		current_vertices = lerp_vertices(current_vertices, target_vertices, t)
+		for child in mesh_instance.get_children():
+			child.queue_free()
+		# Re-construit le maillage en cours de transition
+		var mesh
+		if mesh_mode==2:
+			mesh = build_stylish_hypercube_mesh_projected(current_vertices)
+			mesh_instance.add_child(mesh)
+		else: # Sinon, le Mesh de l'hypercube devient le Mesh du build
+			match mesh_mode:
+				MeshMode.FULL:
+					mesh = build_solid_hypercube_mesh_projected(current_vertices)
+				MeshMode.WIREFRAME:
+					mesh = build_wireframe_hypercube_mesh_Vector_3(current_vertices)
+				MeshMode.STYLISH:
+					mesh = build_stylish_hypercube_mesh_projected(current_vertices)
+				_:
+					mesh = build_wireframe_hypercube_mesh_Vector_3(current_vertices)
+			mesh_instance.mesh = mesh
+	
+	transitioning = false
+	is_up_to_date = true
+
+func lerp_vertices(start_vertices, end_vertices, t):
+	var new_vertices = []
+	for i in range(start_vertices.size()):
+		new_vertices.append(start_vertices[i].lerp(end_vertices[i], t))
+	
+	return new_vertices
+
+
+func view_face():
+	dynamic_vertices = [
+	Vector4(-1, -1, -1, -1), Vector4(-1, -1, -1,  1), Vector4(-1, -1,  1, -1), Vector4(-1, -1,  1,  1),
+	Vector4(-1,  1, -1, -1), Vector4(-1,  1, -1,  1), Vector4(-1,  1,  1, -1), Vector4(-1,  1,  1,  1),
+	Vector4( 1, -1, -1, -1), Vector4( 1, -1, -1,  1), Vector4( 1, -1,  1, -1), Vector4( 1, -1,  1,  1),
+	Vector4( 1,  1, -1, -1), Vector4( 1,  1, -1,  1), Vector4( 1,  1,  1, -1), Vector4( 1,  1,  1,  1)
+]
+	#rotate_toward_camera()
+
+func fugue_view():
+	is_point_of_view_fugue = true
+	dynamic_vertices = [
+	Vector4(-1, -1, -1, -1), Vector4(-1, -1, -1,  1), Vector4(-1, -1,  1, -1), Vector4(-1, -1,  1,  1),
+	Vector4(-1,  1, -1, -1), Vector4(-1,  1, -1,  1), Vector4(-1,  1,  1, -1), Vector4(-1,  1,  1,  1),
+	Vector4( 1, -1, -1, -1), Vector4( 1, -1, -1,  1), Vector4( 1, -1,  1, -1), Vector4( 1, -1,  1,  1),
+	Vector4( 1,  1, -1, -1), Vector4( 1,  1, -1,  1), Vector4( 1,  1,  1, -1), Vector4( 1,  1,  1,  1)
+]
+	is_double_rotate = false
+	is_rotate = false
+	is_translate = false
+	#rotate_toward_camera()
+func point_view() :
+	dynamic_vertices = [
+	Vector4(-1, -1, -1, -1), Vector4(-1, -1, -1,  1), Vector4(-1, -1,  1, -1), Vector4(-1, -1,  1,  1),
+	Vector4(-1,  1, -1, -1), Vector4(-1,  1, -1,  1), Vector4(-1,  1,  1, -1), Vector4(-1,  1,  1,  1),
+	Vector4( 1, -1, -1, -1), Vector4( 1, -1, -1,  1), Vector4( 1, -1,  1, -1), Vector4( 1, -1,  1,  1),
+	Vector4( 1,  1, -1, -1), Vector4( 1,  1, -1,  1), Vector4( 1,  1,  1, -1), Vector4( 1,  1,  1,  1)
+]
+	is_double_rotate = false
+	is_rotate = false
+	is_translate = false
+	is_point_of_view_point = true
+	#rotate_toward_camera()
+
+func rotate_toward_camera():
+	$RayCast3D.position = Vector3(0,0,0)
+	var raycast_global_pos = $RayCast3D.global_transform.origin
+	var camera_global_pos = camera.global_transform.origin
+	var direction = (camera_global_pos - raycast_global_pos).normalized()
+	# Création d'une nouvelle rotation alignant le RayCast vers la Caméra
+	var new_basis = Basis.looking_at(direction, Vector3.UP)
+	$".".transform.basis = new_basis
+func find_accessible_dimensions(current_dim: Dictionary, dimensions: Array) -> Array:
+	var accessible = []
+	
+	for dim in dimensions:
+		var swaps = 0
+		var keys = ["x", "y", "z", "w"]
+		
+		for key in keys:
+			if current_dim[key] != dim[key]:
+				swaps += 1
+		
+		# Si une seule permutation ou aucune (même dimension), on considère comme accessible
+		if swaps == 2:
+			accessible.append(dim)
+	
+	return accessible

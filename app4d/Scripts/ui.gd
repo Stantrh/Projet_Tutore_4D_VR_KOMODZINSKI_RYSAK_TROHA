@@ -18,30 +18,6 @@ var prev_rotation_pos = {} # rotations
 var rotation_buttons = {} # tableau des boutons de l'interface pour modifier leur état
 
 var dimensions = [
-	"XYZ", 
-	"XYW", 
-	"XZW", 
-	"XWY", 
-	"XWZ", 
-	"XZY", 
-	"YZW", 
-	"YZX", 
-	"YXW", 
-	"YXZ", 
-	"YWX", 
-	"YWZ", 
-	"ZXY", 
-	"ZXW", 
-	"ZYX", 
-	"ZYW", 
-	"ZWX", 
-	"ZWY", 
-	"WXY", 
-	"WXZ", 
-	"WYX", 
-	"WYZ", 
-	"WZY", 
-	"WZX"
 ]
 
 
@@ -93,7 +69,7 @@ func _ready():
 	y_translation_reset_button.connect("pressed", Callable(self,"_on_translation_reset_button_pressed").bind(1))
 	z_translation_reset_button.connect("pressed", Callable(self,"_on_translation_reset_button_pressed").bind(2))
 	w_translation_reset_button.connect("pressed", Callable(self,"_on_translation_reset_button_pressed").bind(3))
-	
+	#dimensions = object_controlled.accesible_dimensions
 	for i in range(dimensions.size()):
 		dimension_check_box.add_item(dimensions[i],i)
 	dimension_check_box.selected = 0
@@ -273,7 +249,14 @@ func open_interface(object):
 	visible = true
 	object_controlled = object
 	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
-	dimension_check_box.selected = object_controlled.dimension_selected
+	dimensions = []
+	dimensions.append(object_controlled.dimensions[object_controlled.dimension_selected].name)
+	for dimension in object_controlled.accesible_dimensions :
+		dimensions.append(dimension.name)
+	dimension_check_box.clear()
+	for i in range(dimensions.size()):
+		dimension_check_box.add_item(dimensions[i],i)
+	dimension_check_box.selected =  0
 	
 func _on_close_button_pressed():
 	object_controlled = null
@@ -286,4 +269,87 @@ func _on_translation_reset_button_pressed(i : int):
 
 
 func _on_option_button_item_selected(index):
-	object_controlled.change_dimension(index)
+	object_controlled.change_dimension(dimensions[index])
+	
+	dimensions = []
+	dimensions.append(object_controlled.dimensions[object_controlled.dimension_selected].name)
+	for dimension in object_controlled.accesible_dimensions :
+		dimensions.append(dimension.name)
+	dimension_check_box.clear()
+	for i in range(dimensions.size()):
+		dimension_check_box.add_item(dimensions[i],i)
+	dimension_check_box.selected =  0
+
+
+func _on_face_view_button_pressed():
+	prev_translation_pos[object_controlled] = [0.0, 0.0, 0.0, 0.0]
+	var slider_pos_array = prev_translation_pos[object_controlled]
+	var indice = 0
+	for translation_slider in translation_sliders:
+		translation_slider.value = slider_pos_array[indice]
+		sliders_label[indice].text = str(slider_pos_array[indice])
+		indice += 1
+	object_controlled.view_face()
+
+
+func _on_fugue_vie_button_pressed():
+	prev_translation_pos[object_controlled] = [0.0, 0.0, 0.0, 0.0]
+	var slider_pos_array = prev_translation_pos[object_controlled]
+	var indice = 0
+	for translation_slider in translation_sliders:
+		translation_slider.value = slider_pos_array[indice]
+		sliders_label[indice].text = str(slider_pos_array[indice])
+		indice += 1
+	object_controlled.fugue_view()
+	prev_rotation_pos[object_controlled] = {
+				"XY": {"toggled": false, "disabled": false},
+				"XZ": {"toggled": false, "disabled": false},
+				"YZ": {"toggled": false, "disabled": false},
+				"XW": {"toggled": false, "disabled": false},
+				"YW": {"toggled": false, "disabled": false},
+				"ZW": {"toggled": false, "disabled": false}
+			}
+	xy_rotation_button.button_pressed = false
+	xz_rotation_button.button_pressed = false
+	yz_rotation_button.button_pressed = false
+	xw_rotation_button.button_pressed = false
+	yw_rotation_button.button_pressed = false
+	zw_rotation_button.button_pressed = false
+	xy_rotation_button.disabled = false
+	xz_rotation_button.disabled = false
+	yz_rotation_button.disabled = false
+	xw_rotation_button.disabled = false
+	yw_rotation_button.disabled = false
+	zw_rotation_button.disabled = false
+	
+
+
+func _on_point_view_button_pressed():
+	prev_translation_pos[object_controlled] = [0.0, 0.0, 0.0, 0.0]
+	var slider_pos_array = prev_translation_pos[object_controlled]
+	var indice = 0
+	for translation_slider in translation_sliders:
+		translation_slider.value = slider_pos_array[indice]
+		sliders_label[indice].text = str(slider_pos_array[indice])
+		indice += 1
+	object_controlled.point_view()
+	prev_rotation_pos[object_controlled] = {
+				"XY": {"toggled": false, "disabled": false},
+				"XZ": {"toggled": false, "disabled": false},
+				"YZ": {"toggled": false, "disabled": false},
+				"XW": {"toggled": false, "disabled": false},
+				"YW": {"toggled": false, "disabled": false},
+				"ZW": {"toggled": false, "disabled": false}
+			}
+	xy_rotation_button.button_pressed = false
+	xz_rotation_button.button_pressed = false
+	yz_rotation_button.button_pressed = false
+	xw_rotation_button.button_pressed = false
+	yw_rotation_button.button_pressed = false
+	zw_rotation_button.button_pressed = false
+	xy_rotation_button.disabled = false
+	xz_rotation_button.disabled = false
+	yz_rotation_button.disabled = false
+	xw_rotation_button.disabled = false
+	yw_rotation_button.disabled = false
+	zw_rotation_button.disabled = false

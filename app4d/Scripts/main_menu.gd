@@ -16,6 +16,7 @@ func _ready():
 	$start.visible = true
 	$choix_figure.visible = false
 	$choix_projection.visible = false
+	$choix_maillage.visible = false
 	regex = RegEx.new()
 	regex.compile("^[1-6]$")
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -78,9 +79,11 @@ func _on_orthogonale_pressed():
 	selected_figures[current_figure].projection_mode = 2
 	current_figure+=1
 	if current_figure >= selected_figures.size():
-		load_world()
+		$choix_projection.hide()
+		$choix_maillage.show()
+		current_figure = 0
 	else :
-		update_label()
+		update_label($choix_projection/VBoxContainer/Label_figure)
 	
 func load_world():
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
@@ -94,23 +97,62 @@ func _on_perspective_pressed():
 	selected_figures[current_figure].projection_mode = 0
 	current_figure+=1
 	if current_figure >= selected_figures.size():
-		load_world()
+		$choix_projection.hide()
+		$choix_maillage.show()
+		current_figure = 0
 	else :
-		update_label()
+		update_label($choix_projection/VBoxContainer/Label_figure)
 
 
 func _on_stéréographique_pressed():
 	selected_figures[current_figure].projection_mode = 1
 	current_figure+=1
 	if current_figure >= selected_figures.size():
-		load_world()
+		current_figure = 0
+		$choix_projection.hide()
+		$choix_maillage.show()
 	else :
-		update_label()
+		update_label($choix_projection/VBoxContainer/Label_figure)
 
-func update_label():
-	var label : Label = $choix_projection/VBoxContainer/Label_figure
+func update_label(label : Label):
 	match selected_figure :
 		available_figures.HYPERCUBE:
 			label.text = "Hypercube n°" + str(current_figure +1)
 		_ :
 			label.text = "Hypercube n°" + str(current_figure +1)
+
+
+func _on_wireframe_pressed():
+	selected_figures[current_figure].mesh_mode = 0
+	current_figure+=1
+	if current_figure >= selected_figures.size():
+		current_figure = 0
+		load_world()
+	else :
+		update_label($choix_maillage/VBoxContainer/Label_figure)
+
+
+func _on_full_pressed():
+	selected_figures[current_figure].mesh_mode = 1
+	current_figure+=1
+	if current_figure >= selected_figures.size():
+		current_figure = 0
+		load_world()
+	else :
+		update_label($choix_maillage/VBoxContainer/Label_figure)
+
+
+func _on_stylish_pressed():
+	selected_figures[current_figure].mesh_mode = 2
+	current_figure+=1
+	if current_figure >= selected_figures.size():
+		current_figure = 0
+		load_world()
+	else :
+		update_label($choix_maillage/VBoxContainer/Label_figure)
+
+
+func _on_retour_style_pressed():
+	current_figure = 0 
+	$choix_maillage.hide()
+	$choix_projection.show()

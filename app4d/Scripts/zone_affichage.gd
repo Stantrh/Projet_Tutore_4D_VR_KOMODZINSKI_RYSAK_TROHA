@@ -4,7 +4,6 @@ extends Node3D
 # Ici les exports ne servent à rien
 @export var area_min = Vector3(-3, -3, -3)
 @export var area_max = Vector3(3, 3, 3)
-
 # Créer une zone de taille area_min - area_max
 func create_area_mesh() -> MeshInstance3D:
 	# On créer le Mesh sous forme de cube

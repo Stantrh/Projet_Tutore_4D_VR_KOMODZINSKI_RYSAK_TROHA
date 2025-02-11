@@ -244,6 +244,7 @@ func update_stylish_hypercube():
 			new_vertices.append(rotate_4d(vertex, 44.83, axe_1, axe_2, 25, axe2_a, axe2_b))
 		is_point_of_view_fugue = false
 		dynamic_vertices = new_vertices
+		marker.transform.origin = apply_projection(get_global_center(dynamic_vertices))
 	elif is_point_of_view_point:
 		#is_double_rotate = true
 		var axe_1 = dimensions[dimension_selected].x
@@ -254,6 +255,7 @@ func update_stylish_hypercube():
 			new_vertices.append(rotate_4d(vertex,-120,axe2_1,axe2_2,0,0,0))
 		is_point_of_view_point = false
 		dynamic_vertices = new_vertices
+		marker.transform.origin = apply_projection(get_global_center(dynamic_vertices))
 		is_double_rotate = false
 	else:
 		# Calcul des nouvelles positions 4D en fonction des rotations / translations
@@ -263,9 +265,12 @@ func update_stylish_hypercube():
 			# Mise à jour du vecteur de base et application de la translation sur le node concerné
 			dynamic_vertices = new_vertices	
 			apply_translation(vect_translate)
+			is_translate = false
+			marker.transform.origin = apply_projection(get_global_center(dynamic_vertices))
 		elif is_rotate:
 			for vertex in dynamic_vertices:
 				new_vertices.append( rotate_4d(vertex, rotation_angle, axe_a, axe_b, rotation_angle2, axe2_a, axe2_b) )
+				marker.transform.origin = apply_projection(get_global_center(new_vertices))
 		else:
 			for vertex in dynamic_vertices:	
 				new_vertices.append(vertex)
@@ -371,7 +376,7 @@ func update_hypercube():
 			new_vertices.append(rotate_4d(vertex, 44.83, axe_1, axe_2, 25, axe2_a, axe2_b))
 		is_point_of_view_fugue = false
 		dynamic_vertices = new_vertices
-		marker.global_position = apply_projection(get_global_center(dynamic_vertices))
+		marker.transform.origin = apply_projection(get_global_center(dynamic_vertices))
 	elif is_point_of_view_point:
 		#is_double_rotate = true
 		var axe_1 = dimensions[dimension_selected].x
@@ -383,26 +388,26 @@ func update_hypercube():
 		is_point_of_view_point = false
 		dynamic_vertices = new_vertices
 		is_double_rotate = false
-		marker.global_position = apply_projection(get_global_center(dynamic_vertices))
+		marker.transform.origin = apply_projection(get_global_center(dynamic_vertices))
 	else:		
 	# /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	# /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		if is_translate:
 			for vertex in dynamic_vertices:
 				new_vertices.append( translate_4d(vertex, vect_translate) )
-			marker.global_position = apply_projection(get_global_center(new_vertices))
+			
 			dynamic_vertices = new_vertices
+			marker.transform.origin = apply_projection(get_global_center(dynamic_vertices))
 			apply_translation(vect_translate)	
-			print(marker.global_position)
+			print(marker.position)
 			is_translate = false
 		elif is_rotate:
 			for vertex in dynamic_vertices:
 				new_vertices.append( rotate_4d(vertex, rotation_angle, axe_a, axe_b, rotation_angle2, axe2_a, axe2_b) )
-			marker.global_position = apply_projection(get_global_center(new_vertices))
+			marker.transform.origin = apply_projection(get_global_center(new_vertices))
 		else:
 			for vertex in dynamic_vertices:
 				new_vertices.append(vertex)
-				marker.global_position = apply_projection(get_global_center(new_vertices))
 		
 		if not is_hypercube_visible(new_vertices):
 			mesh_instance.visible = false
@@ -478,10 +483,11 @@ func build_wireframe_hypercube_mesh_Vector_3(vertices: Array) -> Mesh:
 		var p1: Vector3 = vertices[edge[0]]
 		var p2: Vector3 = vertices[edge[1]]
 		
-		# On ajoute les deux extrémités de l'arête
-		surface_tool.add_vertex(p1)
-		surface_tool.add_vertex(p2)
-	
+		var clipped_points = area.clip_edge(p1, p2)
+		# Si il y a bien deux points alors on créer l'arêtes
+		if clipped_points.size() == 2:
+			surface_tool.add_vertex(clipped_points[0])
+			surface_tool.add_vertex(clipped_points[1])
 	surface_tool.commit(mesh)
 	return mesh
 

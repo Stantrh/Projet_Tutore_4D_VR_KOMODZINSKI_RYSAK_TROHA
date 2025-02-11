@@ -20,3 +20,4 @@ visible = false
 script = ExtResource("2_2qdoe")
 
 [node name="Marker3D" type="Marker3D" parent="."]
+gizmo_extents = 2.9

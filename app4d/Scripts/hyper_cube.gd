@@ -59,6 +59,7 @@ enum MeshMode {
 @export var mesh_mode: int = 0  # 0: Plein, 1: stylisé, 2: Filaire
 @export var projection_mode: int = 0  # 0: Perspective, 1: Stéréographique, 2: Orthogonale
 @export var dimension_selected : int = 0 #pour savoir quel est la dimension actuelle 
+@onready var marker : Marker3D = $Marker3D
 var is_point_of_view_fugue = false
 var is_point_of_view_point = false
 var change_view = false
@@ -370,6 +371,7 @@ func update_hypercube():
 			new_vertices.append(rotate_4d(vertex, 44.83, axe_1, axe_2, 25, axe2_a, axe2_b))
 		is_point_of_view_fugue = false
 		dynamic_vertices = new_vertices
+		marker.global_position = apply_projection(get_global_center(dynamic_vertices))
 	elif is_point_of_view_point:
 		#is_double_rotate = true
 		var axe_1 = dimensions[dimension_selected].x
@@ -381,20 +383,25 @@ func update_hypercube():
 		is_point_of_view_point = false
 		dynamic_vertices = new_vertices
 		is_double_rotate = false
+		marker.global_position = apply_projection(get_global_center(dynamic_vertices))
 	else:		
 	# /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	# /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		if is_translate:
 			for vertex in dynamic_vertices:
 				new_vertices.append( translate_4d(vertex, vect_translate) )
+				marker.global_position = apply_projection(get_global_center(new_vertices))
+				print(marker.global_position)
 			dynamic_vertices = new_vertices	
 			apply_translation(vect_translate)
 		elif is_rotate:
 			for vertex in dynamic_vertices:
 				new_vertices.append( rotate_4d(vertex, rotation_angle, axe_a, axe_b, rotation_angle2, axe2_a, axe2_b) )
+			marker.global_position = apply_projection(get_global_center(new_vertices))
 		else:
 			for vertex in dynamic_vertices:
 				new_vertices.append(vertex)
+				marker.global_position = apply_projection(get_global_center(new_vertices))
 		
 		if not is_hypercube_visible(new_vertices):
 			mesh_instance.visible = false
@@ -413,6 +420,7 @@ func update_hypercube():
 		
 		if is_translate:
 			is_translate = false
+	
 
 # Cette méthode return true si au moins une partie de l'hypercube est dans la zone
 # Elle utilise une méthode qui est dans zone_affichage
@@ -769,7 +777,7 @@ func apply_projection(point_4d: Vector4) -> Vector3:
 func project_perspective(point_4d: Vector4) -> Vector3:
 	#print(ignored_axis)
 	# On calcule la distance entre la caméra et la position de l'hypercube
-	var d = camera.global_position.distance_to(global_position)
+	var d = camera.global_position.distance_to(marker.global_position)
 	return Vector3(point_4d[dimensions[dimension_selected].x]* d /(point_4d[dimensions[dimension_selected].w]+d),
 	point_4d[dimensions[dimension_selected].y]* d /(point_4d[dimensions[dimension_selected].w]+d),
 	point_4d[dimensions[dimension_selected].z]* d /(point_4d[dimensions[dimension_selected].w]+d))
@@ -819,8 +827,8 @@ func rotate_4d(point: Vector4, angle1: float, axis1_a: int, axis1_b: int, angle2
 	if is_double_rotate:
 		var cos_theta2 = cos(angle2)
 		var sin_theta2 = sin(angle2)
-		temp_a = point[axis2_a]
-		temp_b = point[axis2_b]
+		temp_a = local_point[axis2_a]
+		temp_b = local_point[axis2_b]
 		rotated_point[axis2_a] = temp_a * cos_theta2 - temp_b * sin_theta2
 		rotated_point[axis2_b] = temp_a * sin_theta2 + temp_b * cos_theta2
 	return rotated_point + center
@@ -939,10 +947,8 @@ func point_view() :
 	#rotate_toward_camera()
 
 func rotate_toward_camera():
-	$RayCast3D.position = Vector3(0,0,0)
-	var raycast_global_pos = $RayCast3D.global_transform.origin
 	var camera_global_pos = camera.global_transform.origin
-	var direction = (camera_global_pos - raycast_global_pos).normalized()
+	var direction = (camera_global_pos - marker.global_transform.origin).normalized()
 	# Création d'une nouvelle rotation alignant le RayCast vers la Caméra
 	var new_basis = Basis.looking_at(direction, Vector3.UP)
 	$".".transform.basis = new_basis

@@ -19,5 +19,4 @@ shape = SubResource("BoxShape3D_o0t87")
 visible = false
 script = ExtResource("2_2qdoe")
 
-[node name="RayCast3D" type="RayCast3D" parent="."]
-target_position = Vector3(1, 0, 0)
+[node name="Marker3D" type="Marker3D" parent="."]

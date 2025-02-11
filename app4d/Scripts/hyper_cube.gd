@@ -167,7 +167,6 @@ func _ready():
 	add_child(bounds_mesh)
 	#bounds_mesh.top_level = true
 	accesible_dimensions = find_accessible_dimensions(dimensions[dimension_selected],dimensions)
-	
 	## Création du mesh pour la zone d'affichage
 	#var bounds_mesh = area.create_area_mesh()
 	#add_child(bounds_mesh)
@@ -802,13 +801,16 @@ func apply_translation(vect: Vector4):
 
 # Cette méthode applique une rotation ou une double rotation à un point
 func rotate_4d(point: Vector4, angle1: float, axis1_a: int, axis1_b: int, angle2: float, axis2_a: int, axis2_b: int) -> Vector4:
+	var center = get_global_center(dynamic_vertices)
+	var local_point = point - center
+	
 	# On calcule cos et sin de la première rotation
 	var cos_theta1 = cos(angle1)
 	var sin_theta1 = sin(angle1)
 	# On créer des variables temporaires
-	var rotated_point = point
-	var temp_a = point[axis1_a]
-	var temp_b = point[axis1_b]
+	var rotated_point = local_point
+	var temp_a = local_point[axis1_a]
+	var temp_b = local_point[axis1_b]
 	# On applique la transformation
 	rotated_point[axis1_a] = temp_a * cos_theta1 - temp_b * sin_theta1
 	rotated_point[axis1_b] = temp_a * sin_theta1 + temp_b * cos_theta1
@@ -821,7 +823,14 @@ func rotate_4d(point: Vector4, angle1: float, axis1_a: int, axis1_b: int, angle2
 		temp_b = point[axis2_b]
 		rotated_point[axis2_a] = temp_a * cos_theta2 - temp_b * sin_theta2
 		rotated_point[axis2_b] = temp_a * sin_theta2 + temp_b * cos_theta2
-	return rotated_point
+	return rotated_point + center
+
+
+func get_global_center(vertices: Array) -> Vector4:
+	var center = Vector4()
+	for vertex in vertices:
+		center += vertex
+	return center / vertices.size()
 
 #fonction pour changer le point qu'on ne projette pas
 

@@ -158,8 +158,6 @@ func _process(_delta):
 func _on_translation_x_slider_value_changed(value):
 	if object_controlled != null:
 		
-		print("X : " + str(value))
-		
 		if not prev_translation_pos.has(object_controlled): # si c'est la première fois qu'on touche à cette hypercube
 			prev_translation_pos[object_controlled] = [0.0, 0.0, 0.0, 0.0]
 		# on récupère le tableau dans tous les cas, soit 0.0 si on vient de l'initialiser, soit les précédentes valeurs
@@ -167,7 +165,6 @@ func _on_translation_x_slider_value_changed(value):
 		
 		var delta_x = value - prev_translation_pos_slider[0] # le delta, pour savoir si on avance ou recule, en haut ou en bas, etc.
 		prev_translation_pos_slider[0] = value 
-		
 		object_controlled.vect_translate = Vector4(delta_x, 0, 0, 0)
 		object_controlled.is_translate = true
 		sliders_label[0].text = str(value)

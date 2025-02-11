@@ -389,11 +389,14 @@ func update_hypercube():
 	# /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		if is_translate:
 			for vertex in dynamic_vertices:
+				print("vertex" + str(vertex))
 				new_vertices.append( translate_4d(vertex, vect_translate) )
 				marker.global_position = apply_projection(get_global_center(new_vertices))
-				print(marker.global_position)
-			dynamic_vertices = new_vertices	
+			print(new_vertices)
+			dynamic_vertices = new_vertices
 			apply_translation(vect_translate)
+			print(dynamic_vertices)	
+			
 		elif is_rotate:
 			for vertex in dynamic_vertices:
 				new_vertices.append( rotate_4d(vertex, rotation_angle, axe_a, axe_b, rotation_angle2, axe2_a, axe2_b) )

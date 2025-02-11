@@ -165,7 +165,7 @@ func _ready():
 	var bounds_mesh = area.create_area_mesh()
 	# Et on l'ajoute en enfant du noeud HyperCube
 	add_child(bounds_mesh)
-	bounds_mesh.top_level = true
+	#bounds_mesh.top_level = true
 	accesible_dimensions = find_accessible_dimensions(dimensions[dimension_selected],dimensions)
 	
 	## Création du mesh pour la zone d'affichage
@@ -646,7 +646,7 @@ func build_solid_hypercube_mesh(vertices) -> Mesh:
 	material.cull_mode = BaseMaterial3D.CULL_DISABLED # On le désactive pour pas que les faces arrières soient cachées
 	material.albedo_color = Color(1, 1, 1, 0.3)
 	material.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED # On désactive l'effet de lumière
-	material.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
+	material.transparency = BaseMaterial3D.TRANSPARENCY_DISABLED
 	material.vertex_color_use_as_albedo = true
 	# On applique le matériau
 	surface_tool.set_material(material)
@@ -699,7 +699,7 @@ func build_solid_hypercube_mesh_projected(vertices: Array) -> Mesh:
 	material.cull_mode = BaseMaterial3D.CULL_DISABLED         # Désactive le culling pour afficher les faces arrières
 	material.albedo_color = Color(1, 1, 1, 0.3)
 	material.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED # Désactive l'éclairage
-	material.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
+	material.transparency = BaseMaterial3D.TRANSPARENCY_DISABLED
 	material.vertex_color_use_as_albedo = true
 	surface_tool.set_material(material)
 	

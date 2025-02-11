@@ -221,7 +221,7 @@ func create_stylish_hypercube():
 func _process(delta):
 	if !is_up_to_date:
 		return
-	# On incrémente l'angle de rotation pour avoir une figur qui tourne en continu
+	# On incrémente l'angle de rotation pour avoir une figur qui tourne en continue
 	if is_rotate:
 		rotation_angle += delta
 		# La même chose si on a une double rotation
@@ -389,14 +389,12 @@ func update_hypercube():
 	# /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		if is_translate:
 			for vertex in dynamic_vertices:
-				print("vertex" + str(vertex))
 				new_vertices.append( translate_4d(vertex, vect_translate) )
-				marker.global_position = apply_projection(get_global_center(new_vertices))
-			print(new_vertices)
+			marker.global_position = apply_projection(get_global_center(new_vertices))
 			dynamic_vertices = new_vertices
-			apply_translation(vect_translate)
-			print(dynamic_vertices)	
-			
+			apply_translation(vect_translate)	
+			print(marker.global_position)
+			is_translate = false
 		elif is_rotate:
 			for vertex in dynamic_vertices:
 				new_vertices.append( rotate_4d(vertex, rotation_angle, axe_a, axe_b, rotation_angle2, axe2_a, axe2_b) )
@@ -423,7 +421,6 @@ func update_hypercube():
 		
 		if is_translate:
 			is_translate = false
-	
 
 # Cette méthode return true si au moins une partie de l'hypercube est dans la zone
 # Elle utilise une méthode qui est dans zone_affichage

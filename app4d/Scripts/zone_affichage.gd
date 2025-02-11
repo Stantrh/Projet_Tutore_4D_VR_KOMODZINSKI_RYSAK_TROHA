@@ -56,6 +56,8 @@ func clip_edge(start: Vector3, end: Vector3) -> Array:
 		points.append(start)
 	if is_point_in_area(end):
 		points.append(end)
+	if points.size() == 2 :
+		return points
 	# On parcourt les plans et on vérifie s'il y a une intersection
 	for plane in get_clip_planes():
 		var intersection = intersect_line_with_plane(start, end, plane)

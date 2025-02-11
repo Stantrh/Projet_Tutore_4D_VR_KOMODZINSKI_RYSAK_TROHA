@@ -165,8 +165,10 @@ func _on_translation_x_slider_value_changed(value):
 		
 		var delta_x = value - prev_translation_pos_slider[0] # le delta, pour savoir si on avance ou recule, en haut ou en bas, etc.
 		prev_translation_pos_slider[0] = value 
+		object_controlled.is_up_to_date = false
 		object_controlled.vect_translate = Vector4(delta_x, 0, 0, 0)
 		object_controlled.is_translate = true
+		object_controlled.is_up_to_date = true
 		sliders_label[0].text = str(value)
 
 
@@ -181,9 +183,10 @@ func _on_translation_y_slider_value_changed(value):
 		
 		var delta_y = value - prev_translation_pos_slider[1] # le delta, pour savoir si on avance ou recule, en haut ou en bas, etc.
 		prev_translation_pos_slider[1] = value 
-		
+		object_controlled.is_up_to_date = false
 		object_controlled.vect_translate = Vector4(0, delta_y, 0, 0)
 		object_controlled.is_translate = true
+		object_controlled.is_up_to_date = true
 		sliders_label[1].text = str(value)
 
 func _on_translation_z_slider_value_changed(value):
@@ -196,9 +199,10 @@ func _on_translation_z_slider_value_changed(value):
 		
 		var delta_z = value - prev_translation_pos_slider[2] # le delta, pour savoir si on avance ou recule, en haut ou en bas, etc.
 		prev_translation_pos_slider[2] = value 
-		
+		object_controlled.is_up_to_date = false
 		object_controlled.vect_translate = Vector4(0, 0, delta_z, 0)
 		object_controlled.is_translate = true
+		object_controlled.is_up_to_date = true
 		sliders_label[2].text = str(value)
 func _on_translation_w_slider_value_changed(value):
 	if object_controlled != null:
@@ -210,9 +214,10 @@ func _on_translation_w_slider_value_changed(value):
 
 		var delta_w = value - prev_translation_pos_slider[3] # le delta, pour savoir si on avance ou recule, en haut ou en bas, etc.
 		prev_translation_pos_slider[3] = value 
-		
+		object_controlled.is_up_to_date = false
 		object_controlled.vect_translate = Vector4(0, 0, 0, delta_w)
 		object_controlled.is_translate = true
+		object_controlled.is_up_to_date = true
 		sliders_label[3].text = str(value)
 	
 	

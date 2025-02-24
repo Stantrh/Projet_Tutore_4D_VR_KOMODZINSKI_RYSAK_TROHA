@@ -252,7 +252,7 @@ func open_interface(object):
 	object_controlled = object
 	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 	dimensions = []
-	dimensions.append(object_controlled.dimensions[object_controlled.dimension_selected].name)
+	dimensions.append(object_controlled.DIMENSIONS[object_controlled.dimension_selected].name)
 	for dimension in object_controlled.accesible_dimensions :
 		dimensions.append(dimension.name)
 	dimension_check_box.clear()
@@ -274,7 +274,7 @@ func _on_option_button_item_selected(index):
 	object_controlled.change_dimension(dimensions[index])
 	
 	dimensions = []
-	dimensions.append(object_controlled.dimensions[object_controlled.dimension_selected].name)
+	dimensions.append(object_controlled.DIMENSIONS[object_controlled.dimension_selected].name)
 	for dimension in object_controlled.accesible_dimensions :
 		dimensions.append(dimension.name)
 	dimension_check_box.clear()

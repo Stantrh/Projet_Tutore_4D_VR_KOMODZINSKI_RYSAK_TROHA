@@ -1,16 +1,25 @@
 extends Node3D
 
+
+enum Object4D{
+	Tesseract
+}
+@export var object_selected : Object4D = Object4D.Tesseract
+@export var mesh_mode = 0
+@export var projection_mode = 0
 # Variables qui définies la taille de la zone d'affichage
-# Ici les exports ne servent à rien
-@export var area_min = Vector3(-3, -3, -3)
-@export var area_max = Vector3(3, 3, 3)
+@export var area_min = Vector3(-2, -2, -2)
+@export var area_max = Vector3(2, 2, 2)
+var child_instantiated = false
 # Créer une zone de taille area_min - area_max
 func create_area_mesh() -> MeshInstance3D:
-	# On créer le Mesh sous forme de cube
+# On créer le Mesh sous forme de cube
 	var mesh_instance = MeshInstance3D.new()
 	var cube_mesh = BoxMesh.new()
 	var size = area_max - area_min
-	cube_mesh.size = size
+	print(size)
+	cube_mesh.size = size *2
+	print(cube_mesh.size)
 	mesh_instance.mesh = cube_mesh
 	mesh_instance.transform.origin = area_min + size / 2.0 # on positionne le cube au centre
 	# On créer le matériau
@@ -64,3 +73,26 @@ func clip_edge(start: Vector3, end: Vector3) -> Array:
 		if intersection != null and is_point_in_area(intersection):
 			points.append(intersection)
 	return points
+
+func _ready():
+	var bounds_mesh = create_area_mesh()
+	add_child(bounds_mesh)
+	child_instantiated = false
+
+func _process(delta):
+	if not child_instantiated and WorldInfo.camera :
+		_instantiate_child()
+
+func _instantiate_child():
+	var child = null
+	match object_selected:
+		Object4D.Tesseract:
+			child = preload("res://Scenes/hyper_cube.tscn").instantiate()
+
+	if child:
+		child.mesh_mode = mesh_mode
+		child.projection_mode = projection_mode
+		child.camera = WorldInfo.camera
+		child.area = self
+		add_child(child)
+		child_instantiated = true

@@ -5,7 +5,6 @@ extends Node3D
 func _ready():
 	WorldInfo.camera = $CharacterView/Camera3D
 
-
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta):
 	pass

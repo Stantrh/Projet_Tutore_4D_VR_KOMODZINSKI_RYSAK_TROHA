@@ -1,9 +1,10 @@
-[gd_scene load_steps=8 format=3 uid="uid://dme5pbe0dpogm"]
+[gd_scene load_steps=9 format=3 uid="uid://dme5pbe0dpogm"]
 
 [ext_resource type="Script" path="res://Scripts/world.gd" id="1_1maet"]
 [ext_resource type="PackedScene" uid="uid://ds5cp4u5hsjak" path="res://Scenes/hyper_cube.tscn" id="1_gh55x"]
 [ext_resource type="PackedScene" uid="uid://i2l7p16xiufn" path="res://Scenes/character_view.tscn" id="2_wfvje"]
 [ext_resource type="PackedScene" uid="uid://dik77har2dd4m" path="res://Scenes/ui.tscn" id="3_x60an"]
+[ext_resource type="PackedScene" uid="uid://cs3mpxmnuxmus" path="res://Scenes/zone_affichage.tscn" id="4_af4ot"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_4yftq"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -43,6 +44,8 @@ mesh_mode = 2
 
 [node name="CharacterView" parent="." instance=ExtResource("2_wfvje")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, 10)
+
+[node name="ZoneAffichage" parent="." instance=ExtResource("4_af4ot")]
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 

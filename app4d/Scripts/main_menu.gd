@@ -60,11 +60,13 @@ func _on_retour_button_pressed():
 
 func _on_confirm_button_pressed():
 	for i in range(int($choix_figure/Popup/ReferenceRect/ColorRect/VBoxContainer/VBoxContainer/TextEdit.text)):
+		var figure = preload("res://Scenes/zone_affichage.tscn").instantiate()
 		match selected_figure : 
 			available_figures.HYPERCUBE :
-				selected_figures.append(preload("res://Scenes/hyper_cube.tscn").instantiate())
+				figure.object_selected = figure.Object4D.Tesseract
 			_:
-				selected_figures.append(preload("res://Scenes/hyper_cube.tscn").instantiate())
+				figure.object_selected = figure.Object4D.Tesseract
+		selected_figures.append(figure)
 	$choix_figure/Popup.hide()
 	$choix_figure.hide()
 	$choix_projection.show()

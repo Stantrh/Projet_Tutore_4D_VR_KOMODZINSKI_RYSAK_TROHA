@@ -1,9 +1,11 @@
 extends Node
 
 signal _on_camera_changed(value)
+
+var _camera : Camera3D
 var camera: Camera3D:
 	get:
-		return camera
+		return _camera
 	set(value):
-		camera = value
+		_camera = value
 		_on_camera_changed.emit(value)

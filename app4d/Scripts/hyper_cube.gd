@@ -37,7 +37,6 @@ var transitioning = false # Indique si une transition est en cours
 @export var is_translate = false # Détermine si la translation est active
 @export var vect_translate = Vector4(0, 0, 0, 0) # Vecteur de translation à appliquer sur l'hypercube 4D
 @onready var collision_shape : CollisionShape3D = $Area3D/CollisionShape3D 
-
 #### Valeurs d'enum par rapport à la visualisation de l'hypercube
 @export var mesh_mode: int = 0  # Graphisme de l'hypercube | 0: Plein, 1: stylisé, 2: Filaire
 @export var projection_mode: int = 0  # Projection de l'hypercube | 0: Perspective, 1: Stéréographique, 2: Orthogonale
@@ -58,10 +57,11 @@ var change_view = false # COMMENTAIRES A FAIRE
 var is_up_to_date = true # COMMENTAIRES A FAIRE
 
 # COMMENTAIRES A FAIRE
-@onready var camera : Camera3D = $"../CharacterView/Camera3D"
-@onready var area = $ZoneAffichage # La variable de la zone
+@onready var camera : Camera3D = WorldInfo.camera  # $"../CharacterView/Camera3D"
+@export var area : Node3D = null # La variable de la zone
 
 func _ready():
+	WorldInfo.connect("_on_camera_changed",_on_camera_changed)
 	# Création du Mesh pour les modes FULL / WIREFRAME
 	mesh_instance = MeshInstance3D.new()
 	add_child(mesh_instance)
@@ -176,6 +176,9 @@ func update_stylish_hypercube():
 	var visible = false
 	for vertex in new_vertices:
 		var projected_point = apply_projection(vertex)
+		if area == null :
+			visible = true 
+			break
 		if area.is_point_in_area(projected_point):
 			visible = true
 			break
@@ -331,6 +334,8 @@ func update_hypercube():
 func is_hypercube_visible(vertices: Array) -> bool:
 	for vertex in vertices:
 		var projected_point = apply_projection(vertex)
+		if area == null :
+			return true
 		if area.is_point_in_area(projected_point):
 			return true
 	return false
@@ -362,11 +367,15 @@ func build_wireframe_hypercube_mesh(vertices) -> Mesh:
 		var p2 = apply_projection(vertices[edge[1]])
 		# Si vous souhaitez que la zone soit optionnel alors il ne faut pas oublier de modifier ces lignes
 		# Si l'arête est coupé par la zone alors on obtient de nouveaux points grâces à la méthode clip_edge
-		var clipped_points = area.clip_edge(p1, p2)
-		# Si il y a bien deux points alors on créer l'arêtes
-		if clipped_points.size() == 2:
-			surface_tool.add_vertex(clipped_points[0])
-			surface_tool.add_vertex(clipped_points[1])
+		if area != null:
+			var clipped_points = area.clip_edge(p1, p2)
+			# Si il y a bien deux points alors on créer l'arêtes
+			if clipped_points.size() == 2:
+				surface_tool.add_vertex(clipped_points[0])
+				surface_tool.add_vertex(clipped_points[1])
+		else :
+			surface_tool.add_vertex(p1)
+			surface_tool.add_vertex(p2)
 
 	surface_tool.commit(mesh)
 	return mesh
@@ -383,11 +392,15 @@ func build_wireframe_hypercube_mesh_Vector_3(vertices: Array) -> Mesh:
 		var p1: Vector3 = vertices[edge[0]]
 		var p2: Vector3 = vertices[edge[1]]
 		
-		var clipped_points = area.clip_edge(p1, p2)
-		# Si il y a bien deux points alors on créer l'arêtes
-		if clipped_points.size() == 2:
-			surface_tool.add_vertex(clipped_points[0])
-			surface_tool.add_vertex(clipped_points[1])
+		if area != null:
+			var clipped_points = area.clip_edge(p1, p2)
+			# Si il y a bien deux points alors on créer l'arêtes
+			if clipped_points.size() == 2:
+				surface_tool.add_vertex(clipped_points[0])
+				surface_tool.add_vertex(clipped_points[1])
+		else :
+			surface_tool.add_vertex(p1)
+			surface_tool.add_vertex(p2)
 	surface_tool.commit(mesh)
 	return mesh
 
@@ -399,8 +412,21 @@ func build_stylish_hypercube_mesh_projected(vertices) -> Node3D:
 		# On applique la projection
 		var projected_vertex = vertex
 		# Et on continue seulement si le point est toujours dans la zone /// Donc il faut modifier ça si vous souhaitez que la zone soit optionnel
-		if area.is_point_in_area(projected_vertex):
-			# Ensuite c'est seulement visuel, on créer la sphère et son matériau
+		if area != null : 
+			if area.is_point_in_area(projected_vertex):
+				# Ensuite c'est seulement visuel, on créer la sphère et son matériau
+				var point = MeshInstance3D.new()
+				point.mesh = SphereMesh.new()
+				point.scale = Vector3(0.2, 0.2, 0.2)
+				point.transform.origin = vertex
+				var material = StandardMaterial3D.new()
+				material.albedo_color = Color.BLUE
+				material.roughness = 0.1
+				material.metallic = 0.9
+				point.mesh.material = material
+				# On ajoute le mesh en enfant du Node3D
+				parent_node.add_child(point)
+		else : 
 			var point = MeshInstance3D.new()
 			point.mesh = SphereMesh.new()
 			point.scale = Vector3(0.2, 0.2, 0.2)
@@ -412,7 +438,6 @@ func build_stylish_hypercube_mesh_projected(vertices) -> Node3D:
 			point.mesh.material = material
 			# On ajoute le mesh en enfant du Node3D
 			parent_node.add_child(point)
-
 	# Ici on créer un cylindre pour chaque arête
 	# Pour rappel, get_hypercube_edges est une méthodes qui renvoie les arêtes de l'hypercube
 	# donc edge est un tableau qui contient chaque segment --> [[sommet1, sommet2], [sommet4, sommet6], []]
@@ -422,7 +447,10 @@ func build_stylish_hypercube_mesh_projected(vertices) -> Node3D:
 		var p2 = vertices[edge[1]]
 		# Si vous souhaitez que la zone soit optionnel alors il ne faut pas oublier de modifier ces lignes
 		# Si l'arête est coupé par la zone alors on obtient de nouveaux points grâces à la méthode clip_edge
-		var clipped_points = area.clip_edge(p1, p2)
+		var clipped_points = [p1,p2]
+		if area != null:
+			clipped_points = area.clip_edge(p1, p2)
+			
 		# Si il y a bien deux points alors on créer l'arêtes
 		if clipped_points.size() == 2:
 			var cylinder = MeshInstance3D.new()
@@ -505,9 +533,12 @@ func build_solid_hypercube_mesh(vertices) -> Mesh:
 			# On coupe les faces si elles sortent de la zone //// si vous souhaitez que la zone soit optionnel alors il ne faut pas oublier de modifier ces lignes
 			var clipped_face = []
 			for i in range(4):
-				var start = projected_vertices[i]
-				var end = projected_vertices[(i + 1) % 4]
-				clipped_face += area.clip_edge(start, end)
+				if area != null :
+					var start = projected_vertices[i]
+					var end = projected_vertices[(i + 1) % 4]
+					clipped_face += area.clip_edge(start, end)
+				else : 
+					clipped_face += [projected_vertices[i],projected_vertices[(i + 1)%4]]
 
 			clipped_face = clipped_face.duplicate()
 			# On construit la face s'il y a au moins 3 points
@@ -555,9 +586,12 @@ func build_solid_hypercube_mesh_projected(vertices: Array) -> Mesh:
 			# Découpage de la face selon la zone (optionnel)
 			var clipped_face = []
 			for i in range(4):
-				var start = projected_vertices[i]
-				var end = projected_vertices[(i + 1) % 4]
-				clipped_face += area.clip_edge(start, end)
+				if area != null :
+					var start = projected_vertices[i]
+					var end = projected_vertices[(i + 1) % 4]
+					clipped_face += area.clip_edge(start, end)
+				else : 
+					clipped_face += [projected_vertices[i],projected_vertices[(i + 1)%4]]
 			
 			# On duplique la face découpée si besoin (pour éviter toute référence inattendue)
 			clipped_face = clipped_face.duplicate()
@@ -820,3 +854,5 @@ func find_accessible_dimensions(current_dim: Dictionary, dimensions: Array) -> A
 			accessible.append(dim)
 	
 	return accessible
+func _on_camera_changed(value):
+	camera = value

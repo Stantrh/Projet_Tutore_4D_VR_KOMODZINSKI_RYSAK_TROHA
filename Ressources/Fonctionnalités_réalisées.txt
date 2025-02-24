@@ -1,7 +1,4 @@
 Fonctionnalités réalisées : 
-Ajout de couleurs aux faces solides : Réalisée par RYSAK Hugo
-Implémentation interface Fez : L'utilisateur peut effectuer une rotation pour changer de plan, ce qui permet de voir l'hypercube sous une autre perspective. Réalisée par RYSAK Hugo
-Interface points de vues : L'utilisateur peut choisir entre trois points de vue pour orienter l'hypercube (vue de face, vue par point de fuite, vue par la pointe). Réalisée par RYSAK Hugo
-Optimisation de l'application : Réglage de bugs, amélioration des performances pour les visualisations, refactorisation du code. Réalisée par TROHA Stanislas
+
 
 

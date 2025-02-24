@@ -87,7 +87,7 @@ func _on_orthogonale_pressed():
 	
 func load_world():
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
-	var main_world = preload("res://Scenes/world_2.tscn").instantiate()
+	var main_world = preload("res://Scenes/world_main.tscn").instantiate()
 	main_world.shapes = selected_figures
 	get_tree().root.add_child(main_world)
 	$"../../".queue_free()

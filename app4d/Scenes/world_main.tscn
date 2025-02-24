@@ -1,0 +1,86 @@
+[gd_scene load_steps=8 format=3 uid="uid://d103fjhenxc4o"]
+
+[ext_resource type="Script" path="res://Scripts/world_main.gd" id="1_ffw0n"]
+[ext_resource type="PackedScene" uid="uid://i2l7p16xiufn" path="res://Scenes/character_view.tscn" id="2_nxuto"]
+[ext_resource type="PackedScene" uid="uid://dik77har2dd4m" path="res://Scenes/ui.tscn" id="3_egf23"]
+[ext_resource type="Texture2D" uid="uid://bsvvyq3bp6xof" path="res://Assets/UI/crosshair.png" id="4_jecyr"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_2t7w4"]
+sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+ground_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+
+[sub_resource type="Sky" id="Sky_miacb"]
+sky_material = SubResource("ProceduralSkyMaterial_2t7w4")
+
+[sub_resource type="Environment" id="Environment_i2sw5"]
+background_mode = 2
+sky = SubResource("Sky_miacb")
+tonemap_mode = 2
+glow_enabled = true
+
+[node name="world2" type="Node3D"]
+script = ExtResource("1_ffw0n")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_i2sw5")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.866025, -0.433013, 0.25, 0, 0.5, 0.866025, -0.5, 0.75, -0.433013, 0, 19, 0)
+shadow_enabled = true
+
+[node name="CSGBox3D" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.1929, -0.747417, 0.570654)
+size = Vector3(5000, 0.2, 5000)
+
+[node name="CharacterView" parent="." instance=ExtResource("2_nxuto")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 7.88783, 1.64278, 0)
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="UI" parent="CanvasLayer" instance=ExtResource("3_egf23")]
+visible = false
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer"]
+custom_minimum_size = Vector2(32, 32)
+anchors_preset = -1
+anchor_left = 0.486
+anchor_top = 0.475
+anchor_right = 0.514
+anchor_bottom = 0.525
+offset_left = 16.128
+offset_top = 16.2
+offset_right = -16.128
+offset_bottom = -16.2
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("4_jecyr")
+expand_mode = 3
+
+[node name="markers" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.568527, 0)
+
+[node name="Marker3D" type="Marker3D" parent="markers"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, 8)
+gizmo_extents = 10.0
+
+[node name="Marker3D4" type="Marker3D" parent="markers"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, 26)
+gizmo_extents = 10.0
+
+[node name="Marker3D5" type="Marker3D" parent="markers"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 26, 3, 26)
+gizmo_extents = 10.0
+
+[node name="Marker3D2" type="Marker3D" parent="markers"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, -8)
+gizmo_extents = 10.0
+
+[node name="Marker3D3" type="Marker3D" parent="markers"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, -26)
+gizmo_extents = 10.0
+
+[node name="Marker3D6" type="Marker3D" parent="markers"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18, 3, -26)
+gizmo_extents = 10.0
+
+[connection signal="object_selected" from="CharacterView" to="." method="_on_character_view_object_selected"]

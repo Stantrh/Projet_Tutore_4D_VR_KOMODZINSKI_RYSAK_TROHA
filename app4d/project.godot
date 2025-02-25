@@ -20,6 +20,7 @@ config/icon="res://icon.svg"
 HypercubeConstants="*res://Scripts/hypercube_constants.gd"
 HypercubeModes="*res://Scripts/hypercube_modes.gd"
 WorldInfo="*res://Scripts/world_info.gd"
+StackedConstant="*res://Scripts/stacked_constant.gd"
 
 [display]
 

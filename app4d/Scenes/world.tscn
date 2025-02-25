@@ -1,9 +1,8 @@
-[gd_scene load_steps=9 format=3 uid="uid://dme5pbe0dpogm"]
+[gd_scene load_steps=8 format=3 uid="uid://dme5pbe0dpogm"]
 
 [ext_resource type="Script" path="res://Scripts/world.gd" id="1_1maet"]
 [ext_resource type="PackedScene" uid="uid://i2l7p16xiufn" path="res://Scenes/character_view.tscn" id="2_wfvje"]
 [ext_resource type="PackedScene" uid="uid://dik77har2dd4m" path="res://Scenes/ui.tscn" id="3_x60an"]
-[ext_resource type="PackedScene" uid="uid://b2aaslmcll36m" path="res://Scenes/hypercube_stacking.tscn" id="4_hwlht"]
 [ext_resource type="PackedScene" uid="uid://cs3mpxmnuxmus" path="res://Scenes/zone_affichage.tscn" id="5_vwbob"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_4yftq"]
@@ -41,11 +40,9 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, 10)
 [node name="UI" parent="CanvasLayer" instance=ExtResource("3_x60an")]
 visible = false
 
-[node name="hypercube_stacking" parent="." instance=ExtResource("4_hwlht")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, 0)
-mesh_mode = 1
-
 [node name="ZoneAffichage" parent="." instance=ExtResource("5_vwbob")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 5, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 10, 0)
+area_min = Vector3(-3, -3, -3)
+area_max = Vector3(3, 3, 3)
 
 [connection signal="object_selected" from="CharacterView" to="." method="_on_character_view_object_selected"]

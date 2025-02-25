@@ -1,12 +1,14 @@
 extends Node3D
-
+#A CHANGER POUR LE PARSER
 # Les coordonnées des sommets de l'hypercube, en 4D
-var dynamic_vertices = HypercubeConstants.DEFAULT_VERTICES.duplicate((true))
+#Object dans lequel on va chercher
+var object = StackedConstant
+var dynamic_vertices = object.DEFAULT_VERTICES.duplicate((true))
 
 # on charge les 8 cubes qui constituent l'hypercube
-const CUBES = HypercubeConstants.CUBES
+var CUBES = object.CUBES
 # on charge les différentes faces de l'hypercube, les 4 points des carrés représentant les faces
-const CUBE_FACES = HypercubeConstants.CUBE_FACES
+var CUBE_FACES = object.CUBE_FACES
 # on charge les couleurs des faces
 const FACE_COLORS = HypercubeConstants.FACE_COLORS
 
@@ -272,7 +274,7 @@ func update_hypercube():
 		var axe_1 = DIMENSIONS[dimension_selected].x
 		var axe_2 = DIMENSIONS[dimension_selected].w
 		for vertex in dynamic_vertices :
-			new_vertices.append(rotate_4d(vertex, 44.83, axe_1, axe_2, 25, axe2_a, axe2_b))
+			new_vertices.append(rotate_4d(vertex, 45, axe_1, axe_2, 25, axe2_a, axe2_b))
 		is_point_of_view_fugue = false
 		dynamic_vertices = new_vertices
 		marker.transform.origin = apply_projection(get_global_center(dynamic_vertices))
@@ -515,6 +517,8 @@ func build_solid_hypercube_mesh(vertices) -> Mesh:
 	# Donc on parcourt chaque cube
 	var iColor = 0;
 	for cube in CUBES:
+		if iColor >= FACE_COLORS.size():
+			iColor = 0
 		var face_color = FACE_COLORS[iColor]
 		iColor+=1
 		# Et chaque face du cube
@@ -614,8 +618,8 @@ func build_solid_hypercube_mesh_projected(vertices: Array) -> Mesh:
 # Cette méthode retoune les arêtes de l'hypercube sous forme de liste --> [[sommet1, sommet4], [], []]
 func get_hypercube_edges() -> Array:
 	var edges = []
-	for i in range(16):
-		for j in range(i + 1, 16):
+	for i in range(dynamic_vertices.size()):
+		for j in range(i + 1, dynamic_vertices.size()):
 			if (dynamic_vertices[i] - dynamic_vertices[j]).length() == 2:
 				edges.append([i, j])
 	return edges
@@ -816,18 +820,18 @@ func lerp_vertices(start_vertices, end_vertices, t):
 
 
 func view_face():
-	dynamic_vertices = HypercubeConstants.DEFAULT_VERTICES.duplicate((true))
+	dynamic_vertices = object.DEFAULT_VERTICES.duplicate((true))
 	#rotate_toward_camera()
 
 func fugue_view():
 	is_point_of_view_fugue = true
-	dynamic_vertices = HypercubeConstants.DEFAULT_VERTICES.duplicate((true))
+	dynamic_vertices = object.DEFAULT_VERTICES.duplicate((true))
 	is_double_rotate = false
 	is_rotate = false
 	is_translate = false
 	#rotate_toward_camera()
 func point_view() :
-	dynamic_vertices = HypercubeConstants.DEFAULT_VERTICES.duplicate((true))
+	dynamic_vertices = object.DEFAULT_VERTICES.duplicate((true))
 	is_double_rotate = false
 	is_rotate = false
 	is_translate = false

@@ -32,7 +32,7 @@ var transitioning = false # Indique si une transition est en cours
 @export var rotation_angle2 = 90
 @export var axe2_a = 1
 @export var axe2_b = 3
-
+@export var interactible : bool = true
 #### TRANSLATIONS
 @export var is_translate = false # Détermine si la translation est active
 @export var vect_translate = Vector4(0, 0, 0, 0) # Vecteur de translation à appliquer sur l'hypercube 4D
@@ -56,20 +56,19 @@ var is_point_of_view_point = false # COMMENTAIRES A FAIRE
 var change_view = false # COMMENTAIRES A FAIRE
 var is_up_to_date = true # COMMENTAIRES A FAIRE
 
-# COMMENTAIRES A FAIRE
+# COMMENTAIRES A FAIRE	
 @onready var camera : Camera3D = WorldInfo.camera  # $"../CharacterView/Camera3D"
 @export var area : Node3D = null # La variable de la zone
 
 func _ready():
+	if !interactible :
+		$Area3D.monitoring = false
+		$Area3D.monitorable = false
+		$Area3D/CollisionShape3D.disabled = true
 	WorldInfo.connect("_on_camera_changed",_on_camera_changed)
 	# Création du Mesh pour les modes FULL / WIREFRAME
 	mesh_instance = MeshInstance3D.new()
 	add_child(mesh_instance)
-	# On créer un autre Mesh pour la zone
-	# Donc si on veut faire que la zone soit optionnelle, il faut modifier ici sans oublier les méthodes build_ et une partie de update_hypercube
-	#var bounds_mesh = area.create_area_mesh()
-	#add_child(bounds_mesh) # ajout en tant qu'enfant de l'hypercube (Node3D)
-	#bounds_mesh.top_level = true
 	accesible_dimensions = find_accessible_dimensions(DIMENSIONS[dimension_selected],DIMENSIONS)
 	
 	# Selon le mode, on construit l'hypercube une seule fois pour le mode stylish (performances)
@@ -82,6 +81,7 @@ func _ready():
 func _process(delta):
 	if !is_up_to_date:
 		return
+
 	# On incrémente l'angle de rotation pour avoir une figure qui tourne en continu
 	if is_rotate:
 		rotation_angle += delta

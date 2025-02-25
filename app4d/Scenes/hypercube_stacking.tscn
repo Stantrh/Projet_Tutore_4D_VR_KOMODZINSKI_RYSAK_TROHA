@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://b2aaslmcll36m"]
+
+[ext_resource type="Script" path="res://Scripts/hypercube_stacking.gd" id="1_ixbhr"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_62i6k"]
+size = Vector3(12, 12, 12)
+
+[node name="hypercube_stacking" type="Node3D" groups=["Hyperfigure"]]
+script = ExtResource("1_ixbhr")
+
+[node name="Area3D" type="Area3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+shape = SubResource("BoxShape3D_62i6k")

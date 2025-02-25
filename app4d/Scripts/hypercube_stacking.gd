@@ -11,7 +11,9 @@ extends Node
 @export var axe2_a = 1
 @export var axe2_b = 3
 @export var interactible : bool = true
-
+var is_view_face = false
+var is_point_of_view_fugue = false  
+var is_point_of_view_point = false  
 #### TRANSLATIONS
 @export var is_translate = false 
 @export var vect_translate = Vector4(0, 0, 0, 0)
@@ -29,6 +31,7 @@ const HYPERCUBE_SCENE = preload("res://Scenes/hyper_cube.tscn")
 
 func _ready():
 	child_instantiated = false
+	accesible_dimensions = find_accessible_dimensions(DIMENSIONS[dimension_selected],DIMENSIONS)
 
 func _process(delta: float) -> void:
 	if not child_instantiated and WorldInfo.camera : 
@@ -44,26 +47,27 @@ func _process(delta: float) -> void:
 
 
 func update_hypercubes():
-	# Supprimer tous les hypercubes enfants
-	for child in get_children():
-		if child.is_in_group("Hyperfigure"):
-			child.queue_free()
+	if not transitioning : 
+		# Supprimer tous les hypercubes enfants
+		for child in get_children():
+			if child.is_in_group("Hyperfigure"):
+				child.queue_free()
 
-	# Récupérer les nouveaux sommets transformés
-	var transformed_vertices = generate_transformed_hypercube_vertices()
+		# Récupérer les nouveaux sommets transformés
+		var transformed_vertices = generate_transformed_hypercube_vertices()
 
-	# Instancier les nouveaux hypercubes
-	for vertices in transformed_vertices:
-		var child = HYPERCUBE_SCENE.instantiate()
-		child.interactible = false
-		child.dynamic_vertices = vertices
-		child.mesh_mode = mesh_mode
-		child.projection_mode = projection_mode
-		child.camera = WorldInfo.camera
-		add_child(child)
-
-	# Reset des flags après mise à jour
-	is_translate = false
+		# Instancier les nouveaux hypercubes
+		for vertices in transformed_vertices:
+			var child = HYPERCUBE_SCENE.instantiate()
+			child.interactible = false
+			child.dynamic_vertices = vertices
+			child.mesh_mode = mesh_mode
+			child.projection_mode = projection_mode
+			child.camera = WorldInfo.camera
+			add_child(child)
+			child.set_dimension_selected(dimension_selected)
+		# Reset des flags après mise à jour
+		is_translate = false
 
 func generate_transformed_hypercube_vertices() -> Array:
 	var all_hypercubes = []
@@ -76,21 +80,34 @@ func generate_transformed_hypercube_vertices() -> Array:
 					var hypercube_vertices = []
 					for vertex in small_vertices:
 						var new_vertex = Vector4(vertex.x + i, vertex.y + j, vertex.z + k, vertex.w + l)
-
+						if is_point_of_view_fugue :
+							var axe_1 = DIMENSIONS[dimension_selected].x
+							var axe_2 = DIMENSIONS[dimension_selected].w
+							new_vertex =	rotate_4d(new_vertex, 44.83, axe_1, axe_2, 25, axe2_a, axe2_b)
+						elif is_point_of_view_point:
+						#is_double_rotate = true
+							var axe_1 = DIMENSIONS[dimension_selected].x
+							var axe_2 = DIMENSIONS[dimension_selected].w
+							var axe2_1 = DIMENSIONS[dimension_selected].y
+							var axe2_2 = DIMENSIONS[dimension_selected].w
+							new_vertex =rotate_4d(new_vertex,-120,axe2_1,axe2_2,0,0,0)
+							is_double_rotate = false
 						# Appliquer translation
 						if is_translate : 
 							real_vect_translate += vect_translate
 							is_translate = false
+						if is_view_face :
+							real_vect_translate = Vector4(0,0,0,0)
 						new_vertex += real_vect_translate
-
+			
 						# Appliquer rotation si nécessaire
-						if is_rotate:
+						if is_rotate and not is_view_face:
 							new_vertex = rotate_4d(new_vertex,rotation_angle,axe_a,axe_b,rotation_angle2,axe2_a,axe2_b)
-
+						
 						hypercube_vertices.append(new_vertex)
 
 					all_hypercubes.append(hypercube_vertices)
-
+	is_view_face = false
 	return all_hypercubes
 
 func generate_small_hypercube_vertices() -> Array:
@@ -102,20 +119,10 @@ func generate_small_hypercube_vertices() -> Array:
 					vertices.append(Vector4(a, b, c, d))
 	return vertices
 
-func rotate_point(v: Vector4, a: int, b: int, angle: float) -> Vector4:
-	var rad = deg_to_rad(angle)
-	var cos_theta = cos(rad)
-	var sin_theta = sin(rad)
-	
-	var rotated = Vector4(v.x, v.y, v.z, v.w)
-	rotated[a] = v[a] * cos_theta - v[b] * sin_theta
-	rotated[b] = v[a] * sin_theta + v[b] * cos_theta
-	
-	return rotated
 func rotate_4d(point: Vector4, angle1: float, axis1_a: int, axis1_b: int, angle2: float, axis2_a: int, axis2_b: int) -> Vector4:
 	var center = Vector4(0,0,0,0)
 	var local_point = point - center
-	
+	print(is_double_rotate)
 	# On calcule cos et sin de la première rotation
 	var cos_theta1 = cos(angle1)
 	var sin_theta1 = sin(angle1)
@@ -186,3 +193,48 @@ func set_rotate_plan(plan: String, single_rotate: bool):
 				axe2_a = 2
 				axe2_b = 3
 		
+func view_face():
+	is_view_face = true
+	is_point_of_view_fugue = false
+	is_point_of_view_point = false
+func fugue_view():
+	is_point_of_view_fugue = true
+	is_view_face = false	
+	is_point_of_view_point = false
+	is_double_rotate = false
+	is_rotate = false
+	is_translate = false
+	#rotate_toward_camera()
+func point_view() :
+	is_double_rotate = false
+	is_rotate = false
+	is_translate = false
+	is_point_of_view_point = true
+	is_point_of_view_fugue = false
+	is_view_face = false	
+	#
+func find_accessible_dimensions(current_dim: Dictionary, dimensions: Array) -> Array:
+	var accessible = []
+	
+	for dim in dimensions:
+		var swaps = 0
+		var keys = ["x", "y", "z", "w"]
+		
+		for key in keys:
+			if current_dim[key] != dim[key]:
+				swaps += 1
+		
+		# Si une seule permutation ou aucune (même dimension), on considère comme accessible
+		if swaps == 2:
+			accessible.append(dim)
+	
+	return accessible
+func change_dimension(new_dimension: String):
+	transitioning = true
+	for i in range(DIMENSIONS.size()):
+		if DIMENSIONS[i].name == new_dimension:
+			dimension_selected = i
+			break
+	accesible_dimensions = find_accessible_dimensions(DIMENSIONS[dimension_selected], DIMENSIONS)
+	transitioning = false
+	

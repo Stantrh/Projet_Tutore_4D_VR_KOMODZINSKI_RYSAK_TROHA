@@ -81,7 +81,6 @@ func _ready():
 func _process(delta):
 	if !is_up_to_date:
 		return
-
 	# On incrémente l'angle de rotation pour avoir une figure qui tourne en continu
 	if is_rotate:
 		rotation_angle += delta
@@ -299,7 +298,7 @@ func update_hypercube():
 			dynamic_vertices = new_vertices
 			marker.transform.origin = apply_projection(get_global_center(dynamic_vertices))
 			apply_translation(vect_translate)	
-			print(marker.position)
+			#print(marker.position)
 			is_translate = false
 		elif is_rotate:
 			for vertex in dynamic_vertices:
@@ -764,10 +763,14 @@ func change_dimension(new_dimension: String):
 		target_vertices.append(apply_projection(dynamic_vertices[i]))
 	var new_dim = DIMENSIONS[dimension_selected] # Nouvelle dimension sélectionnée
 	accesible_dimensions = find_accessible_dimensions(DIMENSIONS[dimension_selected], DIMENSIONS)
-
-
-	# Lancer l'animation de transition
+		# Lancer l'animation de transition
 	animate_dimension_transition()
+func set_dimension_selected(new_dimension_selected):
+	is_up_to_date = false
+	dimension_selected = new_dimension_selected
+	is_up_to_date = true
+
+
 
 	
 

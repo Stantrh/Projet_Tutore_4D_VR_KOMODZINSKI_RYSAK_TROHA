@@ -34,13 +34,14 @@ func _process(delta: float) -> void:
 	if not child_instantiated and WorldInfo.camera : 
 		update_hypercubes()
 		child_instantiated = false
-	if is_translate or is_rotate or is_double_rotate:
-		update_hypercubes()  # Recalcule et recrée tout quand on applique une transformation
 	if is_rotate:
 		rotation_angle += delta
 		# La même chose si on a une double rotation
 		if is_double_rotate:
 			rotation_angle2 += delta
+	if is_translate or is_rotate or is_double_rotate:
+		update_hypercubes()  # Recalcule et recrée tout quand on applique une transformation
+
 
 func update_hypercubes():
 	# Supprimer tous les hypercubes enfants
@@ -80,8 +81,6 @@ func generate_transformed_hypercube_vertices() -> Array:
 						if is_translate : 
 							real_vect_translate += vect_translate
 							is_translate = false
-						print(real_vect_translate)
-						print(vect_translate)
 						new_vertex += real_vect_translate
 
 						# Appliquer rotation si nécessaire

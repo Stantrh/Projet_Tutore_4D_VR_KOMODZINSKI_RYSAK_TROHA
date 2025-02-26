@@ -2,7 +2,7 @@ extends Node3D
 #A CHANGER POUR LE PARSER
 # Les coordonnées des sommets de l'hypercube, en 4D
 #Object dans lequel on va chercher
-var object = StackedConstant
+var object = HypercubeConstants
 var dynamic_vertices = object.DEFAULT_VERTICES.duplicate((true))
 
 # on charge les 8 cubes qui constituent l'hypercube
@@ -43,7 +43,7 @@ var transitioning = false # Indique si une transition est en cours
 @export var mesh_mode: int = 0  # Graphisme de l'hypercube | 0: Plein, 1: stylisé, 2: Filaire
 @export var projection_mode: int = 0  # Projection de l'hypercube | 0: Perspective, 1: Stéréographique, 2: Orthogonale
 var mesh_instance: MeshInstance3D # Mesh de l'hypercube
-
+var hypercube_changed : bool = false
 # --- Variables pour le mode STYLISH
 var stylish_container: Node3D = null # Contient les cylindres et sphères
 var stylish_spheres = [] # Tableaux des MeshInstance3D pour les sommets
@@ -78,8 +78,19 @@ func _ready():
 		create_stylish_hypercube()
 	else:
 		update_hypercube()
+	if WorldInfo.camera : 
+		WorldInfo.camera.get_parent().camera_moved.connect(_on_camera_moved)
 		
+func _on_camera_moved():
+	print("yep")
+	if projection_mode == 0 :
+		print("youhou")
+		if mesh_mode == MeshMode.STYLISH:
+			update_stylish_hypercube()
+		else:
+			update_hypercube()
 		
+			
 func _process(delta):
 	if !is_up_to_date:
 		return
@@ -91,12 +102,20 @@ func _process(delta):
 			rotation_angle2 += delta
 	# On appel en continu la méthode update_hypercube pour que la rotation prenne effet et aussi pour la projection perspective
 	# Pour le mode STYLISH, on met à jour la position des nodes existants
-	if mesh_mode == MeshMode.STYLISH:
+	#if mesh_mode == MeshMode.STYLISH:
+		#update_stylish_hypercube()
+	#else:
+		#update_hypercube()
+	if is_rotate or is_translate or hypercube_changed :
+		hypercube_changed = false 
+		if mesh_mode == MeshMode.STYLISH:
+			update_stylish_hypercube()
+		else:
+			update_hypercube()
+	if not camera and WorldInfo.camera : 
+		camera = WorldInfo.camera
+	if mesh_mode == MeshMode.STYLISH : 
 		update_stylish_hypercube()
-	else:
-		update_hypercube()
-
-		
 func create_stylish_hypercube():
 	# Crée un conteneur pour l'hypercube en mode STYLISH
 	stylish_container = Node3D.new()
@@ -132,7 +151,6 @@ func create_stylish_hypercube():
 		cylinder_instance.mesh.material = material
 		stylish_container.add_child(cylinder_instance)
 		stylish_cylinders.append(cylinder_instance)
-
 func update_stylish_hypercube():
 	var new_vertices = []
 	if is_point_of_view_fugue :
@@ -268,7 +286,6 @@ func update_hypercube():
 	# Pour FULL ou WIREFRAME, on reconstruit le mesh chaque frame (méthode actuelle)
 	for child in mesh_instance.get_children():
 		child.queue_free()
-	
 	var new_vertices = []
 	if is_point_of_view_fugue :
 		var axe_1 = DIMENSIONS[dimension_selected].x
@@ -278,6 +295,14 @@ func update_hypercube():
 		is_point_of_view_fugue = false
 		dynamic_vertices = new_vertices
 		marker.transform.origin = apply_projection(get_global_center(dynamic_vertices))
+		var mesh
+		if mesh_mode == MeshMode.STYLISH:
+			# Ce cas n'arrive normalement pas ici
+			mesh = apply_build(new_vertices)
+			mesh_instance.add_child(mesh)
+		else:
+			mesh = apply_build(new_vertices)
+			mesh_instance.mesh = mesh
 	elif is_point_of_view_point:
 		#is_double_rotate = true
 		var axe_1 = DIMENSIONS[dimension_selected].x
@@ -290,6 +315,14 @@ func update_hypercube():
 		dynamic_vertices = new_vertices
 		is_double_rotate = false
 		marker.transform.origin = apply_projection(get_global_center(dynamic_vertices))
+		var mesh
+		if mesh_mode == MeshMode.STYLISH:
+			# Ce cas n'arrive normalement pas ici
+			mesh = apply_build(new_vertices)
+			mesh_instance.add_child(mesh)
+		else:
+			mesh = apply_build(new_vertices)
+			mesh_instance.mesh = mesh
 	else:		
 	# /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	# /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -750,6 +783,7 @@ func get_global_center(vertices: Array) -> Vector4:
 
 #fonction pour changer le point qu'on ne projette pas
 func change_dimension(new_dimension: String):
+	hypercube_changed = true
 	current_vertices.clear()
 	target_vertices.clear()
 	if transitioning:
@@ -821,16 +855,19 @@ func lerp_vertices(start_vertices, end_vertices, t):
 
 func view_face():
 	dynamic_vertices = object.DEFAULT_VERTICES.duplicate((true))
+	hypercube_changed = true
 	#rotate_toward_camera()
 
 func fugue_view():
 	is_point_of_view_fugue = true
+	hypercube_changed = true
 	dynamic_vertices = object.DEFAULT_VERTICES.duplicate((true))
 	is_double_rotate = false
 	is_rotate = false
 	is_translate = false
 	#rotate_toward_camera()
 func point_view() :
+	hypercube_changed = true
 	dynamic_vertices = object.DEFAULT_VERTICES.duplicate((true))
 	is_double_rotate = false
 	is_rotate = false

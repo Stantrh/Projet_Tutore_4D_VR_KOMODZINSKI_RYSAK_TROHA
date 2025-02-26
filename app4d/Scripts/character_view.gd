@@ -11,7 +11,7 @@ var mouse_sensitivity: Vector2 = Vector2(0.2, 0.2)
 var move_speed: float = 5.0
 # Limite de rotation verticale
 var vertical_limit: float = 89.0
-
+signal camera_moved
 # Variables pour stocker l'angle de rotation
 var yaw: float = 0.0  # Rotation horizontale (gauche/droite)
 var pitch: float = 0.0  # Rotation verticale (haut/bas)
@@ -37,12 +37,13 @@ func _process(delta):
 	if Input.is_action_pressed("move_forward"):
 		direction -= transform.basis.z
 	if Input.is_action_pressed("move_backward"):
-			direction += transform.basis.z
+		direction += transform.basis.z
 	if Input.is_action_pressed("move_left"):
 		direction -= transform.basis.x
 	if Input.is_action_pressed("move_right"):
 		direction += transform.basis.x
-		
+	if direction != Vector3.ZERO :
+		camera_moved.emit()
 		# Normaliser la direction et appliquer le mouvement
 	direction = direction.normalized()
 	position += direction * move_speed * delta

@@ -26,6 +26,20 @@ const FACE_COLORS = [
 	Color(1, 0.5, 0, 1),# orange
 	Color(0.5, 0, 1, 1) # violet
 ]
+const EDGES = [
+	# Connexions dans chaque cube 3D
+	[0, 1], [1, 3], [3, 2], [2, 0], # Face avant
+	[4, 5], [5, 7], [7, 6], [6, 4], # Face arrière
+	[0, 4], [1, 5], [2, 6], [3, 7], # Connexions entre face avant et arrière
+	
+	[8, 9], [9, 11], [11, 10], [10, 8], # Face avant du cube 3D parallèle
+	[12, 13], [13, 15], [15, 14], [14, 12], # Face arrière du cube 3D parallèle
+	[8, 12], [9, 13], [10, 14], [11, 15], # Connexions entre face avant et arrière
+
+	# Connexions entre les deux cubes 3D dans la 4e dimension
+	[0, 8], [1, 9], [2, 10], [3, 11],
+	[4, 12], [5, 13], [6, 14], [7, 15]
+]
 
 const DIMENSIONS = [
 	{"name": "XYZ", "x": 0, "y": 1, "z": 2, "w": 3},

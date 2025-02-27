@@ -82,15 +82,22 @@ func _ready():
 		WorldInfo.camera.get_parent().camera_moved.connect(_on_camera_moved)
 		
 func _on_camera_moved():
-	print("yep")
 	if projection_mode == 0 :
-		print("youhou")
 		if mesh_mode == MeshMode.STYLISH:
 			update_stylish_hypercube()
 		else:
 			update_hypercube()
 		
-			
+func stop_rotation():
+	is_rotate = false
+	var new_vertices = []
+	for vertice in dynamic_vertices :
+		new_vertices.append(rotate_4d(vertice, rotation_angle, axe_a, axe_b, rotation_angle2, axe2_a, axe2_b))
+	dynamic_vertices = new_vertices
+	if mesh_mode == MeshMode.STYLISH :
+		update_stylish_hypercube()
+	else : 
+		update_hypercube()
 func _process(delta):
 	if !is_up_to_date:
 		return
@@ -135,7 +142,7 @@ func create_stylish_hypercube():
 		stylish_spheres.append(sphere_instance)
 	
 	# Calcul des arêtes de l'hypercube (elles ne changent pas)
-	stylish_edges = get_hypercube_edges()
+	stylish_edges = object.EDGES
 	
 	# Création des cylindres pour les arêtes
 	for edge in stylish_edges:
@@ -395,7 +402,7 @@ func build_wireframe_hypercube_mesh(vertices) -> Mesh:
 	# On construit les arêtes
 	# get_hypercube_edges est une méthodes qui renvoie les arêtes de l'hypercube
 	# donc edge est un tableau qui contient chaque segment --> [[sommet1, sommet2], [sommet4, sommet6], []]
-	for edge in get_hypercube_edges():
+	for edge in object.EDGES:
 		# On applique la projection aux sommets
 		var p1 = apply_projection(vertices[edge[0]])
 		var p2 = apply_projection(vertices[edge[1]])
@@ -421,7 +428,7 @@ func build_wireframe_hypercube_mesh_Vector_3(vertices: Array) -> Mesh:
 	surface_tool.begin(Mesh.PRIMITIVE_LINES)
 	
 	# Pour chaque arête de l'hypercube (chaque edge est un tableau [index_sommet1, index_sommet2])
-	for edge in get_hypercube_edges():
+	for edge in object.EDGES:
 		# On récupère directement les positions 3D des sommets
 		var p1: Vector3 = vertices[edge[0]]
 		var p2: Vector3 = vertices[edge[1]]
@@ -475,7 +482,7 @@ func build_stylish_hypercube_mesh_projected(vertices) -> Node3D:
 	# Ici on créer un cylindre pour chaque arête
 	# Pour rappel, get_hypercube_edges est une méthodes qui renvoie les arêtes de l'hypercube
 	# donc edge est un tableau qui contient chaque segment --> [[sommet1, sommet2], [sommet4, sommet6], []]
-	for edge in get_hypercube_edges():
+	for edge in object.EDGES:
 		# On applique la projection aux sommets
 		var p1 = vertices[edge[0]]
 		var p2 = vertices[edge[1]]

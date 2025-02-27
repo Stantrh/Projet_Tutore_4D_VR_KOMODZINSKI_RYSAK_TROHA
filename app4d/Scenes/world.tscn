@@ -42,7 +42,6 @@ visible = false
 
 [node name="ZoneAffichage" parent="." instance=ExtResource("5_vwbob")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 10, 0)
-mesh_mode = 2
 area_min = Vector3(-3, -3, -3)
 area_max = Vector3(3, 3, 3)
 

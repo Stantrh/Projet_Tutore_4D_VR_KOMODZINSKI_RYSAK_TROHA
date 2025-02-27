@@ -19,7 +19,7 @@ const CELLS = [
 var DEFAULT_VERTICES = generate_transformed_hypercube_vertices()
 
 var CUBES = generate_cells(DEFAULT_VERTICES)
-
+var EDGES = get_hypercube_edges()
 
 func generate_transformed_hypercube_vertices() -> Array:
 	var all_hypercubes = []
@@ -56,3 +56,11 @@ static func generate_cells(vertices: Array) -> Array:
 func _ready():
 	print("Total Sommets:", DEFAULT_VERTICES.size())
 	print("Total Cellules:", CUBES)
+
+func get_hypercube_edges() -> Array:
+	var edges = []
+	for i in range(DEFAULT_VERTICES.size()):
+		for j in range(i + 1, DEFAULT_VERTICES.size()):
+			if (DEFAULT_VERTICES[i] - DEFAULT_VERTICES[j]).length() == 2:
+				edges.append([i, j])
+	return edges

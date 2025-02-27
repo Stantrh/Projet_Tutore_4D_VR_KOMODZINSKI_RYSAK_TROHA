@@ -142,7 +142,7 @@ func _on_check_button_toggled(button_pressed: bool, axis_pair: String):
 					print("axe2_a : " + str(axe2_a))
 					print("axe2_b : " + str(axe2_b))
 				elif active_rotations.size() == 0:
-					object_controlled.is_rotate = false
+					object_controlled.stop_rotation()
 				
 		
 	

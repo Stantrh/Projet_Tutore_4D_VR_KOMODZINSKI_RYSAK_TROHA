@@ -13,6 +13,7 @@ script = ExtResource("1_v1v16")
 [node name="Area3D" type="Area3D" parent="."]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 0, 0)
 shape = SubResource("BoxShape3D_o0t87")
 
 [node name="ZoneAffichage" type="Node3D" parent="."]

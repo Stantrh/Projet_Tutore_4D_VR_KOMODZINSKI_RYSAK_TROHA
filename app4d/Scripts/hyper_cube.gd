@@ -67,8 +67,8 @@ func _ready():
 	add_child(mesh_instance)
 	# On créer un autre Mesh pour la zone
 	# Donc si on veut faire que la zone soit optionnelle, il faut modifier ici sans oublier les méthodes build_ et une partie de update_hypercube
-	#var bounds_mesh = area.create_area_mesh()
-	#add_child(bounds_mesh) # ajout en tant qu'enfant de l'hypercube (Node3D)
+	var bounds_mesh = area.create_area_mesh()
+	add_child(bounds_mesh) # ajout en tant qu'enfant de l'hypercube (Node3D)
 	#bounds_mesh.top_level = true
 	accesible_dimensions = find_accessible_dimensions(DIMENSIONS[dimension_selected],DIMENSIONS)
 	

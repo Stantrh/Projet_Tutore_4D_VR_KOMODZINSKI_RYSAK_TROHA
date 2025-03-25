@@ -1,0 +1,48 @@
+[gd_scene load_steps=3 format=3 uid="uid://uk7c31uwtcjr"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_cm4us"]
+font_size = 12
+
+[sub_resource type="LabelSettings" id="LabelSettings_mw227"]
+font_size = 9
+
+[node name="perspective_screen" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.411765, 0.411765, 0.411765, 0.54902)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ColorRect"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 20
+
+[node name="Label" type="Label" parent="ColorRect/VBoxContainer"]
+layout_mode = 2
+text = "Projection Perspective"
+label_settings = SubResource("LabelSettings_cm4us")
+horizontal_alignment = 1
+
+[node name="Label2" type="Label" parent="ColorRect/VBoxContainer"]
+layout_mode = 2
+text = "Lorsqu’on regarde un objet en trois dimensions, les objets éloignés semblent plus petits et les lignes parallèles semblent converger (comme des rails de chemin de fer). Cette transformation, appelée projection en perspective, permet de donner une illusion de profondeur sur un écran ou une feuille plate.
+
+Pour un hypercube (4D → 3D), la projection en perspective fonctionne de la même manière"
+label_settings = SubResource("LabelSettings_mw227")
+horizontal_alignment = 1
+autowrap_mode = 2

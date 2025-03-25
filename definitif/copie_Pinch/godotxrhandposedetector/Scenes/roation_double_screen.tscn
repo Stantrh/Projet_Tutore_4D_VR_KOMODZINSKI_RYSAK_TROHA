@@ -1,0 +1,57 @@
+[gd_scene load_steps=3 format=3 uid="uid://cvvh4inok3qb6"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_8v8cd"]
+font_size = 12
+
+[sub_resource type="LabelSettings" id="LabelSettings_hiqem"]
+font_size = 9
+
+[node name="roation_double_screen" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.411765, 0.411765, 0.411765, 0.54902)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ColorRect"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 20
+
+[node name="Label" type="Label" parent="ColorRect/VBoxContainer"]
+layout_mode = 2
+text = "Rotation sur deux plans"
+label_settings = SubResource("LabelSettings_8v8cd")
+horizontal_alignment = 1
+
+[node name="Label2" type="Label" parent="ColorRect/VBoxContainer"]
+layout_mode = 2
+text = "Vous avez déjà compris comment tourner sur un plan… mais ici, sur l’Île des Rotations , les choses deviennent bien plus étranges. Ici, les rotations ne se limitent plus à un seul plan : elles peuvent se produire simultanément sur deux plans distincts !
+
+Dans notre monde tridimensionnel, une rotation se fait autour d’un axe unique. Mais en quatre dimensions, la notion même d’axe de rotation change…
+
+Que signifie tourner sur deux plans à la fois ?
+Dans un espace 3D, une rotation se fait toujours autour d’un seul plan de rotation. Mais dans un espace 4D, il est possible de faire tourner un objet autour de deux plans différents simultanément !
+
+Imaginez un hypercube flottant devant vous.
+
+Il ne tourne pas simplement comme un cube dans notre monde.
+Deux plans indépendants peuvent tourner en même temps, sans qu’il y ait un seul axe fixe.
+C’est comme si un cube pouvait pivoter dans une direction tout en tournant sur lui-même dans une autre, donnant l’impression qu’il se déforme, se replie et glisse dans des directions impossibles."
+label_settings = SubResource("LabelSettings_hiqem")
+horizontal_alignment = 1
+autowrap_mode = 2

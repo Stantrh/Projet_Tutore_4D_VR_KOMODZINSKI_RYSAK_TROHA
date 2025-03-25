@@ -1,0 +1,49 @@
+[gd_scene load_steps=3 format=3 uid="uid://xhdqy67bjii0"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_8v8cd"]
+font_size = 12
+
+[sub_resource type="LabelSettings" id="LabelSettings_hiqem"]
+font_size = 9
+
+[node name="roation_simple_screen" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.411765, 0.411765, 0.411765, 0.54902)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ColorRect"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 20
+
+[node name="Label" type="Label" parent="ColorRect/VBoxContainer"]
+layout_mode = 2
+text = "Rotation sur un plan"
+label_settings = SubResource("LabelSettings_8v8cd")
+horizontal_alignment = 1
+
+[node name="Label2" type="Label" parent="ColorRect/VBoxContainer"]
+layout_mode = 2
+text = "Ici, les rotations cachent des secrets que seul un œil attentif peut déceler. Peut-être que certaines portes ne s’ouvrent qu’en pivotant d’un angle précis ? Peut-être qu’un simple mouvement dans le bon plan peut révéler un passage caché vers une autre dimension ?
+
+Dans ce monde où la quatrième dimension se dévoile, les rotations ne sont plus ce qu’elles semblent être. Un simple pivotement peut transformer un objet de manière inattendue, des formes familières se métamorphosent sous vos yeux, et un mouvement en apparence anodin peut vous projeter dans un espace insoupçonné.
+"
+label_settings = SubResource("LabelSettings_hiqem")
+horizontal_alignment = 1
+autowrap_mode = 2

@@ -1,0 +1,22 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://b516bl3re2flh"
+path="res://.godot/imported/roofmodule_base.obj-51e83e6c4159957a3e9f147cd06aaa9e.mesh"
+
+[deps]
+
+files=["res://.godot/imported/roofmodule_base.obj-51e83e6c4159957a3e9f147cd06aaa9e.mesh"]
+
+source_file="res://Assets/3D/KayKit_Space_Base_Bits_1.0_FREE/KayKit_Space_Base_Bits_1.0_FREE/Assets/obj/roofmodule_base.obj"
+dest_files=["res://.godot/imported/roofmodule_base.obj-51e83e6c4159957a3e9f147cd06aaa9e.mesh", "res://.godot/imported/roofmodule_base.obj-51e83e6c4159957a3e9f147cd06aaa9e.mesh"]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+optimize_mesh=true
+force_disable_mesh_compression=false

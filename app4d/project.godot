@@ -24,6 +24,10 @@ StackedConstant="*res://Scripts/stacked_constant.gd"
 
 [display]
 
+window/size/viewport_width=1920
+window/size/viewport_height=1080
+window/size/mode=3
+window/size/borderless=true
 window/stretch/mode="viewport"
 window/stretch/aspect="expand"
 
@@ -32,7 +36,9 @@ window/stretch/aspect="expand"
 folder_colors={
 "res://Assets/": "blue",
 "res://Scenes/": "green",
-"res://Scripts/": "pink"
+"res://Scripts/": "pink",
+"res://VR/Scenes/": "green",
+"res://VR/Scripts/": "pink"
 }
 
 [global_group]
@@ -87,3 +93,7 @@ rotate={
 "events": [Object(InputEventMouseButton,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"button_mask":4,"position":Vector2(149, 11),"global_position":Vector2(158, 57),"factor":1.0,"button_index":3,"canceled":false,"pressed":true,"double_click":false,"script":null)
 ]
 }
+
+[xr]
+
+openxr/enabled=true

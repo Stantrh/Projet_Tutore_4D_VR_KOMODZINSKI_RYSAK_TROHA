@@ -1,0 +1,22 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://bh5iqlj7o5saf"
+path="res://.godot/imported/terrain_slope_outer_corner.obj-e4f38cbeee2a13facfa21f6e5eb4c966.mesh"
+
+[deps]
+
+files=["res://.godot/imported/terrain_slope_outer_corner.obj-e4f38cbeee2a13facfa21f6e5eb4c966.mesh"]
+
+source_file="res://Assets/3D/KayKit_Space_Base_Bits_1.0_FREE/KayKit_Space_Base_Bits_1.0_FREE/Assets/obj/terrain_slope_outer_corner.obj"
+dest_files=["res://.godot/imported/terrain_slope_outer_corner.obj-e4f38cbeee2a13facfa21f6e5eb4c966.mesh", "res://.godot/imported/terrain_slope_outer_corner.obj-e4f38cbeee2a13facfa21f6e5eb4c966.mesh"]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+optimize_mesh=true
+force_disable_mesh_compression=false

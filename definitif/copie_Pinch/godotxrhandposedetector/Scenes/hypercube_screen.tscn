@@ -1,0 +1,45 @@
+[gd_scene load_steps=3 format=3 uid="uid://bdytoss1tc7h2"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_8v8cd"]
+font_size = 12
+
+[sub_resource type="LabelSettings" id="LabelSettings_hiqem"]
+font_size = 9
+
+[node name="Hypercube Screen" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.411765, 0.411765, 0.411765, 0.54902)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ColorRect"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 20
+
+[node name="Label" type="Label" parent="ColorRect/VBoxContainer"]
+layout_mode = 2
+text = "L'Hypercube"
+label_settings = SubResource("LabelSettings_8v8cd")
+horizontal_alignment = 1
+
+[node name="Label2" type="Label" parent="ColorRect/VBoxContainer"]
+layout_mode = 2
+text = "L’Hypercube, lui, est l’évolution d’un cube dans la quatrième dimension. Là où un cube est composé de 6 faces carrées, un hypercube est formé de 8 cubes interconnectés d’une manière qui défie l’entendement humain. Vous ne pouvez pas le voir entièrement d’un seul coup d'œil, car une partie de sa structure échappe à notre perception tridimensionnelle. Imaginez un cube qui semble se déformer, s’étirer et se connecter à lui-même sous des angles impossibles... Voilà ce qu’est un Hypercube !"
+label_settings = SubResource("LabelSettings_hiqem")
+autowrap_mode = 2

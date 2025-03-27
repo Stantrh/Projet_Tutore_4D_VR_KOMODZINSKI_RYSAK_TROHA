@@ -1,4 +1,4 @@
 Fonctionnalités réalisées : 
-
-
+UI en VR : RYSAK Hugo
+Implémentation PLY et parser : TROHA Stanislas
 

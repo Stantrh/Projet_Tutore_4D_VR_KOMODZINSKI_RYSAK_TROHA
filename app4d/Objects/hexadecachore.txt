@@ -1,0 +1,56 @@
+ply
+format ascii 1.0
+comment 16-cell: vertices and edges (4D cross polytope)
+
+element vertices 8
+property float x
+property float y
+property float z
+property float w
+
+element edges 24
+property int v1
+property int v2
+
+end_header
+# --- Sommets ---
+1 0 0 0
+-1 0 0 0
+0 1 0 0
+0 -1 0 0
+0 0 1 0
+0 0 -1 0
+0 0 0 1
+0 0 0 -1
+
+# --- Arêtes ---
+# Pour le sommet V0 = (1,0,0,0)
+0 2
+0 3
+0 4
+0 5
+0 6
+0 7
+# Pour le sommet V1 = (-1,0,0,0)
+1 2
+1 3
+1 4
+1 5
+1 6
+1 7
+# Pour le sommet V2 = (0,1,0,0)
+2 4
+2 5
+2 6
+2 7
+# Pour le sommet V3 = (0,-1,0,0)
+3 4
+3 5
+3 6
+3 7
+# Pour le sommet V4 = (0,0,1,0)
+4 6
+4 7
+# Pour le sommet V5 = (0,0,-1,0)
+5 6
+5 7

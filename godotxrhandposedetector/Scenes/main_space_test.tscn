@@ -1,6 +1,6 @@
 [gd_scene load_steps=18 format=3 uid="uid://cxhjscxefvj8g"]
 
-[ext_resource type="Script" path="res://main.gd" id="1_yjm6x"]
+[ext_resource type="Script" path="res://Scripts/main_space_test.gd" id="1_741v3"]
 [ext_resource type="MeshLibrary" uid="uid://bvobp4fo1wvr6" path="res://Scenes/library/space_library.tres" id="2_wl4q0"]
 [ext_resource type="PackedScene" uid="uid://clc5dre31iskm" path="res://addons/godot-xr-tools/xr/start_xr.tscn" id="3_ecpoh"]
 [ext_resource type="PackedScene" path="res://Scenes/character_view.tscn" id="4_j1f33"]
@@ -30,7 +30,7 @@ tonemap_mode = 2
 
 [node name="MainSpaceTest" type="Node3D"]
 transform = Transform3D(0.7, 0, 0, 0, 0.7, 0, 0, 0, 0.7, 0, 0, 0)
-script = ExtResource("1_yjm6x")
+script = ExtResource("1_741v3")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_3lccq")

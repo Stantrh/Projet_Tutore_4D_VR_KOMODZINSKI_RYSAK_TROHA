@@ -1,0 +1,449 @@
+[gd_scene load_steps=5 format=3 uid="uid://dee40sudawdet"]
+
+[ext_resource type="Script" path="res://Scripts/ui_arm.gd" id="1_g86p8"]
+[ext_resource type="Texture2D" uid="uid://clt884qaxoib0" path="res://Assets/UI/Button/keyboard-left-arrow-button.png" id="1_k55x3"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_xr5im"]
+font_size = 9
+font_color = Color(0, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_u0swr"]
+font_size = 13
+font_color = Color(0, 0, 0, 1)
+
+[node name="UI_arm" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_g86p8")
+
+[node name="ReferenceRect" type="ReferenceRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+border_color = Color(0, 0, 0, 1)
+
+[node name="ColorRect" type="ColorRect" parent="ReferenceRect"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="ReferenceRect/ColorRect"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MarginContainer3" type="MarginContainer" parent="ReferenceRect/ColorRect/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="left_button" type="TextureButton" parent="ReferenceRect/ColorRect/HBoxContainer/MarginContainer3"]
+layout_mode = 2
+texture_normal = ExtResource("1_k55x3")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="Init" type="Control" parent="ReferenceRect/ColorRect/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 4.0
+metadata/_edit_use_anchors_ = true
+
+[node name="Label" type="Label" parent="ReferenceRect/ColorRect/HBoxContainer/Init"]
+layout_mode = 2
+anchor_right = 0.984
+anchor_bottom = 0.035
+offset_right = 12.72
+offset_bottom = -0.17
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+text = "4D Explorer"
+horizontal_alignment = 1
+clip_text = true
+
+[node name="InitMessage" type="Label" parent="ReferenceRect/ColorRect/HBoxContainer/Init"]
+custom_minimum_size = Vector2(100, 15)
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.421
+anchor_right = 1.0
+anchor_bottom = 0.555
+offset_top = 0.297974
+offset_bottom = -0.410004
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 2
+text = "Veuillez Vous approchez d'un objet pour le controller"
+label_settings = SubResource("LabelSettings_xr5im")
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="Translation" type="Control" parent="ReferenceRect/ColorRect/HBoxContainer"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 4.0
+metadata/_edit_use_anchors_ = true
+
+[node name="Label" type="Label" parent="ReferenceRect/ColorRect/HBoxContainer/Translation"]
+layout_mode = 2
+anchor_right = 0.984
+anchor_bottom = 0.035
+offset_right = 12.72
+offset_bottom = -0.17
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+text = "Translation"
+horizontal_alignment = 1
+clip_text = true
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ReferenceRect/ColorRect/HBoxContainer/Translation"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = -0.002
+anchor_top = 0.268
+anchor_right = 1.0
+anchor_bottom = 0.808
+offset_left = -0.38998
+offset_top = -0.296005
+offset_right = -1.97998
+offset_bottom = 2.224
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="ReferenceRect/ColorRect/HBoxContainer/Translation/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Label" type="Label" parent="ReferenceRect/ColorRect/HBoxContainer/Translation/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 13
+text = "X"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="translation_x_slider" type="HSlider" parent="ReferenceRect/ColorRect/HBoxContainer/Translation/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+min_value = -10.0
+max_value = 10.0
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="ReferenceRect/ColorRect/HBoxContainer/Translation/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Label2" type="Label" parent="ReferenceRect/ColorRect/HBoxContainer/Translation/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 13
+text = "Y"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="translation_y_slider" type="HSlider" parent="ReferenceRect/ColorRect/HBoxContainer/Translation/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+min_value = -10.0
+max_value = 10.0
+
+[node name="HBoxContainer3" type="HBoxContainer" parent="ReferenceRect/ColorRect/HBoxContainer/Translation/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Label3" type="Label" parent="ReferenceRect/ColorRect/HBoxContainer/Translation/VBoxContainer/HBoxContainer3"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 13
+text = "Z"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="translation_z_slider" type="HSlider" parent="ReferenceRect/ColorRect/HBoxContainer/Translation/VBoxContainer/HBoxContainer3"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+min_value = -10.0
+max_value = 10.0
+
+[node name="HBoxContainer4" type="HBoxContainer" parent="ReferenceRect/ColorRect/HBoxContainer/Translation/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Label4" type="Label" parent="ReferenceRect/ColorRect/HBoxContainer/Translation/VBoxContainer/HBoxContainer4"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 13
+text = "W"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="translation_w_slider" type="HSlider" parent="ReferenceRect/ColorRect/HBoxContainer/Translation/VBoxContainer/HBoxContainer4"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+min_value = -10.0
+max_value = 10.0
+
+[node name="Rotation" type="Control" parent="ReferenceRect/ColorRect/HBoxContainer"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 4.0
+metadata/_edit_use_anchors_ = true
+
+[node name="Label" type="Label" parent="ReferenceRect/ColorRect/HBoxContainer/Rotation"]
+layout_mode = 2
+anchor_right = 0.984
+anchor_bottom = 0.035
+offset_right = 12.72
+offset_bottom = -0.17
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+text = "Rotation"
+horizontal_alignment = 1
+clip_text = true
+
+[node name="GridContainer" type="GridContainer" parent="ReferenceRect/ColorRect/HBoxContainer/Rotation"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = -0.002
+anchor_top = 0.268
+anchor_right = 0.998
+anchor_bottom = 0.811
+offset_left = -0.389989
+offset_top = -0.296005
+offset_right = -0.294006
+offset_bottom = 0.237976
+grow_horizontal = 2
+grow_vertical = 2
+columns = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="ReferenceRect/ColorRect/HBoxContainer/Rotation/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 3
+
+[node name="Label" type="Label" parent="ReferenceRect/ColorRect/HBoxContainer/Rotation/GridContainer/HBoxContainer"]
+custom_minimum_size = Vector2(16, 23)
+layout_mode = 2
+size_flags_horizontal = 4
+text = "XY"
+label_settings = SubResource("LabelSettings_u0swr")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="xy_rotation_button" type="CheckButton" parent="ReferenceRect/ColorRect/HBoxContainer/Rotation/GridContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="ReferenceRect/ColorRect/HBoxContainer/Rotation/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 3
+
+[node name="Label" type="Label" parent="ReferenceRect/ColorRect/HBoxContainer/Rotation/GridContainer/HBoxContainer2"]
+custom_minimum_size = Vector2(16, 23)
+layout_mode = 2
+size_flags_horizontal = 4
+text = "XW"
+label_settings = SubResource("LabelSettings_u0swr")
+vertical_alignment = 1
+
+[node name="xw_rotation_button" type="CheckButton" parent="ReferenceRect/ColorRect/HBoxContainer/Rotation/GridContainer/HBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 2
+size_flags_vertical = 4
+
+[node name="HBoxContainer3" type="HBoxContainer" parent="ReferenceRect/ColorRect/HBoxContainer/Rotation/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 3
+
+[node name="Label" type="Label" parent="ReferenceRect/ColorRect/HBoxContainer/Rotation/GridContainer/HBoxContainer3"]
+custom_minimum_size = Vector2(16, 23)
+layout_mode = 2
+size_flags_horizontal = 0
+text = "XZ"
+label_settings = SubResource("LabelSettings_u0swr")
+vertical_alignment = 1
+
+[node name="xz_rotation_button" type="CheckButton" parent="ReferenceRect/ColorRect/HBoxContainer/Rotation/GridContainer/HBoxContainer3"]
+layout_mode = 2
+size_flags_horizontal = 2
+
+[node name="HBoxContainer4" type="HBoxContainer" parent="ReferenceRect/ColorRect/HBoxContainer/Rotation/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 3
+
+[node name="Label" type="Label" parent="ReferenceRect/ColorRect/HBoxContainer/Rotation/GridContainer/HBoxContainer4"]
+custom_minimum_size = Vector2(16, 23)
+layout_mode = 2
+size_flags_horizontal = 4
+text = "YW"
+label_settings = SubResource("LabelSettings_u0swr")
+vertical_alignment = 1
+
+[node name="yw_rotation_button" type="CheckButton" parent="ReferenceRect/ColorRect/HBoxContainer/Rotation/GridContainer/HBoxContainer4"]
+layout_mode = 2
+size_flags_horizontal = 2
+
+[node name="HBoxContainer5" type="HBoxContainer" parent="ReferenceRect/ColorRect/HBoxContainer/Rotation/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 3
+
+[node name="Label" type="Label" parent="ReferenceRect/ColorRect/HBoxContainer/Rotation/GridContainer/HBoxContainer5"]
+custom_minimum_size = Vector2(16, 23)
+layout_mode = 2
+size_flags_horizontal = 4
+text = "YZ"
+label_settings = SubResource("LabelSettings_u0swr")
+vertical_alignment = 1
+
+[node name="yz_rotation_button" type="CheckButton" parent="ReferenceRect/ColorRect/HBoxContainer/Rotation/GridContainer/HBoxContainer5"]
+layout_mode = 2
+size_flags_horizontal = 2
+
+[node name="HBoxContainer6" type="HBoxContainer" parent="ReferenceRect/ColorRect/HBoxContainer/Rotation/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 3
+
+[node name="Label" type="Label" parent="ReferenceRect/ColorRect/HBoxContainer/Rotation/GridContainer/HBoxContainer6"]
+custom_minimum_size = Vector2(16, 23)
+layout_mode = 2
+size_flags_horizontal = 4
+text = "ZW"
+label_settings = SubResource("LabelSettings_u0swr")
+vertical_alignment = 1
+
+[node name="zw_rotation_button" type="CheckButton" parent="ReferenceRect/ColorRect/HBoxContainer/Rotation/GridContainer/HBoxContainer6"]
+layout_mode = 2
+size_flags_horizontal = 2
+
+[node name="PointDeVue" type="Control" parent="ReferenceRect/ColorRect/HBoxContainer"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 4.0
+metadata/_edit_use_anchors_ = true
+
+[node name="Label" type="Label" parent="ReferenceRect/ColorRect/HBoxContainer/PointDeVue"]
+layout_mode = 2
+anchor_right = 0.984
+anchor_bottom = 0.035
+offset_right = 12.72
+offset_bottom = -0.17
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+text = "Point De Vue"
+horizontal_alignment = 1
+clip_text = true
+
+[node name="HBoxContainer" type="HBoxContainer" parent="ReferenceRect/ColorRect/HBoxContainer/PointDeVue"]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.301
+anchor_right = 1.0
+anchor_bottom = 0.722
+offset_left = -2.07598
+offset_top = -2.14203
+offset_right = -1.97998
+offset_bottom = 0.187958
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="face_view_button" type="Button" parent="ReferenceRect/ColorRect/HBoxContainer/PointDeVue/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 9
+text = "Face"
+text_overrun_behavior = 3
+
+[node name="fugue_vie_button" type="Button" parent="ReferenceRect/ColorRect/HBoxContainer/PointDeVue/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 9
+text = "Fuite"
+text_overrun_behavior = 3
+
+[node name="point_view_button" type="Button" parent="ReferenceRect/ColorRect/HBoxContainer/PointDeVue/HBoxContainer"]
+z_index = 3
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 9
+text = "Pointe"
+text_overrun_behavior = 3
+
+[node name="Fez" type="Control" parent="ReferenceRect/ColorRect/HBoxContainer"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 4.0
+metadata/_edit_use_anchors_ = true
+
+[node name="Label" type="Label" parent="ReferenceRect/ColorRect/HBoxContainer/Fez"]
+layout_mode = 2
+anchor_right = 0.984
+anchor_bottom = 0.035
+offset_right = 12.72
+offset_bottom = -0.17
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+text = "Fez"
+horizontal_alignment = 1
+clip_text = true
+
+[node name="OptionButton" type="OptionButton" parent="ReferenceRect/ColorRect/HBoxContainer/Fez"]
+custom_minimum_size = Vector2(100, 15)
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.421
+anchor_right = 1.0
+anchor_bottom = 0.555
+offset_top = 0.297974
+offset_bottom = -0.410004
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_vertical = 4
+
+[node name="MarginContainer2" type="MarginContainer" parent="ReferenceRect/ColorRect/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="right_button" type="TextureButton" parent="ReferenceRect/ColorRect/HBoxContainer/MarginContainer2"]
+layout_mode = 2
+texture_normal = ExtResource("1_k55x3")
+ignore_texture_size = true
+stretch_mode = 5
+flip_h = true
+
+[connection signal="pressed" from="ReferenceRect/ColorRect/HBoxContainer/MarginContainer3/left_button" to="." method="_on_left_button_pressed"]
+[connection signal="value_changed" from="ReferenceRect/ColorRect/HBoxContainer/Translation/VBoxContainer/HBoxContainer/translation_x_slider" to="." method="_on_translation_x_slider_value_changed"]
+[connection signal="value_changed" from="ReferenceRect/ColorRect/HBoxContainer/Translation/VBoxContainer/HBoxContainer2/translation_y_slider" to="." method="_on_translation_y_slider_value_changed"]
+[connection signal="value_changed" from="ReferenceRect/ColorRect/HBoxContainer/Translation/VBoxContainer/HBoxContainer3/translation_z_slider" to="." method="_on_translation_z_slider_value_changed"]
+[connection signal="value_changed" from="ReferenceRect/ColorRect/HBoxContainer/Translation/VBoxContainer/HBoxContainer4/translation_w_slider" to="." method="_on_translation_w_slider_value_changed"]
+[connection signal="pressed" from="ReferenceRect/ColorRect/HBoxContainer/PointDeVue/HBoxContainer/face_view_button" to="." method="_on_face_view_button_pressed"]
+[connection signal="pressed" from="ReferenceRect/ColorRect/HBoxContainer/PointDeVue/HBoxContainer/fugue_vie_button" to="." method="_on_fugue_vie_button_pressed"]
+[connection signal="pressed" from="ReferenceRect/ColorRect/HBoxContainer/PointDeVue/HBoxContainer/point_view_button" to="." method="_on_point_view_button_pressed"]
+[connection signal="item_selected" from="ReferenceRect/ColorRect/HBoxContainer/Fez/OptionButton" to="." method="_on_option_button_item_selected"]
+[connection signal="pressed" from="ReferenceRect/ColorRect/HBoxContainer/MarginContainer2/right_button" to="." method="_on_right_button_pressed"]

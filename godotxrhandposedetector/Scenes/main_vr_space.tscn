@@ -1,4 +1,4 @@
-[gd_scene load_steps=39 format=3 uid="uid://sn05ubxysvdr"]
+[gd_scene load_steps=43 format=3 uid="uid://sn05ubxysvdr"]
 
 [ext_resource type="Script" path="res://main.gd" id="1_hh7dd"]
 [ext_resource type="PackedScene" uid="uid://cjcehqrfoxav3" path="res://addons/hand_pose_detector/hands/LeftHandHumanoid.gltf" id="2_3ueq0"]
@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://bjcxf427un2wp" path="res://addons/godot-xr-tools/player/poke/poke.tscn" id="3_xfpn3"]
 [ext_resource type="Script" path="res://addons/hand_pose_detector/hand_pose_detector.gd" id="4_036y8"]
 [ext_resource type="Script" path="res://addons/hand_pose_detector/hand_pose.gd" id="5_7tde8"]
+[ext_resource type="PackedScene" uid="uid://dee40sudawdet" path="res://Scenes/ui_arm.tscn" id="5_pv0mg"]
 [ext_resource type="Resource" uid="uid://n6qmsq57l1g4" path="res://addons/hand_pose_detector/poses/index_pinch.tres" id="6_2uhjc"]
 [ext_resource type="Resource" uid="uid://dhbqusuodrl3r" path="res://addons/hand_pose_detector/poses/fist.tres" id="7_6u0uw"]
 [ext_resource type="Resource" uid="uid://ceofxcl7q122" path="res://addons/hand_pose_detector/poses/point.tres" id="8_nuq4y"]
@@ -77,9 +78,18 @@ action_name = "teleport"
 script = ExtResource("12_lmvct")
 actions = Array[ExtResource("11_ynejt")]([SubResource("Resource_5tx15"), SubResource("Resource_3mr7m"), SubResource("Resource_typ38")])
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_3jc2v"]
+size = Vector3(0.292419, 0.165283, 0.125122)
+
 [sub_resource type="Resource" id="Resource_w10eo"]
 script = ExtResource("9_ueqdi")
 poses = Array[ExtResource("5_7tde8")]([ExtResource("6_2uhjc"), ExtResource("7_6u0uw"), ExtResource("8_nuq4y")])
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_w7chi"]
+size = Vector3(26.2929, 24.8101, 27.5691)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_nkryd"]
+size = Vector3(27.507, 28.3578, 27.775)
 
 [node name="MainVrSpace" type="Node3D"]
 transform = Transform3D(0.7, 0, 0, 0, 0.7, 0, 0, 0, 0.7, 0, 0, 0)
@@ -106,6 +116,12 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.429, 1.429, 5.714)
 [node name="XRCamera3D" type="XRCamera3D" parent="XROrigin3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
 
+[node name="RayCast3D" type="RayCast3D" parent="XROrigin3D/XRCamera3D"]
+target_position = Vector3(0, 0, -10)
+collision_mask = 16
+hit_from_inside = true
+collide_with_areas = true
+
 [node name="LeftTrackedHand" type="XRNode3D" parent="XROrigin3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.3, 1, 0)
 tracker = &"/user/hand_tracker/left"
@@ -128,6 +144,23 @@ hand_pose_set = SubResource("Resource_ysyy8")
 
 [node name="HandPoseController" parent="XROrigin3D/LeftTrackedHand/HandPoseDetector" instance=ExtResource("10_uuwmn")]
 controller_action_map = SubResource("Resource_qoc6m")
+
+[node name="Area3D" type="Area3D" parent="XROrigin3D/LeftTrackedHand"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0, 0.2)
+collision_layer = 16
+collision_mask = 16
+
+[node name="CanvasLayerViewport4" parent="XROrigin3D/LeftTrackedHand/Area3D" instance=ExtResource("20_5gebl")]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)
+screen_size = Vector2(0.25, 0.15)
+collision_layer = 5251072
+scene = ExtResource("5_pv0mg")
+scene_properties_keys = PackedStringArray("ui_arm.gd", "object_controlled")
+metadata/_edit_lock_ = true
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="XROrigin3D/LeftTrackedHand/Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00863647, 0.0047605, 0)
+shape = SubResource("BoxShape3D_3jc2v")
 
 [node name="RightTrackedHand" type="XRNode3D" parent="XROrigin3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.3, 1, 0)
@@ -173,6 +206,7 @@ grab_distance = 0.1
 teleport_button_action = "teleport"
 
 [node name="PlayerBody" parent="XROrigin3D" instance=ExtResource("16_60ao4")]
+collision_layer = 524800
 
 [node name="StartXR" parent="." instance=ExtResource("17_lc3nq")]
 
@@ -181,13 +215,37 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 72.857, 5, -54.553)
 script = ExtResource("18_tny8y")
 projection_mode = 1
 
+[node name="Area3D" type="Area3D" parent="HypercubeSS"]
+collision_layer = 512
+collision_mask = 513
+
+[node name="HypercubeSS_area" type="CollisionShape3D" parent="HypercubeSS/Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.53989, 5.71509, -1.52452)
+shape = SubResource("BoxShape3D_w7chi")
+
 [node name="HypercubeOS" parent="." instance=ExtResource("19_nfuol")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -80.272, 5, -54.925)
 projection_mode = 2
 
+[node name="HypercubeOS_area" type="Area3D" parent="HypercubeOS"]
+collision_layer = 512
+collision_mask = 513
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="HypercubeOS/HypercubeOS_area"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.20196, 1.78625, -0.57489)
+shape = SubResource("BoxShape3D_nkryd")
+
 [node name="HypercubePF" parent="." instance=ExtResource("19_nfuol")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.708, 5, -128.571)
 mesh_mode = 2
+
+[node name="HypercubePFArea" type="Area3D" parent="HypercubePF"]
+collision_layer = 512
+collision_mask = 513
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="HypercubePF/HypercubePFArea"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.49298, 7.53708)
+shape = SubResource("BoxShape3D_nkryd")
 
 [node name="welcome_screen" parent="." instance=ExtResource("20_5gebl")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.42857, 2.85714, 0.870194)
@@ -222,6 +280,13 @@ scene_properties_keys = PackedStringArray()
 
 [node name="Sun" parent="." instance=ExtResource("29_es202")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6332.86, 1712.42, 288.47)
+
+[connection signal="body_entered" from="HypercubeSS/Area3D" to="." method="_on_area_3d_body_entered"]
+[connection signal="body_exited" from="HypercubeSS/Area3D" to="." method="_on_area_3d_body_exited"]
+[connection signal="body_entered" from="HypercubeOS/HypercubeOS_area" to="." method="_on_hypercube_os_area_body_entered"]
+[connection signal="body_exited" from="HypercubeOS/HypercubeOS_area" to="." method="_on_hypercube_os_area_body_exited"]
+[connection signal="body_entered" from="HypercubePF/HypercubePFArea" to="." method="_on_hypercube_pf_area_body_entered"]
+[connection signal="body_exited" from="HypercubePF/HypercubePFArea" to="." method="_on_hypercube_pf_area_body_exited"]
 
 [editable path="XROrigin3D/LeftTrackedHand/LeftHandHumanoid2"]
 [editable path="XROrigin3D/RightTrackedHand/RightHandHumanoid2"]

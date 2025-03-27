@@ -1,4 +1,4 @@
-[gd_scene load_steps=32 format=3 uid="uid://b1ru2hhyje1l0"]
+[gd_scene load_steps=33 format=3 uid="uid://b1ru2hhyje1l0"]
 
 [ext_resource type="Script" path="res://main.gd" id="1_pu0c1"]
 [ext_resource type="PackedScene" uid="uid://cjcehqrfoxav3" path="res://addons/hand_pose_detector/hands/LeftHandHumanoid.gltf" id="2_lgk54"]
@@ -21,6 +21,7 @@
 [ext_resource type="PackedScene" uid="uid://cs3mpxmnuxmus" path="res://Scenes/zone_affichage.tscn" id="18_pc687"]
 [ext_resource type="PackedScene" uid="uid://clujaf3u776a3" path="res://addons/godot-xr-tools/objects/viewport_2d_in_3d.tscn" id="19_qkdhb"]
 [ext_resource type="PackedScene" uid="uid://cryorm2pf41vq" path="res://Scenes/ui.tscn" id="20_kbxgu"]
+[ext_resource type="PackedScene" uid="uid://dee40sudawdet" path="res://Scenes/ui_arm.tscn" id="22_kqa3v"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_wrum2"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -91,6 +92,13 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.3, 1, 0)
 tracker = &"/user/hand_tracker/left"
 show_when_tracked = true
+
+[node name="CanvasLayerViewport4" parent="XROrigin3D/LeftTrackedHand" instance=ExtResource("19_qkdhb")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0, 0.2)
+screen_size = Vector2(0.25, 0.15)
+scene = ExtResource("22_kqa3v")
+scene_properties_keys = PackedStringArray("ui_arm.gd", "object_controlled")
+metadata/_edit_lock_ = true
 
 [node name="LeftHandHumanoid2" parent="XROrigin3D/LeftTrackedHand" instance=ExtResource("2_lgk54")]
 
@@ -186,8 +194,8 @@ scene_properties_keys = PackedStringArray("ui.gd", "object_controlled")
 [node name="CanvasLayerViewport3" parent="." instance=ExtResource("19_qkdhb")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0, 0)
 screen_size = Vector2(2, 1.5)
-scene = ExtResource("20_kbxgu")
-scene_properties_keys = PackedStringArray("ui.gd", "object_controlled")
+scene = ExtResource("22_kqa3v")
+scene_properties_keys = PackedStringArray("ui_arm.gd", "object_controlled")
 
 [editable path="XROrigin3D/LeftTrackedHand/LeftHandHumanoid2"]
 [editable path="XROrigin3D/RightTrackedHand/RightHandHumanoid2"]

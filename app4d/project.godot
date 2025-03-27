@@ -35,8 +35,10 @@ window/stretch/aspect="expand"
 
 folder_colors={
 "res://Assets/": "blue",
+"res://Objects/": "red",
 "res://Scenes/": "green",
 "res://Scripts/": "pink",
+"res://Scripts/Utils/": "gray",
 "res://VR/Scenes/": "green",
 "res://VR/Scripts/": "pink"
 }

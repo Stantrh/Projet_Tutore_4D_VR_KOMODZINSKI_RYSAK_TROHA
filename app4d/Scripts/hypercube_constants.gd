@@ -41,6 +41,16 @@ const EDGES = [
 	[4, 12], [5, 13], [6, 14], [7, 15]
 ]
 
+
+# Pour initialiser les sommets de l'hypercube, et lors des resets pour les points de vue
+const DEFAULT_VERTICES = [
+	Vector4(-1, -1, -1, -1), Vector4(-1, -1, -1,  1), Vector4(-1, -1,  1, -1), Vector4(-1, -1,  1,  1),
+	Vector4(-1,  1, -1, -1), Vector4(-1,  1, -1,  1), Vector4(-1,  1,  1, -1), Vector4(-1,  1,  1,  1),
+	Vector4( 1, -1, -1, -1), Vector4( 1, -1, -1,  1), Vector4( 1, -1,  1, -1), Vector4( 1, -1,  1,  1),
+	Vector4( 1,  1, -1, -1), Vector4( 1,  1, -1,  1), Vector4( 1,  1,  1, -1), Vector4( 1,  1,  1,  1)
+]
+
+
 const DIMENSIONS = [
 	{"name": "XYZ", "x": 0, "y": 1, "z": 2, "w": 3},
 	{"name": "XYW", "x": 0, "y": 1, "z": 3, "w": 2},
@@ -66,12 +76,4 @@ const DIMENSIONS = [
 	{"name": "WYZ", "x": 3, "y": 1, "z": 2, "w": 0},
 	{"name": "WZY", "x": 3, "y": 2, "z": 1, "w": 0},
 	{"name": "WZX", "x": 3, "y": 2, "z": 0, "w": 1}
-]
-
-# Pour initialiser les sommets de l'hypercube, et lors des resets pour les points de vue
-const DEFAULT_VERTICES = [
-	Vector4(-1, -1, -1, -1), Vector4(-1, -1, -1,  1), Vector4(-1, -1,  1, -1), Vector4(-1, -1,  1,  1),
-	Vector4(-1,  1, -1, -1), Vector4(-1,  1, -1,  1), Vector4(-1,  1,  1, -1), Vector4(-1,  1,  1,  1),
-	Vector4( 1, -1, -1, -1), Vector4( 1, -1, -1,  1), Vector4( 1, -1,  1, -1), Vector4( 1, -1,  1,  1),
-	Vector4( 1,  1, -1, -1), Vector4( 1,  1, -1,  1), Vector4( 1,  1,  1, -1), Vector4( 1,  1,  1,  1)
 ]

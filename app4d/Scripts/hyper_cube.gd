@@ -1,9 +1,18 @@
 extends Node3D
+
+### POUR LE PARSER
+# on récupère le parser
+var parser = preload("res://Scripts/Utils/parser.gd")
+
+# On a le chemin d'un fichier qu'on met en export
+@export var ply_object_path: String = "res://Objects/hypercube.txt"
+
 #A CHANGER POUR LE PARSER
 # Les coordonnées des sommets de l'hypercube, en 4D
 #Object dans lequel on va chercher
 var object = HypercubeConstants
-var dynamic_vertices = object.DEFAULT_VERTICES.duplicate((true))
+var dynamic_vertices = []
+var dynamic_edges = []
 
 # on charge les 8 cubes qui constituent l'hypercube
 var CUBES = object.CUBES
@@ -63,6 +72,19 @@ var is_up_to_date = true # COMMENTAIRES A FAIRE
 @export var area : Node3D = null # La variable de la zone
 
 func _ready():
+	
+	# On charge les constantes depuis le fichier PLY
+	var hypercube_data = parser.load_hypercube_constants(ply_object_path)
+	# Puis on assigne aux sommets et aux arêtes ce qu'on a parsé depuis le fichier
+	dynamic_vertices = hypercube_data["vertices"]
+	dynamic_edges = hypercube_data["edges"]
+	
+	print("Vertices From Constants : " + str(dynamic_vertices) + "\n")
+	print("Vertices From Parser : " + str(hypercube_data["vertices"]) + "\n")
+	print("Edges From Constants : " + str(dynamic_edges) + "\n")
+	print("Edges From Parser : " + str(hypercube_data["edges"]) + "\n")
+	
+	
 	if !interactible :
 		$Area3D.monitoring = false
 		$Area3D.monitorable = false
@@ -142,7 +164,7 @@ func create_stylish_hypercube():
 		stylish_spheres.append(sphere_instance)
 	
 	# Calcul des arêtes de l'hypercube (elles ne changent pas)
-	stylish_edges = object.EDGES
+	stylish_edges = dynamic_edges
 	
 	# Création des cylindres pour les arêtes
 	for edge in stylish_edges:
@@ -402,7 +424,7 @@ func build_wireframe_hypercube_mesh(vertices) -> Mesh:
 	# On construit les arêtes
 	# get_hypercube_edges est une méthodes qui renvoie les arêtes de l'hypercube
 	# donc edge est un tableau qui contient chaque segment --> [[sommet1, sommet2], [sommet4, sommet6], []]
-	for edge in object.EDGES:
+	for edge in dynamic_edges:
 		# On applique la projection aux sommets
 		var p1 = apply_projection(vertices[edge[0]])
 		var p2 = apply_projection(vertices[edge[1]])
@@ -428,7 +450,7 @@ func build_wireframe_hypercube_mesh_Vector_3(vertices: Array) -> Mesh:
 	surface_tool.begin(Mesh.PRIMITIVE_LINES)
 	
 	# Pour chaque arête de l'hypercube (chaque edge est un tableau [index_sommet1, index_sommet2])
-	for edge in object.EDGES:
+	for edge in dynamic_edges:
 		# On récupère directement les positions 3D des sommets
 		var p1: Vector3 = vertices[edge[0]]
 		var p2: Vector3 = vertices[edge[1]]
@@ -482,7 +504,7 @@ func build_stylish_hypercube_mesh_projected(vertices) -> Node3D:
 	# Ici on créer un cylindre pour chaque arête
 	# Pour rappel, get_hypercube_edges est une méthodes qui renvoie les arêtes de l'hypercube
 	# donc edge est un tableau qui contient chaque segment --> [[sommet1, sommet2], [sommet4, sommet6], []]
-	for edge in object.EDGES:
+	for edge in dynamic_edges:
 		# On applique la projection aux sommets
 		var p1 = vertices[edge[0]]
 		var p2 = vertices[edge[1]]

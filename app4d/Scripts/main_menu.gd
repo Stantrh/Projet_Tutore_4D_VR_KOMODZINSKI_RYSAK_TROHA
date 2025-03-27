@@ -77,6 +77,7 @@ func _on_retour_button_down():
 	$choix_figure.show()
 
 
+
 func _on_orthogonale_pressed():
 	selected_figures[current_figure].projection_mode = 2
 	current_figure+=1

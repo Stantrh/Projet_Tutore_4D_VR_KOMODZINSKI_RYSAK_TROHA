@@ -17,9 +17,9 @@ func create_area_mesh() -> MeshInstance3D:
 	var mesh_instance = MeshInstance3D.new()
 	var cube_mesh = BoxMesh.new()
 	var size = area_max - area_min
-	print(size)
+	#print(size)
 	cube_mesh.size = size *2
-	print(cube_mesh.size)
+	#print(cube_mesh.size)
 	mesh_instance.mesh = cube_mesh
 	mesh_instance.transform.origin = area_min + size / 2.0 # on positionne le cube au centre
 	# On créer le matériau

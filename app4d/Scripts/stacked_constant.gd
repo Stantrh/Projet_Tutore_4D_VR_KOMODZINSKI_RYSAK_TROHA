@@ -55,7 +55,7 @@ static func generate_cells(vertices: Array) -> Array:
 	return cells
 func _ready():
 	print("Total Sommets:", DEFAULT_VERTICES.size())
-	print("Total Cellules:", CUBES)
+	#print("Total Cellules:", CUBES)
 
 func get_hypercube_edges() -> Array:
 	var edges = []

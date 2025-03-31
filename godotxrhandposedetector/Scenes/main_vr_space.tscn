@@ -1,7 +1,7 @@
 [gd_scene load_steps=43 format=3 uid="uid://sn05ubxysvdr"]
 
 [ext_resource type="Script" path="res://main.gd" id="1_hh7dd"]
-[ext_resource type="PackedScene" uid="uid://cjcehqrfoxav3" path="res://addons/hand_pose_detector/hands/LeftHandHumanoid.gltf" id="2_3ueq0"]
+[ext_resource type="PackedScene" uid="uid://dabmoo0spa6vg" path="res://addons/hand_pose_detector/hands/RightHandHumanoid.gltf" id="2_3ueq0"]
 [ext_resource type="Texture2D" uid="uid://bhs382btmms13" path="res://Assets/Image/8k_stars_milky_way.jpg" id="2_f8ssy"]
 [ext_resource type="MeshLibrary" uid="uid://bvobp4fo1wvr6" path="res://Scenes/library/space_library.tres" id="2_njk4g"]
 [ext_resource type="PackedScene" uid="uid://bjcxf427un2wp" path="res://addons/godot-xr-tools/player/poke/poke.tscn" id="3_xfpn3"]

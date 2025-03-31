@@ -141,7 +141,7 @@ func _process(delta):
 	if is_rotate or is_translate or hypercube_changed :
 		hypercube_changed = false 
 		if mesh_mode == MeshMode.STYLISH:
-			update_stylish_hypercube_Vector3()
+			update_stylish_hypercube_Vector3(dynamic_vertices)
 		else:
 			update_hypercube()
 	if not camera and WorldInfo.camera : 

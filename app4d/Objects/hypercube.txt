@@ -1,6 +1,6 @@
 ply
 format ascii 1.0
-comment Fichier PLY pour hypercube : uniquement sommets et arêtes
+comment Fichier PLY pour Hypercube : Sommets & Arêtes
 
 element vertices 16
 property float x

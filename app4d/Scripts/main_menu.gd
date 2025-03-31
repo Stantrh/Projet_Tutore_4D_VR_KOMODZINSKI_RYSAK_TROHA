@@ -64,6 +64,9 @@ func _on_confirm_button_pressed():
 		match selected_figure : 
 			available_figures.HYPERCUBE :
 				figure.object_selected = figure.Object4D.Tesseract
+				figure.ply_object_path = "res://Objects/hypercube.txt"
+			available_figures.HYPERSPHERE :
+				figure.ply_object_path = "res://Objects/hypersphere.txt"
 			_:
 				figure.object_selected = figure.Object4D.Tesseract
 		selected_figures.append(figure)
@@ -159,3 +162,9 @@ func _on_retour_style_pressed():
 	current_figure = 0 
 	$choix_maillage.hide()
 	$choix_projection.show()
+
+
+func _on_hyper_sphère_pressed():
+	$choix_figure/Popup.popup_centered()
+	$choix_figure/Popup.show()
+	selected_figure = 1

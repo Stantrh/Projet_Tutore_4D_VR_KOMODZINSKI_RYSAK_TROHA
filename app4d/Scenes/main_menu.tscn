@@ -122,7 +122,6 @@ text = "HyperCube"
 custom_minimum_size = Vector2(200, 100)
 layout_mode = 2
 tooltip_text = "Equivalent d'une sphère mais en 4ème dimension"
-disabled = true
 text = "HyperSphère"
 
 [node name="Button3" type="Button" parent="choix_figure/VBoxContainer/VBoxContainer/GridContainer"]
@@ -385,6 +384,7 @@ text = "Retour"
 [connection signal="pressed" from="start/VBoxContainer/VBoxContainer2/start_button" to="." method="_on_start_button_pressed"]
 [connection signal="pressed" from="start/VBoxContainer/VBoxContainer2/exit_button" to="." method="_on_exit_button_pressed"]
 [connection signal="pressed" from="choix_figure/VBoxContainer/VBoxContainer/GridContainer/hyper_cube" to="." method="_on_hyper_cube_pressed"]
+[connection signal="pressed" from="choix_figure/VBoxContainer/VBoxContainer/GridContainer/hyper_sphère" to="." method="_on_hyper_sphère_pressed"]
 [connection signal="pressed" from="choix_figure/VBoxContainer/VBoxContainer/HBoxContainer/back_button" to="." method="_on_back_button_pressed"]
 [connection signal="text_changed" from="choix_figure/Popup/ReferenceRect/ColorRect/VBoxContainer/VBoxContainer/TextEdit" to="." method="_on_text_edit_text_changed"]
 [connection signal="pressed" from="choix_figure/Popup/ReferenceRect/ColorRect/VBoxContainer/VBoxContainer/HBoxContainer/Confirm_button" to="." method="_on_confirm_button_pressed"]

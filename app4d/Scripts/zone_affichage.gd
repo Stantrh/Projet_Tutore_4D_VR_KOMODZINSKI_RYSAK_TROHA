@@ -10,6 +10,7 @@ enum Object4D{
 # Variables qui définies la taille de la zone d'affichage
 @export var area_min = Vector3(-2, -2, -2)
 @export var area_max = Vector3(2, 2, 2)
+@export var ply_object_path = "user://Objects/hexadecachore.txt"
 var child_instantiated = false
 # Créer une zone de taille area_min - area_max
 func create_area_mesh() -> MeshInstance3D:
@@ -94,5 +95,6 @@ func _instantiate_child():
 		child.projection_mode = projection_mode
 		child.camera = WorldInfo.camera
 		child.area = self
+		child.ply_object_path = ply_object_path
 		add_child(child)
 		child_instantiated = true

@@ -42,8 +42,14 @@ visible = false
 
 [node name="ZoneAffichage" parent="." instance=ExtResource("5_vwbob")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 10, 0)
-mesh_mode = 2
 area_min = Vector3(-3, -3, -3)
 area_max = Vector3(3, 3, 3)
+ply_object_path = "res://Objects/hypersphere.txt"
+
+[node name="ZoneAffichage2" parent="." instance=ExtResource("5_vwbob")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 10, 0)
+area_min = Vector3(-3, -3, -3)
+area_max = Vector3(3, 3, 3)
+ply_object_path = "res://Objects/hexadecachore.txt"
 
 [connection signal="object_selected" from="CharacterView" to="." method="_on_character_view_object_selected"]

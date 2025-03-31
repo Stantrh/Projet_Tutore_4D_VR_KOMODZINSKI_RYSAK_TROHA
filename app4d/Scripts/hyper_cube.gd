@@ -5,7 +5,7 @@ extends Node3D
 var parser = preload("res://Scripts/Utils/parser.gd")
 
 # On a le chemin d'un fichier qu'on met en export
-@export var ply_object_path: String = "res://Objects/hexadecachore.txt"
+@export var ply_object_path: String = "res://Objects/hypercube.txt"
 
 #A CHANGER POUR LE PARSER
 # Les coordonnées des sommets de l'hypercube, en 4D
@@ -59,7 +59,7 @@ var stylish_spheres = [] # Tableaux des MeshInstance3D pour les sommets
 var stylish_cylinders = [] # Tableaux des MeshInstance3D pour les arêtes
 var stylish_edges = [] # Liste des arêtes (indices [i, j]) qui relient les sommets
 
-
+var DEFAULT_VERTICES = []
 #### Pour les points de vue (Vue de face, vue de fuite, vue par la pointe)
 @onready var marker : Marker3D = $Marker3D
 var is_point_of_view_fugue = false # COMMENTAIRES A FAIRE
@@ -78,7 +78,7 @@ func _ready():
 	# Puis on assigne aux sommets et aux arêtes ce qu'on a parsé depuis le fichier
 	dynamic_vertices = hypercube_data["vertices"]
 	dynamic_edges = hypercube_data["edges"]
-	
+	DEFAULT_VERTICES = dynamic_vertices
 	print("Vertices From Constants : " + str(dynamic_vertices) + "\n")
 	print("Vertices From Parser : " + str(hypercube_data["vertices"]) + "\n")
 	print("Edges From Constants : " + str(dynamic_edges) + "\n")
@@ -883,21 +883,21 @@ func lerp_vertices(start_vertices, end_vertices, t):
 
 
 func view_face():
-	dynamic_vertices = object.DEFAULT_VERTICES.duplicate((true))
+	dynamic_vertices = DEFAULT_VERTICES
 	hypercube_changed = true
 	#rotate_toward_camera()
 
 func fugue_view():
 	is_point_of_view_fugue = true
 	hypercube_changed = true
-	dynamic_vertices = object.DEFAULT_VERTICES.duplicate((true))
+	dynamic_vertices = DEFAULT_VERTICES
 	is_double_rotate = false
 	is_rotate = false
 	is_translate = false
 	#rotate_toward_camera()
 func point_view() :
 	hypercube_changed = true
-	dynamic_vertices = object.DEFAULT_VERTICES.duplicate((true))
+	dynamic_vertices = DEFAULT_VERTICES
 	is_double_rotate = false
 	is_rotate = false
 	is_translate = false

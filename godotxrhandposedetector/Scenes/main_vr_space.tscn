@@ -1,7 +1,6 @@
-[gd_scene load_steps=43 format=3 uid="uid://sn05ubxysvdr"]
+[gd_scene load_steps=42 format=3 uid="uid://sn05ubxysvdr"]
 
 [ext_resource type="Script" path="res://main.gd" id="1_hh7dd"]
-[ext_resource type="PackedScene" uid="uid://dabmoo0spa6vg" path="res://addons/hand_pose_detector/hands/RightHandHumanoid.gltf" id="2_3ueq0"]
 [ext_resource type="Texture2D" uid="uid://bhs382btmms13" path="res://Assets/Image/8k_stars_milky_way.jpg" id="2_f8ssy"]
 [ext_resource type="MeshLibrary" uid="uid://bvobp4fo1wvr6" path="res://Scenes/library/space_library.tres" id="2_njk4g"]
 [ext_resource type="PackedScene" uid="uid://bjcxf427un2wp" path="res://addons/godot-xr-tools/player/poke/poke.tscn" id="3_xfpn3"]
@@ -98,6 +97,13 @@ script = ExtResource("1_hh7dd")
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_3lccq")
 
+[node name="XROrigin3D_LeftTrackedHand_LeftHandHumanoid2_LeftHandHumanoid_Skeleton3D#XRHandModifier3D" type="XRHandModifier3D" parent="."]
+
+[node name="XROrigin3D_LeftTrackedHand_LeftHandHumanoid2_LeftHandHumanoid_Skeleton3D#BoneAttachment3D" type="BoneAttachment3D" parent="."]
+transform = Transform3D(0.0148923, 0.3927, 0.919546, -0.993092, 0.112853, -0.0321113, -0.116383, -0.912716, 0.391668, -0.0111001, 0.0429431, -0.171614)
+bone_name = "LeftIndexTip"
+bone_idx = 9
+
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(0.974189, -0.195491, 0.112867, -4.04627e-08, 0.5, 0.866026, -0.225733, -0.843673, 0.487094, 0, 2.84353, 0)
 shadow_enabled = true
@@ -127,16 +133,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.3, 1, 0)
 tracker = &"/user/hand_tracker/left"
 show_when_tracked = true
 
-[node name="LeftHandHumanoid2" parent="XROrigin3D/LeftTrackedHand" instance=ExtResource("2_3ueq0")]
-
-[node name="XRHandModifier3D" type="XRHandModifier3D" parent="XROrigin3D/LeftTrackedHand/LeftHandHumanoid2/LeftHandHumanoid/Skeleton3D" index="1"]
-
-[node name="BoneAttachment3D" type="BoneAttachment3D" parent="XROrigin3D/LeftTrackedHand/LeftHandHumanoid2/LeftHandHumanoid/Skeleton3D" index="2"]
-transform = Transform3D(0.0148923, 0.3927, 0.919546, -0.993092, 0.112853, -0.0321113, -0.116383, -0.912716, 0.391668, -0.0111001, 0.0429431, -0.171614)
-bone_name = "LeftIndexTip"
-bone_idx = 9
-
-[node name="Poke" parent="XROrigin3D/LeftTrackedHand/LeftHandHumanoid2/LeftHandHumanoid/Skeleton3D/BoneAttachment3D" instance=ExtResource("3_xfpn3")]
+[node name="LeftHandHumanoid2" parent="XROrigin3D/LeftTrackedHand" instance=ExtResource("13_hbh0e")]
 
 [node name="HandPoseDetector" type="Node" parent="XROrigin3D/LeftTrackedHand"]
 script = ExtResource("4_036y8")
@@ -207,6 +204,8 @@ teleport_button_action = "teleport"
 
 [node name="PlayerBody" parent="XROrigin3D" instance=ExtResource("16_60ao4")]
 collision_layer = 524800
+
+[node name="XROrigin3D_LeftTrackedHand_LeftHandHumanoid2_LeftHandHumanoid_Skeleton3D_BoneAttachment3D#Poke" parent="." instance=ExtResource("3_xfpn3")]
 
 [node name="StartXR" parent="." instance=ExtResource("17_lc3nq")]
 

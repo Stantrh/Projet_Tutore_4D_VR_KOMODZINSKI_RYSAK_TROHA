@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://dee40sudawdet"]
 
 [ext_resource type="Script" path="res://Scripts/ui_arm.gd" id="1_g86p8"]
-[ext_resource type="Texture2D" uid="uid://clt884qaxoib0" path="res://Assets/UI/Button/keyboard-left-arrow-button.png" id="1_k55x3"]
+[ext_resource type="Texture2D" uid="uid://di3vx3ngo0rl2" path="res://Assets/UI/Button/keyboard-left-arrow-button.png" id="1_k55x3"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_xr5im"]
 font_size = 9

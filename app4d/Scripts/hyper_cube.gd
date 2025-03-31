@@ -44,6 +44,7 @@ var transitioning = false # Indique si une transition est en cours
 @export var axe2_a = 1
 @export var axe2_b = 3
 @export var interactible : bool = true
+var initialized = false
 #### TRANSLATIONS
 @export var is_translate = false # Détermine si la translation est active
 @export var vect_translate = Vector4(0, 0, 0, 0) # Vecteur de translation à appliquer sur l'hypercube 4D
@@ -72,18 +73,11 @@ var is_up_to_date = true # COMMENTAIRES A FAIRE
 @export var area : Node3D = null # La variable de la zone
 
 func _ready():
-	
-	# On charge les constantes depuis le fichier PLY
-	var hypercube_data = parser.load_hypercube_constants(ply_object_path)
-	# Puis on assigne aux sommets et aux arêtes ce qu'on a parsé depuis le fichier
-	dynamic_vertices = hypercube_data["vertices"]
-	dynamic_edges = hypercube_data["edges"]
-	DEFAULT_VERTICES = dynamic_vertices
-	print("Vertices From Constants : " + str(dynamic_vertices) + "\n")
-	print("Vertices From Parser : " + str(hypercube_data["vertices"]) + "\n")
-	print("Edges From Constants : " + str(dynamic_edges) + "\n")
-	print("Edges From Parser : " + str(hypercube_data["edges"]) + "\n")
-	
+	load_data()
+	#print("Vertices From Constants : " + str(dynamic_vertices) + "\n")
+	#print("Vertices From Parser : " + str(hypercube_data["vertices"]) + "\n")
+	#print("Edges From Constants : " + str(dynamic_edges) + "\n")
+	#print("Edges From Parser : " + str(hypercube_data["edges"]) + "\n")
 	
 	if !interactible :
 		$Area3D.monitoring = false
@@ -94,22 +88,26 @@ func _ready():
 	mesh_instance = MeshInstance3D.new()
 	add_child(mesh_instance)
 	accesible_dimensions = find_accessible_dimensions(DIMENSIONS[dimension_selected],DIMENSIONS)
-	
 	# Selon le mode, on construit l'hypercube une seule fois pour le mode stylish (performances)
 	if mesh_mode == MeshMode.STYLISH:
 		create_stylish_hypercube()
 	else:
 		update_hypercube()
 	if WorldInfo.camera : 
-		WorldInfo.camera.get_parent().camera_moved.connect(_on_camera_moved)
-		
+		WorldInfo.camera.get_parent().camera_moved.connect(_on_camera_moved)		
+func load_data():
+# On charge les constantes depuis le fichier PLY
+	var hypercube_data = parser.load_hypercube_constants(ply_object_path)
+	# Puis on assigne aux sommets et aux arêtes ce qu'on a parsé depuis le fichier
+	dynamic_vertices = hypercube_data["vertices"]
+	dynamic_edges = hypercube_data["edges"]
+	DEFAULT_VERTICES = dynamic_vertices
 func _on_camera_moved():
 	if projection_mode == 0 :
 		if mesh_mode == MeshMode.STYLISH:
 			update_stylish_hypercube()
 		else:
-			update_hypercube()
-		
+			update_hypercube()		
 func stop_rotation():
 	is_rotate = false
 	var new_vertices = []
@@ -143,7 +141,8 @@ func _process(delta):
 			update_hypercube()
 	if not camera and WorldInfo.camera : 
 		camera = WorldInfo.camera
-	if mesh_mode == MeshMode.STYLISH : 
+	if mesh_mode == MeshMode.STYLISH and not initialized :
+		initialized = true 
 		update_stylish_hypercube()
 func create_stylish_hypercube():
 	# Crée un conteneur pour l'hypercube en mode STYLISH
@@ -312,6 +311,7 @@ func update_stylish_hypercube_Vector3(new_vertices):
 
 # --- Pour les autres modes (FULL, WIREFRAME), on garde la méthode existante
 func update_hypercube():
+	var projected_vertices=[]
 	# Pour FULL ou WIREFRAME, on reconstruit le mesh chaque frame (méthode actuelle)
 	for child in mesh_instance.get_children():
 		child.queue_free()
@@ -325,12 +325,14 @@ func update_hypercube():
 		dynamic_vertices = new_vertices
 		marker.transform.origin = apply_projection(get_global_center(dynamic_vertices))
 		var mesh
+		for vertex in new_vertices:
+			projected_vertices.append(apply_projection(vertex))
 		if mesh_mode == MeshMode.STYLISH:
 			# Ce cas n'arrive normalement pas ici
-			mesh = apply_build(new_vertices)
+			mesh = apply_build(projected_vertices)
 			mesh_instance.add_child(mesh)
 		else:
-			mesh = apply_build(new_vertices)
+			mesh = apply_build(projected_vertices)
 			mesh_instance.mesh = mesh
 	elif is_point_of_view_point:
 		#is_double_rotate = true
@@ -343,21 +345,23 @@ func update_hypercube():
 		is_point_of_view_point = false
 		dynamic_vertices = new_vertices
 		is_double_rotate = false
-		marker.transform.origin = apply_projection(get_global_center(dynamic_vertices))
+		marker.transform.origin =apply_projection( get_global_center(dynamic_vertices))
 		var mesh
+		for vertex in new_vertices:
+			projected_vertices.append(apply_projection(vertex))
 		if mesh_mode == MeshMode.STYLISH:
 			# Ce cas n'arrive normalement pas ici
-			mesh = apply_build(new_vertices)
+			mesh = apply_build(projected_vertices)
 			mesh_instance.add_child(mesh)
 		else:
-			mesh = apply_build(new_vertices)
+			mesh = apply_build(projected_vertices)
 			mesh_instance.mesh = mesh
 	else:		
 	# /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	# /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		if is_translate:
 			for vertex in dynamic_vertices:
-				new_vertices.append( translate_4d(vertex, vect_translate) )
+				new_vertices.append(translate_4d(vertex, vect_translate) )
 			
 			dynamic_vertices = new_vertices
 			marker.transform.origin = apply_projection(get_global_center(dynamic_vertices))
@@ -366,7 +370,7 @@ func update_hypercube():
 			is_translate = false
 		elif is_rotate:
 			for vertex in dynamic_vertices:
-				new_vertices.append( rotate_4d(vertex, rotation_angle, axe_a, axe_b, rotation_angle2, axe2_a, axe2_b) )
+				new_vertices.append( rotate_4d(vertex, rotation_angle, axe_a, axe_b, rotation_angle2, axe2_a, axe2_b)) 
 			marker.transform.origin = apply_projection(get_global_center(new_vertices))
 		else:
 			for vertex in dynamic_vertices:
@@ -379,12 +383,14 @@ func update_hypercube():
 			mesh_instance.visible = true
 		
 		var mesh
+		for vertex in new_vertices:
+			projected_vertices.append(apply_projection(vertex))
 		if mesh_mode == MeshMode.STYLISH:
 			# Ce cas n'arrive normalement pas ici
-			mesh = apply_build(new_vertices)
+			mesh = apply_build(projected_vertices)
 			mesh_instance.add_child(mesh)
 		else:
-			mesh = apply_build(new_vertices)
+			mesh = apply_build(projected_vertices)
 			mesh_instance.mesh = mesh
 		
 		if is_translate:
@@ -396,10 +402,10 @@ func update_hypercube():
 # Elle utilise une méthode qui est dans zone_affichage
 func is_hypercube_visible(vertices: Array) -> bool:
 	for vertex in vertices:
-		var projected_point = apply_projection(vertex)
+		var new_vertices = apply_projection(vertex)
 		if area == null :
 			return true
-		if area.is_point_in_area(projected_point):
+		if area.is_point_in_area(new_vertices):
 			return true
 	return false
 
@@ -407,41 +413,41 @@ func is_hypercube_visible(vertices: Array) -> bool:
 func apply_build(vertices):
 	match mesh_mode:
 		MeshMode.FULL:
-			return build_solid_hypercube_mesh(vertices)
+			return build_solid_hypercube_mesh_projected(vertices)
 		MeshMode.WIREFRAME:
-			return build_wireframe_hypercube_mesh(vertices)
+			return build_wireframe_hypercube_mesh_Vector_3(vertices)
 		MeshMode.STYLISH:
 			return create_stylish_hypercube()
 		_:
-			return build_wireframe_hypercube_mesh(vertices)
+			return build_wireframe_hypercube_mesh_Vector_3(vertices)
 
 # Cette méthode build l'affichage wireframe
-func build_wireframe_hypercube_mesh(vertices) -> Mesh:
-	var mesh = ArrayMesh.new()
-	var surface_tool = SurfaceTool.new() # SurfaceTool permet de générer et de modifier dynamiquement un maillage
-	surface_tool.begin(Mesh.PRIMITIVE_LINES) # Ici on initialise la construction avec des lignes
-
-	# On construit les arêtes
-	# get_hypercube_edges est une méthodes qui renvoie les arêtes de l'hypercube
-	# donc edge est un tableau qui contient chaque segment --> [[sommet1, sommet2], [sommet4, sommet6], []]
-	for edge in dynamic_edges:
-		# On applique la projection aux sommets
-		var p1 = apply_projection(vertices[edge[0]])
-		var p2 = apply_projection(vertices[edge[1]])
-		# Si vous souhaitez que la zone soit optionnel alors il ne faut pas oublier de modifier ces lignes
-		# Si l'arête est coupé par la zone alors on obtient de nouveaux points grâces à la méthode clip_edge
-		if area != null:
-			var clipped_points = area.clip_edge(p1, p2)
-			# Si il y a bien deux points alors on créer l'arêtes
-			if clipped_points.size() == 2:
-				surface_tool.add_vertex(clipped_points[0])
-				surface_tool.add_vertex(clipped_points[1])
-		else :
-			surface_tool.add_vertex(p1)
-			surface_tool.add_vertex(p2)
-
-	surface_tool.commit(mesh)
-	return mesh
+#func build_wireframe_hypercube_mesh(vertices) -> Mesh:
+	#var mesh = ArrayMesh.new()
+	#var surface_tool = SurfaceTool.new() # SurfaceTool permet de générer et de modifier dynamiquement un maillage
+	#surface_tool.begin(Mesh.PRIMITIVE_LINES) # Ici on initialise la construction avec des lignes
+#
+	## On construit les arêtes
+	## get_hypercube_edges est une méthodes qui renvoie les arêtes de l'hypercube
+	## donc edge est un tableau qui contient chaque segment --> [[sommet1, sommet2], [sommet4, sommet6], []]
+	#for edge in dynamic_edges:
+		## On applique la projection aux sommets
+		#var p1 = apply_projection(vertices[edge[0]])
+		#var p2 = apply_projection(vertices[edge[1]])
+		## Si vous souhaitez que la zone soit optionnel alors il ne faut pas oublier de modifier ces lignes
+		## Si l'arête est coupé par la zone alors on obtient de nouveaux points grâces à la méthode clip_edge
+		#if area != null:
+			#var clipped_points = area.clip_edge(p1, p2)
+			## Si il y a bien deux points alors on créer l'arêtes
+			#if clipped_points.size() == 2:
+				#surface_tool.add_vertex(clipped_points[0])
+				#surface_tool.add_vertex(clipped_points[1])
+		#else :
+			#surface_tool.add_vertex(p1)
+			#surface_tool.add_vertex(p2)
+#
+	#surface_tool.commit(mesh)
+	#return mesh
 	
 func build_wireframe_hypercube_mesh_Vector_3(vertices: Array) -> Mesh:
 	var mesh = ArrayMesh.new()
@@ -561,63 +567,63 @@ func build_stylish_hypercube_mesh_projected(vertices) -> Node3D:
 	return parent_node
 
 # Cette méthode build l'affichage full
-func build_solid_hypercube_mesh(vertices) -> Mesh:
-	var mesh = ArrayMesh.new()
-	var surface_tool = SurfaceTool.new() # SurfaceTool permet de générer et de modifier dynamiquement un maillage
-	surface_tool.begin(Mesh.PRIMITIVE_TRIANGLES) # Ici on initialise la construction avec des triangles
-
-	# On créer le matériau
-	var material = StandardMaterial3D.new()
-	material.cull_mode = BaseMaterial3D.CULL_DISABLED # On le désactive pour pas que les faces arrières soient cachées
-	material.albedo_color = Color(1, 1, 1, 0.3)
-	material.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED # On désactive l'effet de lumière
-	material.transparency = BaseMaterial3D.TRANSPARENCY_DISABLED
-	material.vertex_color_use_as_albedo = true
-	# On applique le matériau
-	surface_tool.set_material(material)
-	# On construit les faces de l'hypercube
-	# Donc on parcourt chaque cube
-	var iColor = 0;
-	for cube in CUBES:
-		if iColor >= FACE_COLORS.size():
-			iColor = 0
-		var face_color = FACE_COLORS[iColor]
-		iColor+=1
-		# Et chaque face du cube
-		for face in CUBE_FACES:
-
-			#surface_tool.set_material(material)
-			# On applique la projection à chaque sommet de la face
-			var projected_vertices = [
-				apply_projection(vertices[cube[face[0]]]),
-				apply_projection(vertices[cube[face[1]]]),
-				apply_projection(vertices[cube[face[2]]]),
-				apply_projection(vertices[cube[face[3]]])
-			]
-			
-			# On coupe les faces si elles sortent de la zone //// si vous souhaitez que la zone soit optionnel alors il ne faut pas oublier de modifier ces lignes
-			var clipped_face = []
-			for i in range(4):
-				if area != null :
-					var start = projected_vertices[i]
-					var end = projected_vertices[(i + 1) % 4]
-					clipped_face += area.clip_edge(start, end)
-				else : 
-					clipped_face += [projected_vertices[i],projected_vertices[(i + 1)%4]]
-
-			clipped_face = clipped_face.duplicate()
-			# On construit la face s'il y a au moins 3 points
-			if clipped_face.size() >= 3:
-				for i in range(1, clipped_face.size() - 1):
-					surface_tool.set_color(face_color)
-					surface_tool.add_vertex(clipped_face[0])
-					surface_tool.set_color(face_color)
-					surface_tool.add_vertex(clipped_face[i])
-					surface_tool.set_color(face_color)
-					surface_tool.add_vertex(clipped_face[i + 1])
-
-			surface_tool.commit(mesh)
-	return mesh
+#func build_solid_hypercube_mesh(vertices) -> Mesh:
+	#var mesh = ArrayMesh.new()
+	#var surface_tool = SurfaceTool.new() # SurfaceTool permet de générer et de modifier dynamiquement un maillage
+	#surface_tool.begin(Mesh.PRIMITIVE_TRIANGLES) # Ici on initialise la construction avec des triangles
+#
+	## On créer le matériau
+	#var material = StandardMaterial3D.new()
+	#material.cull_mode = BaseMaterial3D.CULL_DISABLED # On le désactive pour pas que les faces arrières soient cachées
+	#material.albedo_color = Color(1, 1, 1, 0.3)
+	#material.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED # On désactive l'effet de lumière
+	#material.transparency = BaseMaterial3D.TRANSPARENCY_DISABLED
+	#material.vertex_color_use_as_albedo = true
+	## On applique le matériau
+	#surface_tool.set_material(material)
+	## On construit les faces de l'hypercube
+	## Donc on parcourt chaque cube
+	#var iColor = 0;
+	#for cube in CUBES:
+		#if iColor >= FACE_COLORS.size():
+			#iColor = 0
+		#var face_color = FACE_COLORS[iColor]
+		#iColor+=1
+		## Et chaque face du cube
+		#for face in CUBE_FACES:
+#
+			##surface_tool.set_material(material)
+			## On applique la projection à chaque sommet de la face
+			#var projected_vertices = [
+				#apply_projection(vertices[cube[face[0]]]),
+				#apply_projection(vertices[cube[face[1]]]),
+				#apply_projection(vertices[cube[face[2]]]),
+				#apply_projection(vertices[cube[face[3]]])
+			#]
+			#
+			## On coupe les faces si elles sortent de la zone //// si vous souhaitez que la zone soit optionnel alors il ne faut pas oublier de modifier ces lignes
+			#var clipped_face = []
+			#for i in range(4):
+				#if area != null :
+					#var start = projected_vertices[i]
+					#var end = projected_vertices[(i + 1) % 4]
+					#clipped_face += area.clip_edge(start, end)
+				#else : 
+					#clipped_face += [projected_vertices[i],projected_vertices[(i + 1)%4]]
+#
+			#clipped_face = clipped_face.duplicate()
+			## On construit la face s'il y a au moins 3 points
+			#if clipped_face.size() >= 3:
+				#for i in range(1, clipped_face.size() - 1):
+					#surface_tool.set_color(face_color)
+					#surface_tool.add_vertex(clipped_face[0])
+					#surface_tool.set_color(face_color)
+					#surface_tool.add_vertex(clipped_face[i])
+					#surface_tool.set_color(face_color)
+					#surface_tool.add_vertex(clipped_face[i + 1])
+#
+			#surface_tool.commit(mesh)
+	#return mesh
 func build_solid_hypercube_mesh_projected(vertices: Array) -> Mesh:
 	var mesh = ArrayMesh.new()
 	var surface_tool = SurfaceTool.new()
@@ -903,13 +909,6 @@ func point_view() :
 	is_translate = false
 	is_point_of_view_point = true
 	#rotate_toward_camera()
-
-func rotate_toward_camera():
-	var camera_global_pos = camera.global_transform.origin
-	var direction = (camera_global_pos - marker.global_transform.origin).normalized()
-	# Création d'une nouvelle rotation alignant le RayCast vers la Caméra
-	var new_basis = Basis.looking_at(direction, Vector3.UP)
-	$".".transform.basis = new_basis
 	
 func find_accessible_dimensions(current_dim: Dictionary, dimensions: Array) -> Array:
 	var accessible = []

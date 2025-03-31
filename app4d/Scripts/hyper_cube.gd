@@ -13,7 +13,7 @@ var parser = preload("res://Scripts/Utils/parser.gd")
 var object = HypercubeConstants
 var dynamic_vertices = []
 var dynamic_edges = []
-
+var rotation_speed_factor = 0.0005
 # on charge les 8 cubes qui constituent l'hypercube
 var CUBES = object.CUBES
 # on charge les différentes faces de l'hypercube, les 4 points des carrés représentant les faces
@@ -277,89 +277,58 @@ func update_stylish_hypercube_Vector3(new_vertices = []):
 		stylish_cylinders[index].transform = cylinder_transform
 # --- Pour les autres modes (FULL, WIREFRAME), on garde la méthode existante
 func update_hypercube():
-	var projected_vertices=[]
-	# Pour FULL ou WIREFRAME, on reconstruit le mesh chaque frame (méthode actuelle)
-	for child in mesh_instance.get_children():
-		child.queue_free()
+	var projected_vertices = []
 	var new_vertices = []
-	if is_point_of_view_fugue :
+	var apply_change = false
+	# Gestion des transformations
+	if is_point_of_view_fugue or is_point_of_view_point:
 		var axe_1 = DIMENSIONS[dimension_selected].x
 		var axe_2 = DIMENSIONS[dimension_selected].w
-		for vertex in dynamic_vertices :
-			new_vertices.append(rotate_4d(vertex, 45, axe_1, axe_2, 25, axe2_a, axe2_b))
-		is_point_of_view_fugue = false
+		if is_point_of_view_fugue:
+			for vertex in dynamic_vertices:
+				new_vertices.append(rotate_4d(vertex, 45, axe_1, axe_2, 25, axe2_a, axe2_b))
+			is_point_of_view_fugue = false
+		else: # is_point_of_view_point
+			var axe2_1 = DIMENSIONS[dimension_selected].y
+			var axe2_2 = DIMENSIONS[dimension_selected].w
+			for vertex in dynamic_vertices:
+				new_vertices.append(rotate_4d(vertex, -120, axe2_1, axe2_2, 0, 0, 0))
+			is_point_of_view_point = false
+			is_double_rotate = false
+
 		dynamic_vertices = new_vertices
-		marker.transform.origin = apply_projection(get_global_center(dynamic_vertices))
-		var mesh
-		projected_vertices = get_projected_vertices(new_vertices)
-		if mesh_mode == MeshMode.STYLISH:
-			# Ce cas n'arrive normalement pas ici
-			mesh = apply_build(projected_vertices)
-			mesh_instance.add_child(mesh)
-		else:
-			mesh = apply_build(projected_vertices)
-			mesh_instance.mesh = mesh
-	elif is_point_of_view_point:
-		#is_double_rotate = true
-		var axe_1 = DIMENSIONS[dimension_selected].x
-		var axe_2 = DIMENSIONS[dimension_selected].w
-		var axe2_1 = DIMENSIONS[dimension_selected].y
-		var axe2_2 = DIMENSIONS[dimension_selected].w
-		for vertex in dynamic_vertices :
-			new_vertices.append(rotate_4d(vertex,-120,axe2_1,axe2_2,0,0,0))
-		is_point_of_view_point = false
+		apply_change = true
+
+	elif is_translate or is_rotate:
+		for vertex in dynamic_vertices:
+			if is_translate:
+				new_vertices.append(translate_4d(vertex, vect_translate))
+			else: # is_rotate
+				new_vertices.append(rotate_4d(vertex, rotation_angle * rotation_speed_factor, axe_a, axe_b, rotation_angle2* rotation_speed_factor, axe2_a, axe2_b))
+
+		if is_translate:
+			apply_translation(vect_translate)
+			is_translate = false
+		
 		dynamic_vertices = new_vertices
-		is_double_rotate = false
-		marker.transform.origin =apply_projection( get_global_center(dynamic_vertices))
-		var mesh
-		projected_vertices = get_projected_vertices(new_vertices)
-		if mesh_mode == MeshMode.STYLISH:
-			# Ce cas n'arrive normalement pas ici
-			mesh = apply_build(projected_vertices)
-			mesh_instance.add_child(mesh)
-		else:
-			mesh = apply_build(projected_vertices)
-			mesh_instance.mesh = mesh
-	else:		
-	# /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	# /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-		if is_translate:
-			for vertex in dynamic_vertices:
-				new_vertices.append(translate_4d(vertex, vect_translate) )
-			
-			dynamic_vertices = new_vertices
-			marker.transform.origin = apply_projection(get_global_center(dynamic_vertices))
-			apply_translation(vect_translate)	
-			#print(marker.position)
-			is_translate = false
-		elif is_rotate:
-			for vertex in dynamic_vertices:
-				new_vertices.append( rotate_4d(vertex, rotation_angle, axe_a, axe_b, rotation_angle2, axe2_a, axe2_b)) 
-			marker.transform.origin = apply_projection(get_global_center(new_vertices))
-		else:
-			for vertex in dynamic_vertices:
-				new_vertices.append(vertex)
-		
-		if not is_hypercube_visible(new_vertices):
-			mesh_instance.visible = false
-			return
-		else:
-			mesh_instance.visible = true
-		
-		var mesh
-		projected_vertices = get_projected_vertices(new_vertices)
-		if mesh_mode == MeshMode.STYLISH:
-			# Ce cas n'arrive normalement pas ici
-			mesh = apply_build(projected_vertices)
-			mesh_instance.add_child(mesh)
-		else:
-			mesh = apply_build(projected_vertices)
-			mesh_instance.mesh = mesh
-		
-		if is_translate:
-			is_translate = false
-			
-			
+		apply_change = true
+
+	# Vérification de visibilité
+	if not is_hypercube_visible(dynamic_vertices):
+		mesh_instance.visible = false
+		return
+	mesh_instance.visible = true
+
+	# Construction du mesh (optimisation : évite la duplication de code)
+	marker.transform.origin = apply_projection(get_global_center(dynamic_vertices))
+	projected_vertices = get_projected_vertices(dynamic_vertices)
+
+	var mesh = apply_build(projected_vertices)
+	if mesh_mode == MeshMode.STYLISH:
+		mesh_instance.add_child(mesh)
+	else:
+		mesh_instance.mesh = mesh
+
 			
 # Cette méthode return true si au moins une partie de l'hypercube est dans la zone
 # Elle utilise une méthode qui est dans zone_affichage

@@ -5,7 +5,7 @@ extends Node3D
 var parser = preload("res://Scripts/Utils/parser.gd")
 
 # On a le chemin d'un fichier qu'on met en export
-@export var ply_object_path: String = "res://Objects/hypercube.txt"
+@export var ply_object_path: String = "res://Objects/hexadecachore.txt"
 
 #A CHANGER POUR LE PARSER
 # Les coordonnées des sommets de l'hypercube, en 4D

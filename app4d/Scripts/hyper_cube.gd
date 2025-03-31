@@ -13,7 +13,8 @@ var parser = preload("res://Scripts/Utils/parser.gd")
 var object = HypercubeConstants
 var dynamic_vertices = []
 var dynamic_edges = []
-var rotation_speed_factor = 0.0005
+var rotation_speed_factor = 0.0000001
+var speed
 # on charge les 8 cubes qui constituent l'hypercube
 var CUBES = object.CUBES
 # on charge les différentes faces de l'hypercube, les 4 points des carrés représentant les faces
@@ -131,7 +132,7 @@ func _process(delta):
 		rotation_angle += delta
 		# La même chose si on a une double rotation
 		if is_double_rotate:
-			rotation_angle2 += delta
+			rotation_angle2 +=  delta
 	# On appel en continu la méthode update_hypercube pour que la rotation prenne effet et aussi pour la projection perspective
 	# Pour le mode STYLISH, on met à jour la position des nodes existants
 	#if mesh_mode == MeshMode.STYLISH:
@@ -303,14 +304,13 @@ func update_hypercube():
 		for vertex in dynamic_vertices:
 			if is_translate:
 				new_vertices.append(translate_4d(vertex, vect_translate))
-			else: # is_rotate
-				new_vertices.append(rotate_4d(vertex, rotation_angle * rotation_speed_factor, axe_a, axe_b, rotation_angle2* rotation_speed_factor, axe2_a, axe2_b))
+			elif is_rotate: # is_rotate
+				new_vertices.append(rotate_4d(vertex, rotation_angle , axe_a, axe_b, rotation_angle2, axe2_a, axe2_b))
 
 		if is_translate:
 			apply_translation(vect_translate)
 			is_translate = false
-		
-		dynamic_vertices = new_vertices
+			dynamic_vertices = new_vertices
 		apply_change = true
 
 	# Vérification de visibilité
@@ -322,7 +322,9 @@ func update_hypercube():
 	# Construction du mesh (optimisation : évite la duplication de code)
 	marker.transform.origin = apply_projection(get_global_center(dynamic_vertices))
 	projected_vertices = get_projected_vertices(dynamic_vertices)
-
+	#Pour eviter des rotations instables
+	if is_rotate:
+		projected_vertices = get_projected_vertices(new_vertices)
 	var mesh = apply_build(projected_vertices)
 	if mesh_mode == MeshMode.STYLISH:
 		mesh_instance.add_child(mesh)

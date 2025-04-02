@@ -4,12 +4,11 @@ importer="scene"
 importer_version=1
 type="PackedScene"
 uid="uid://bbsnuyiprw202"
-path="res://.godot/imported/spacetruck_large.gltf-d69df4dc35885301895c5481a6c793ff.scn"
+valid=false
 
 [deps]
 
 source_file="res://Assets/3D/KayKit_Space_Base_Bits_1.0_FREE/KayKit_Space_Base_Bits_1.0_FREE/Assets/gltf/spacetruck_large.gltf"
-dest_files=["res://.godot/imported/spacetruck_large.gltf-d69df4dc35885301895c5481a6c793ff.scn"]
 
 [params]
 

@@ -4,12 +4,11 @@ importer="scene"
 importer_version=1
 type="PackedScene"
 uid="uid://bt4m0gsujc3sh"
-path="res://.godot/imported/roofmodule_cargo_B.gltf-6a349c2fae496f567669f14e960341fa.scn"
+valid=false
 
 [deps]
 
 source_file="res://Assets/3D/KayKit_Space_Base_Bits_1.0_FREE/KayKit_Space_Base_Bits_1.0_FREE/Assets/gltf/roofmodule_cargo_B.gltf"
-dest_files=["res://.godot/imported/roofmodule_cargo_B.gltf-6a349c2fae496f567669f14e960341fa.scn"]
 
 [params]
 

@@ -4,12 +4,11 @@ importer="scene"
 importer_version=1
 type="PackedScene"
 uid="uid://be4apdcpqnrok"
-path="res://.godot/imported/rock_A.gltf-44e13d605d95b4f050be5805d18247b1.scn"
+valid=false
 
 [deps]
 
 source_file="res://Assets/3D/KayKit_Space_Base_Bits_1.0_FREE/KayKit_Space_Base_Bits_1.0_FREE/Assets/gltf/rock_A.gltf"
-dest_files=["res://.godot/imported/rock_A.gltf-44e13d605d95b4f050be5805d18247b1.scn"]
 
 [params]
 

@@ -4,12 +4,11 @@ importer="scene"
 importer_version=1
 type="PackedScene"
 uid="uid://i4aunw7xu0bt"
-path="res://.godot/imported/structure_tall.gltf-47d105763406befc4150e8c972cbd3e4.scn"
+valid=false
 
 [deps]
 
 source_file="res://Assets/3D/KayKit_Space_Base_Bits_1.0_FREE/KayKit_Space_Base_Bits_1.0_FREE/Assets/gltf/structure_tall.gltf"
-dest_files=["res://.godot/imported/structure_tall.gltf-47d105763406befc4150e8c972cbd3e4.scn"]
 
 [params]
 

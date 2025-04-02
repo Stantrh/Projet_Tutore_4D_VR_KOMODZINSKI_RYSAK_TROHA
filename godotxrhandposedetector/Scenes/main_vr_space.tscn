@@ -1,6 +1,6 @@
 [gd_scene load_steps=43 format=3 uid="uid://sn05ubxysvdr"]
 
-[ext_resource type="Script" path="res://Scripts/main_vr_space.gd" id="1_pwmhd"]
+[ext_resource type="Script" path="res://main.gd" id="1_hh7dd"]
 [ext_resource type="PackedScene" uid="uid://cjcehqrfoxav3" path="res://addons/hand_pose_detector/hands/LeftHandHumanoid.gltf" id="2_3ueq0"]
 [ext_resource type="Texture2D" uid="uid://bhs382btmms13" path="res://Assets/Image/8k_stars_milky_way.jpg" id="2_f8ssy"]
 [ext_resource type="MeshLibrary" uid="uid://bvobp4fo1wvr6" path="res://Scenes/library/space_library.tres" id="2_njk4g"]
@@ -93,7 +93,7 @@ size = Vector3(27.507, 28.3578, 27.775)
 
 [node name="MainVrSpace" type="Node3D"]
 transform = Transform3D(0.7, 0, 0, 0, 0.7, 0, 0, 0, 0.7, 0, 0, 0)
-script = ExtResource("1_pwmhd")
+script = ExtResource("1_hh7dd")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_3lccq")

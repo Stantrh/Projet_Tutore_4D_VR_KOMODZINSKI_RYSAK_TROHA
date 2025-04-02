@@ -4,12 +4,11 @@ importer="scene"
 importer_version=1
 type="PackedScene"
 uid="uid://bxslvawf7ip8c"
-path="res://.godot/imported/roofmodule_solarpanels.gltf-dcb6820e504be7f7c1684d9eee1bbf6c.scn"
+valid=false
 
 [deps]
 
 source_file="res://Assets/3D/KayKit_Space_Base_Bits_1.0_FREE/KayKit_Space_Base_Bits_1.0_FREE/Assets/gltf/roofmodule_solarpanels.gltf"
-dest_files=["res://.godot/imported/roofmodule_solarpanels.gltf-dcb6820e504be7f7c1684d9eee1bbf6c.scn"]
 
 [params]
 

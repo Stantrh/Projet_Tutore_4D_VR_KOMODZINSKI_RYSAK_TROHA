@@ -4,12 +4,11 @@ importer="scene"
 importer_version=1
 type="PackedScene"
 uid="uid://dt2opnab0ap7g"
-path="res://.godot/imported/tunnel_diagonal_short_B.gltf-22b3cc43ebd5a8d7db314d5a7321601f.scn"
+valid=false
 
 [deps]
 
 source_file="res://Assets/3D/KayKit_Space_Base_Bits_1.0_FREE/KayKit_Space_Base_Bits_1.0_FREE/Assets/gltf/tunnel_diagonal_short_B.gltf"
-dest_files=["res://.godot/imported/tunnel_diagonal_short_B.gltf-22b3cc43ebd5a8d7db314d5a7321601f.scn"]
 
 [params]
 

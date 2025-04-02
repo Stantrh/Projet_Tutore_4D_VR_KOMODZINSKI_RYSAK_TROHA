@@ -4,12 +4,11 @@ importer="scene"
 importer_version=1
 type="PackedScene"
 uid="uid://csybh65lh4wfw"
-path="res://.godot/imported/terrain_mining.gltf-a01e7fcffd9e585d5d836b71d8bd8d94.scn"
+valid=false
 
 [deps]
 
 source_file="res://Assets/3D/KayKit_Space_Base_Bits_1.0_FREE/KayKit_Space_Base_Bits_1.0_FREE/Assets/gltf/terrain_mining.gltf"
-dest_files=["res://.godot/imported/terrain_mining.gltf-a01e7fcffd9e585d5d836b71d8bd8d94.scn"]
 
 [params]
 

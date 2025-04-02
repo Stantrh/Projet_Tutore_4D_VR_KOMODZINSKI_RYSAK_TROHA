@@ -4,12 +4,11 @@ importer="scene"
 importer_version=1
 type="PackedScene"
 uid="uid://c30sw2mgtv47n"
-path="res://.godot/imported/terrain_low_curved.gltf-a97dd57f989b7b94090ddb967a82b99c.scn"
+valid=false
 
 [deps]
 
 source_file="res://Assets/3D/KayKit_Space_Base_Bits_1.0_FREE/KayKit_Space_Base_Bits_1.0_FREE/Assets/gltf/terrain_low_curved.gltf"
-dest_files=["res://.godot/imported/terrain_low_curved.gltf-a97dd57f989b7b94090ddb967a82b99c.scn"]
 
 [params]
 

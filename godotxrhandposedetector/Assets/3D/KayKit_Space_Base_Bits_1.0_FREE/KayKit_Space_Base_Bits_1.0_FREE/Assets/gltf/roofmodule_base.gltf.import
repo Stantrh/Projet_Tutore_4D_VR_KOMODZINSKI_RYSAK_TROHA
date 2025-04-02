@@ -4,12 +4,11 @@ importer="scene"
 importer_version=1
 type="PackedScene"
 uid="uid://cbr378cyhhdl5"
-path="res://.godot/imported/roofmodule_base.gltf-43f92ecbe9b77b390d1267b1cda921b4.scn"
+valid=false
 
 [deps]
 
 source_file="res://Assets/3D/KayKit_Space_Base_Bits_1.0_FREE/KayKit_Space_Base_Bits_1.0_FREE/Assets/gltf/roofmodule_base.gltf"
-dest_files=["res://.godot/imported/roofmodule_base.gltf-43f92ecbe9b77b390d1267b1cda921b4.scn"]
 
 [params]
 

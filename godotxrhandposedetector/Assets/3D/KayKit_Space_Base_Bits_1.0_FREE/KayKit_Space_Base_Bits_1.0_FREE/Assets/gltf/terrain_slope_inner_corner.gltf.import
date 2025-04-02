@@ -4,12 +4,11 @@ importer="scene"
 importer_version=1
 type="PackedScene"
 uid="uid://duoupxapp5ls7"
-path="res://.godot/imported/terrain_slope_inner_corner.gltf-e02c8cc5e7693d3f71d498c74433e0de.scn"
+valid=false
 
 [deps]
 
 source_file="res://Assets/3D/KayKit_Space_Base_Bits_1.0_FREE/KayKit_Space_Base_Bits_1.0_FREE/Assets/gltf/terrain_slope_inner_corner.gltf"
-dest_files=["res://.godot/imported/terrain_slope_inner_corner.gltf-e02c8cc5e7693d3f71d498c74433e0de.scn"]
 
 [params]
 

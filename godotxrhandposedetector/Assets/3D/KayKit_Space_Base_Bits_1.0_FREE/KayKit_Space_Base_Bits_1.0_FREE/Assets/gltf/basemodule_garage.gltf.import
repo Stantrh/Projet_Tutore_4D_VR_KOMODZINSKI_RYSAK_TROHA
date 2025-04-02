@@ -4,12 +4,11 @@ importer="scene"
 importer_version=1
 type="PackedScene"
 uid="uid://colf0vtc3ulx7"
-path="res://.godot/imported/basemodule_garage.gltf-caa0de695da6c826a9644db9a1ca5143.scn"
+valid=false
 
 [deps]
 
 source_file="res://Assets/3D/KayKit_Space_Base_Bits_1.0_FREE/KayKit_Space_Base_Bits_1.0_FREE/Assets/gltf/basemodule_garage.gltf"
-dest_files=["res://.godot/imported/basemodule_garage.gltf-caa0de695da6c826a9644db9a1ca5143.scn"]
 
 [params]
 

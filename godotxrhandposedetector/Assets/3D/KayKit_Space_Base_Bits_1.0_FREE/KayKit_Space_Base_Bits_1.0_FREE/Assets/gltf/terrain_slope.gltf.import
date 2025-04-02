@@ -4,12 +4,11 @@ importer="scene"
 importer_version=1
 type="PackedScene"
 uid="uid://2mu6ko4nttoi"
-path="res://.godot/imported/terrain_slope.gltf-914d5dad2985ae2f598328d20ccd9f3f.scn"
+valid=false
 
 [deps]
 
 source_file="res://Assets/3D/KayKit_Space_Base_Bits_1.0_FREE/KayKit_Space_Base_Bits_1.0_FREE/Assets/gltf/terrain_slope.gltf"
-dest_files=["res://.godot/imported/terrain_slope.gltf-914d5dad2985ae2f598328d20ccd9f3f.scn"]
 
 [params]
 

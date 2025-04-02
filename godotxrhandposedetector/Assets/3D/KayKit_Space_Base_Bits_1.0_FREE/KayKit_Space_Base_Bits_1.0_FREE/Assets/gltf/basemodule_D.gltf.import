@@ -4,12 +4,11 @@ importer="scene"
 importer_version=1
 type="PackedScene"
 uid="uid://coxn2sem86cd"
-path="res://.godot/imported/basemodule_D.gltf-465571b5df55a801a71ce423e1239510.scn"
+valid=false
 
 [deps]
 
 source_file="res://Assets/3D/KayKit_Space_Base_Bits_1.0_FREE/KayKit_Space_Base_Bits_1.0_FREE/Assets/gltf/basemodule_D.gltf"
-dest_files=["res://.godot/imported/basemodule_D.gltf-465571b5df55a801a71ce423e1239510.scn"]
 
 [params]
 

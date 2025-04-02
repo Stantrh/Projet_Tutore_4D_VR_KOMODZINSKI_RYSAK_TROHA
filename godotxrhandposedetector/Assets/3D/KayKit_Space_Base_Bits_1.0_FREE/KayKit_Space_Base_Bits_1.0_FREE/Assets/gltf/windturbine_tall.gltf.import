@@ -4,12 +4,11 @@ importer="scene"
 importer_version=1
 type="PackedScene"
 uid="uid://cgb808mcocgdd"
-path="res://.godot/imported/windturbine_tall.gltf-ff93c16fb9d4d69d93be541493a8ecf6.scn"
+valid=false
 
 [deps]
 
 source_file="res://Assets/3D/KayKit_Space_Base_Bits_1.0_FREE/KayKit_Space_Base_Bits_1.0_FREE/Assets/gltf/windturbine_tall.gltf"
-dest_files=["res://.godot/imported/windturbine_tall.gltf-ff93c16fb9d4d69d93be541493a8ecf6.scn"]
 
 [params]
 

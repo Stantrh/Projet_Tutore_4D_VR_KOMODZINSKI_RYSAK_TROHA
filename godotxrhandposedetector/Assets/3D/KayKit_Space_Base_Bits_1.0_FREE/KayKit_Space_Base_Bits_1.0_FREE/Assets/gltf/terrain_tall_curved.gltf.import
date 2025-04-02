@@ -4,12 +4,11 @@ importer="scene"
 importer_version=1
 type="PackedScene"
 uid="uid://qw2ag6fwhmrt"
-path="res://.godot/imported/terrain_tall_curved.gltf-a76c33e83c08b15aec39887e61a81f30.scn"
+valid=false
 
 [deps]
 
 source_file="res://Assets/3D/KayKit_Space_Base_Bits_1.0_FREE/KayKit_Space_Base_Bits_1.0_FREE/Assets/gltf/terrain_tall_curved.gltf"
-dest_files=["res://.godot/imported/terrain_tall_curved.gltf-a76c33e83c08b15aec39887e61a81f30.scn"]
 
 [params]
 

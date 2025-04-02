@@ -4,12 +4,11 @@ importer="scene"
 importer_version=1
 type="PackedScene"
 uid="uid://c4o2sx83kmcs3"
-path="res://.godot/imported/landingpad_small.gltf-7166e69baf5f287b858b007dfcb08b2a.scn"
+valid=false
 
 [deps]
 
 source_file="res://Assets/3D/KayKit_Space_Base_Bits_1.0_FREE/KayKit_Space_Base_Bits_1.0_FREE/Assets/gltf/landingpad_small.gltf"
-dest_files=["res://.godot/imported/landingpad_small.gltf-7166e69baf5f287b858b007dfcb08b2a.scn"]
 
 [params]
 

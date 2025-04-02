@@ -4,12 +4,11 @@ importer="scene"
 importer_version=1
 type="PackedScene"
 uid="uid://cvhpjdcb7vvg6"
-path="res://.godot/imported/cargo_A.gltf-cff32d3f640fcd4b3713bfe0d440b765.scn"
+valid=false
 
 [deps]
 
 source_file="res://Assets/3D/KayKit_Space_Base_Bits_1.0_FREE/KayKit_Space_Base_Bits_1.0_FREE/Assets/gltf/cargo_A.gltf"
-dest_files=["res://.godot/imported/cargo_A.gltf-cff32d3f640fcd4b3713bfe0d440b765.scn"]
 
 [params]
 

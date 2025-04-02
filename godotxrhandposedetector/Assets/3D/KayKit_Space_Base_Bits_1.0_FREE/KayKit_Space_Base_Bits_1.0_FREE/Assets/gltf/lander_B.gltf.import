@@ -4,12 +4,11 @@ importer="scene"
 importer_version=1
 type="PackedScene"
 uid="uid://bqbj640263rju"
-path="res://.godot/imported/lander_B.gltf-b3bd6645da771558b768c318040d0083.scn"
+valid=false
 
 [deps]
 
 source_file="res://Assets/3D/KayKit_Space_Base_Bits_1.0_FREE/KayKit_Space_Base_Bits_1.0_FREE/Assets/gltf/lander_B.gltf"
-dest_files=["res://.godot/imported/lander_B.gltf-b3bd6645da771558b768c318040d0083.scn"]
 
 [params]
 

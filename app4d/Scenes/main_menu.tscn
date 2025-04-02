@@ -2,6 +2,9 @@
 
 [ext_resource type="Script" path="res://Scripts/main_menu.gd" id="1_sbbay"]
 
+[sub_resource type="LabelSettings" id="LabelSettings_vcpta"]
+font_color = Color(0, 0, 0, 1)
+
 [sub_resource type="LabelSettings" id="LabelSettings_k2s5t"]
 font_size = 64
 font_color = Color(0, 0, 0, 1)
@@ -11,9 +14,6 @@ outline_size = 3
 font_size = 32
 font_color = Color(0, 0, 0, 1)
 outline_size = 8
-
-[sub_resource type="LabelSettings" id="LabelSettings_vcpta"]
-font_color = Color(0, 0, 0, 1)
 
 [sub_resource type="LabelSettings" id="LabelSettings_fuvd2"]
 font_size = 29
@@ -37,6 +37,70 @@ offset_left = -0.548004
 offset_right = 0.547974
 grow_horizontal = 2
 grow_vertical = 0
+
+[node name="Popup" type="Popup" parent="start"]
+size = Vector2i(251, 301)
+always_on_top = true
+
+[node name="ReferenceRect" type="ReferenceRect" parent="start/Popup"]
+custom_minimum_size = Vector2(250, 300)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+border_color = Color(0, 0, 0, 1)
+border_width = 5.0
+editor_only = false
+
+[node name="ColorRect" type="ColorRect" parent="start/Popup/ReferenceRect"]
+show_behind_parent = true
+custom_minimum_size = Vector2(250, 300)
+layout_mode = 0
+offset_right = 250.0
+offset_bottom = 300.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="start/Popup/ReferenceRect/ColorRect"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -72.0
+offset_right = 72.0
+offset_bottom = 127.0
+grow_horizontal = 2
+theme_override_constants/separation = 30
+
+[node name="Label" type="Label" parent="start/Popup/ReferenceRect/ColorRect/VBoxContainer"]
+layout_mode = 2
+text = "Combien (max = 6)"
+label_settings = SubResource("LabelSettings_vcpta")
+horizontal_alignment = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="start/Popup/ReferenceRect/ColorRect/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 17
+
+[node name="TextEdit" type="TextEdit" parent="start/Popup/ReferenceRect/ColorRect/VBoxContainer/VBoxContainer"]
+custom_minimum_size = Vector2(50, 100)
+layout_mode = 2
+text = "1"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="start/Popup/ReferenceRect/ColorRect/VBoxContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Confirm_button" type="Button" parent="start/Popup/ReferenceRect/ColorRect/VBoxContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+text = "Confirmer"
+
+[node name="Retour_Button" type="Button" parent="start/Popup/ReferenceRect/ColorRect/VBoxContainer/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(87, -0.1)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+text = "Retour"
 
 [node name="VBoxContainer" type="VBoxContainer" parent="start"]
 layout_mode = 1
@@ -172,70 +236,6 @@ size_flags_horizontal = 4
 size_flags_vertical = 4
 disabled = true
 text = "Mode Libre"
-
-[node name="Popup" type="Popup" parent="choix_figure"]
-size = Vector2i(251, 301)
-always_on_top = true
-
-[node name="ReferenceRect" type="ReferenceRect" parent="choix_figure/Popup"]
-custom_minimum_size = Vector2(250, 300)
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-border_color = Color(0, 0, 0, 1)
-border_width = 5.0
-editor_only = false
-
-[node name="ColorRect" type="ColorRect" parent="choix_figure/Popup/ReferenceRect"]
-show_behind_parent = true
-custom_minimum_size = Vector2(250, 300)
-layout_mode = 0
-offset_right = 250.0
-offset_bottom = 300.0
-
-[node name="VBoxContainer" type="VBoxContainer" parent="choix_figure/Popup/ReferenceRect/ColorRect"]
-layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -72.0
-offset_right = 72.0
-offset_bottom = 127.0
-grow_horizontal = 2
-theme_override_constants/separation = 30
-
-[node name="Label" type="Label" parent="choix_figure/Popup/ReferenceRect/ColorRect/VBoxContainer"]
-layout_mode = 2
-text = "Combien (max = 6)"
-label_settings = SubResource("LabelSettings_vcpta")
-horizontal_alignment = 1
-
-[node name="VBoxContainer" type="VBoxContainer" parent="choix_figure/Popup/ReferenceRect/ColorRect/VBoxContainer"]
-layout_mode = 2
-theme_override_constants/separation = 17
-
-[node name="TextEdit" type="TextEdit" parent="choix_figure/Popup/ReferenceRect/ColorRect/VBoxContainer/VBoxContainer"]
-custom_minimum_size = Vector2(50, 100)
-layout_mode = 2
-text = "1"
-
-[node name="HBoxContainer" type="HBoxContainer" parent="choix_figure/Popup/ReferenceRect/ColorRect/VBoxContainer/VBoxContainer"]
-layout_mode = 2
-
-[node name="Confirm_button" type="Button" parent="choix_figure/Popup/ReferenceRect/ColorRect/VBoxContainer/VBoxContainer/HBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 4
-text = "Confirmer"
-
-[node name="Retour_Button" type="Button" parent="choix_figure/Popup/ReferenceRect/ColorRect/VBoxContainer/VBoxContainer/HBoxContainer"]
-custom_minimum_size = Vector2(87, -0.1)
-layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 4
-text = "Retour"
 
 [node name="choix_projection" type="Control" parent="."]
 visible = false
@@ -381,14 +381,14 @@ layout_mode = 2
 size_flags_horizontal = 4
 text = "Retour"
 
+[connection signal="text_changed" from="start/Popup/ReferenceRect/ColorRect/VBoxContainer/VBoxContainer/TextEdit" to="." method="_on_text_edit_text_changed"]
+[connection signal="pressed" from="start/Popup/ReferenceRect/ColorRect/VBoxContainer/VBoxContainer/HBoxContainer/Confirm_button" to="." method="_on_confirm_button_pressed"]
+[connection signal="pressed" from="start/Popup/ReferenceRect/ColorRect/VBoxContainer/VBoxContainer/HBoxContainer/Retour_Button" to="." method="_on_retour_button_pressed"]
 [connection signal="pressed" from="start/VBoxContainer/VBoxContainer2/start_button" to="." method="_on_start_button_pressed"]
 [connection signal="pressed" from="start/VBoxContainer/VBoxContainer2/exit_button" to="." method="_on_exit_button_pressed"]
 [connection signal="pressed" from="choix_figure/VBoxContainer/VBoxContainer/GridContainer/hyper_cube" to="." method="_on_hyper_cube_pressed"]
 [connection signal="pressed" from="choix_figure/VBoxContainer/VBoxContainer/GridContainer/hyper_sphère" to="." method="_on_hyper_sphère_pressed"]
 [connection signal="pressed" from="choix_figure/VBoxContainer/VBoxContainer/HBoxContainer/back_button" to="." method="_on_back_button_pressed"]
-[connection signal="text_changed" from="choix_figure/Popup/ReferenceRect/ColorRect/VBoxContainer/VBoxContainer/TextEdit" to="." method="_on_text_edit_text_changed"]
-[connection signal="pressed" from="choix_figure/Popup/ReferenceRect/ColorRect/VBoxContainer/VBoxContainer/HBoxContainer/Confirm_button" to="." method="_on_confirm_button_pressed"]
-[connection signal="pressed" from="choix_figure/Popup/ReferenceRect/ColorRect/VBoxContainer/VBoxContainer/HBoxContainer/Retour_Button" to="." method="_on_retour_button_pressed"]
 [connection signal="pressed" from="choix_projection/VBoxContainer/VBoxContainer/HBoxContainer/orthogonale" to="." method="_on_orthogonale_pressed"]
 [connection signal="pressed" from="choix_projection/VBoxContainer/VBoxContainer/HBoxContainer/perspective" to="." method="_on_perspective_pressed"]
 [connection signal="pressed" from="choix_projection/VBoxContainer/VBoxContainer/HBoxContainer/stéréographique" to="." method="_on_stéréographique_pressed"]

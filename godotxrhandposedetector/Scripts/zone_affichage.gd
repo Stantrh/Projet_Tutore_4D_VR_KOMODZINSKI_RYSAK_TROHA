@@ -25,7 +25,7 @@ func create_area_mesh() -> MeshInstance3D:
 	mesh_instance.transform.origin = area_min + size / 2.0 # on positionne le cube au centre
 	# On créer le matériau
 	var material = StandardMaterial3D.new()
-	material.albedo_color = Color(0.1, 0.8, 0.2, 0.5)
+	material.albedo_color = Color(0.1, 0.8, 0.2, 0.2)
 	material.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
 	material.flags_transparent = true
 	cube_mesh.material = material

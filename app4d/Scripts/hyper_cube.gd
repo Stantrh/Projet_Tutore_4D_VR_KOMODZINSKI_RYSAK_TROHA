@@ -103,6 +103,8 @@ func load_data():
 	dynamic_vertices = hypercube_data["vertices"]
 	dynamic_edges = hypercube_data["edges"]
 	DEFAULT_VERTICES = dynamic_vertices
+	print("Vertices From Parser : " + str(hypercube_data["vertices"]) + "\n")
+	print("Edges From Parser : " + str(hypercube_data["edges"]) + "\n")
 func _on_camera_moved():
 	if projection_mode == 0 :
 		if mesh_mode == MeshMode.STYLISH:

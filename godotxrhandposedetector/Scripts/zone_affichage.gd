@@ -10,6 +10,7 @@ enum Object4D{
 # Variables qui définies la taille de la zone d'affichage
 @export var area_min = Vector3(-2, -2, -2)
 @export var area_max = Vector3(2, 2, 2)
+@export var ply_object_path = "res://Objects/hypercube.txt"
 @export var child_instantiated = false
 var child_instantied : Node
 # Créer une zone de taille area_min - area_max
@@ -68,13 +69,27 @@ func clip_edge(start: Vector3, end: Vector3) -> Array:
 		points.append(end)
 	if points.size() == 2 :
 		return points
-	# On parcourt les plans et on vérifie s'il y a une intersection
 	for plane in get_clip_planes():
 		var intersection = intersect_line_with_plane(start, end, plane)
 		if intersection != null and is_point_in_area(intersection):
 			points.append(intersection)
 	return points
-
+func activate():
+	if child_instantied:
+		child_instantied.inactive = false
+		await get_tree().create_timer(0.5).timeout
+		child_instantied.hypercube_changed = true
+	else :
+		await get_tree().create_timer(0.5).timeout
+		child_instantied.inactive = false
+		await get_tree().create_timer(0.5).timeout
+		child_instantied.hypercube_changed = true	
+func desactive():
+	if child_instantied:
+		child_instantied.inactive = true
+	else :
+		await get_tree().create_timer(0.5).timeout
+		child_instantied.inactive = true
 func _ready():
 	var bounds_mesh = create_area_mesh()
 	add_child(bounds_mesh)
@@ -91,10 +106,12 @@ func _instantiate_child():
 			child = preload("res://Scenes/hyper_cube.tscn").instantiate()
 
 	if child:
+		print("ouais")
 		child.mesh_mode = mesh_mode
 		child.projection_mode = projection_mode
 		child.camera = WorldInfo.camera
 		child.area = self
+		child.ply_object_path = ply_object_path
 		add_child(child)
 		child_instantiated = true
 		child_instantied = child

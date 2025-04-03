@@ -8,6 +8,7 @@ var number_objects : int = 0
 enum available_figures {
 	HYPERCUBE,
 	HYPERSPHERE,
+	TRITRIDUOPRISME,
 	EMPILER,
 	#TODO rajouter els autres figures quand elle seront faite
 }
@@ -122,9 +123,9 @@ func _on_stéréographique_pressed():
 func update_label(label : Label):
 	match selected_figure :
 		available_figures.HYPERCUBE:
-			label.text = "Hypercube n°" + str(current_figure +1)
+			label.text = "Objet n°" + str(current_figure +1)
 		_ :
-			label.text = "Hypercube n°" + str(current_figure +1)
+			label.text = "Objet n°" + str(current_figure +1)
 
 
 func _on_wireframe_pressed():
@@ -175,5 +176,16 @@ func _on_hyper_sphère_pressed():
 	var figure = preload("res://Scenes/zone_affichage.tscn").instantiate()
 	figure.object_selected = figure.Object4D.Tesseract
 	figure.ply_object_path = "res://Objects/hypersphere.txt"
+	selected_figures.append(figure)
+	update_label($choix_projection/VBoxContainer/Label_figure)
+
+
+func _on_duoprisme_33_pressed():
+	$choix_figure.hide()
+	$choix_projection.show()
+	selected_figure = 2
+	var figure = preload("res://Scenes/zone_affichage.tscn").instantiate()
+	figure.object_selected = figure.Object4D.Tesseract
+	figure.ply_object_path = "res://Objects/tritriduoprisme.txt"
 	selected_figures.append(figure)
 	update_label($choix_projection/VBoxContainer/Label_figure)

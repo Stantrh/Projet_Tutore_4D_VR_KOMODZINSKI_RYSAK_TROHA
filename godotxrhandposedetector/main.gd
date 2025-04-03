@@ -14,7 +14,53 @@ var is_inside_area = false  # Suivi de l'état d'entrée/sortie
 func _ready():
 	WorldInfo.camera = $XROrigin3D/XRCamera3D
 	raycast.enabled = true
+	$hypersphere_ile/HypersphereSS.desactive()
+	$hypersphere_ile/HypersphereOS.desactive()
+	$hypersphere_ile/HyperspherePF.desactive()
+	$duoprism_ile/DuoprismSS.desactive()
+	$duoprism_ile/DuoprismOS.desactive()
+	$duoprism_ile/DuoprismPF.desactive()
 
+func teleport_to_hypercube():
+	$XROrigin3D.global_position = $hypercube_ile.global_position
+	activate_hypercubes()
+	desactive_duoprism()
+	desactive_hypersphere()
+func teleport_to_hypersphere():
+	$XROrigin3D.global_position = $hypersphere_ile/hypersphere_ile.global_position
+	desactive_duoprism()
+	deactivate_hypercubes()
+	activate_hypersphere()
+func teleport_to_duoprism():
+	$XROrigin3D.global_position = $duoprism_ile/duoprism_ile.global_position
+	activate_duoprism()
+	desactive_hypersphere()
+	deactivate_hypercubes()	
+
+func activate_hypercubes():
+	$HypercubeSS.activate()
+	$HypercubeOS.activate()
+	$HypercubePF.activate()
+func deactivate_hypercubes():
+	$HypercubeSS.desactive()
+	$HypercubeOS.desactive()
+	$HypercubePF.desactive()	
+func desactive_hypersphere():
+	$hypersphere_ile/HypersphereSS.desactive()
+	$hypersphere_ile/HypersphereOS.desactive()
+	$hypersphere_ile/HyperspherePF.desactive()
+func desactive_duoprism():
+	$duoprism_ile/DuoprismSS.desactive()
+	$duoprism_ile/DuoprismOS.desactive()
+	$duoprism_ile/DuoprismPF.desactive()
+func activate_hypersphere():
+	$hypersphere_ile/HypersphereSS.activate()
+	$hypersphere_ile/HypersphereOS.activate()
+	$hypersphere_ile/HyperspherePF.activate()	
+func activate_duoprism():
+	$duoprism_ile/DuoprismSS.activate()
+	$duoprism_ile/DuoprismOS.activate()
+	$duoprism_ile/DuoprismPF.activate()
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
@@ -67,3 +113,73 @@ func _on_hypercube_os_area_body_exited(body):
 func _on_hypercube_pf_area_body_exited(body):
 	if body.is_in_group("player_body"):
 		UI.close()
+
+
+func _on_hypersphere_ss_body_entered(body):
+	if body.is_in_group("player_body"):
+		UI.open_interface($hypersphere_ile/HypersphereSS.child_instantied)
+
+
+func _on_hypersphere_os_area_body_entered(body):
+	if body.is_in_group("player_body"):
+		UI.open_interface($hypersphere_ile/HypersphereOS.child_instantied)
+
+
+func _on_hypersphere_pf_area_body_entered(body):
+	if body.is_in_group("player_body"):
+		UI.open_interface($hypersphere_ile/HyperspherePF.child_instantied)
+
+
+func _on_hypersphere_pf_area_body_exited(body):
+	if body.is_in_group("player_body"):
+		UI.close()
+
+func _on_hypersphere_os_area_body_exited(body):
+	if body.is_in_group("player_body"):
+		UI.close()
+
+func _on_hypersphere_ss_body_exited(body):
+	if body.is_in_group("player_body"):
+		UI.close()
+
+
+
+
+func _on_duoprism_os_area_body_entered(body):
+	if body.is_in_group("player_body"):
+		UI.open_interface($duoprism_ile/DuoprismOS.child_instantied)
+
+
+
+func _on_duoprism_os_area_body_exited(body):
+	if body.is_in_group("player_body"):
+		UI.close()
+
+func _on_duoprism_ss_area_body_entered(body):
+	if body.is_in_group("player_body"):
+		UI.open_interface($duoprism_ile/DuoprismSS.child_instantied)
+
+
+
+func _on_duoprism_pf_area_body_entered(body):
+	if body.is_in_group("player_body"):
+		UI.open_interface($duoprism_ile/DuoprismPF.child_instantied)
+
+
+
+func _on_duoprism_pf_area_body_exited(body):
+	if body.is_in_group("player_body"):
+		UI.close()
+
+
+func _on_duoprism_ss_area_body_exited(body):
+	if body.is_in_group("player_body"):
+		UI.close()
+
+
+func _on_button_panel_hypercube_pressed():
+	teleport_to_hypercube()
+func _on_button_panel_hyphersphere_pressed():
+	teleport_to_hypersphere()
+func _on_button_panel_triduoprism_pressed():
+	teleport_to_duoprism()

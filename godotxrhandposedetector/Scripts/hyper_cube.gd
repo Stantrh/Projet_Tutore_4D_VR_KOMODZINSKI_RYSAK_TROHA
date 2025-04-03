@@ -1,10 +1,21 @@
 extends Node3D
+
+### POUR LE PARSER
+# on récupère le parser
+var parser = preload("res://Scripts/Utils/parser.gd")
+
+# On a le chemin d'un fichier qu'on met en export
+@export var ply_object_path: String = "res://Objects/hypercube.txt"
+
 #A CHANGER POUR LE PARSER
 # Les coordonnées des sommets de l'hypercube, en 4D
 #Object dans lequel on va chercher
 var object = HypercubeConstants
-var dynamic_vertices = object.DEFAULT_VERTICES.duplicate((true))
-
+var dynamic_vertices = []
+var dynamic_edges = []
+var rotation_speed_factor = 0.0000001
+var speed
+var inactive : bool = false
 # on charge les 8 cubes qui constituent l'hypercube
 var CUBES = object.CUBES
 # on charge les différentes faces de l'hypercube, les 4 points des carrés représentant les faces
@@ -35,6 +46,8 @@ var transitioning = false # Indique si une transition est en cours
 @export var axe2_a = 1
 @export var axe2_b = 3
 @export var interactible : bool = true
+var initialized = false
+var reload = false
 #### TRANSLATIONS
 @export var is_translate = false # Détermine si la translation est active
 @export var vect_translate = Vector4(0, 0, 0, 0) # Vecteur de translation à appliquer sur l'hypercube 4D
@@ -49,8 +62,8 @@ var stylish_container: Node3D = null # Contient les cylindres et sphères
 var stylish_spheres = [] # Tableaux des MeshInstance3D pour les sommets
 var stylish_cylinders = [] # Tableaux des MeshInstance3D pour les arêtes
 var stylish_edges = [] # Liste des arêtes (indices [i, j]) qui relient les sommets
-
-
+var intialized : bool = false
+var DEFAULT_VERTICES = []
 #### Pour les points de vue (Vue de face, vue de fuite, vue par la pointe)
 @onready var marker : Marker3D = $Marker3D
 var is_point_of_view_fugue = false # COMMENTAIRES A FAIRE
@@ -63,6 +76,12 @@ var is_up_to_date = true # COMMENTAIRES A FAIRE
 @export var area : Node3D = null # La variable de la zone
 
 func _ready():
+	load_data()
+	#print("Vertices From Constants : " + str(dynamic_vertices) + "\n")
+	#print("Vertices From Parser : " + str(hypercube_data["vertices"]) + "\n")
+	#print("Edges From Constants : " + str(dynamic_edges) + "\n")
+	#print("Edges From Parser : " + str(hypercube_data["edges"]) + "\n")
+	
 	if !interactible :
 		$Area3D.monitoring = false
 		$Area3D.monitorable = false
@@ -72,20 +91,25 @@ func _ready():
 	mesh_instance = MeshInstance3D.new()
 	add_child(mesh_instance)
 	accesible_dimensions = find_accessible_dimensions(DIMENSIONS[dimension_selected],DIMENSIONS)
-	
 	# Selon le mode, on construit l'hypercube une seule fois pour le mode stylish (performances)
 	if mesh_mode == MeshMode.STYLISH:
 		create_stylish_hypercube()
 	else:
 		update_hypercube()
-		
-func _on_camera_moved():
-	if projection_mode == 0 :
-		if mesh_mode == MeshMode.STYLISH:
-			update_stylish_hypercube()
-		else:
-			update_hypercube()
-		
+func update():
+	if mesh_mode == MeshMode.STYLISH:
+		create_stylish_hypercube()
+	else:
+		update_hypercube()
+func load_data():
+# On charge les constantes depuis le fichier PLY
+	var hypercube_data = parser.load_hypercube_constants(ply_object_path)
+	# Puis on assigne aux sommets et aux arêtes ce qu'on a parsé depuis le fichier
+	dynamic_vertices = hypercube_data["vertices"]
+	dynamic_edges = hypercube_data["edges"]
+	DEFAULT_VERTICES = dynamic_vertices
+	#print("Vertices From Parser : " + str(hypercube_data["vertices"]) + "\n")
+	#print("Edges From Parser : " + str(hypercube_data["edges"]) + "\n")	
 func stop_rotation():
 	is_rotate = false
 	var new_vertices = []
@@ -93,34 +117,45 @@ func stop_rotation():
 		new_vertices.append(rotate_4d(vertice, rotation_angle, axe_a, axe_b, rotation_angle2, axe2_a, axe2_b))
 	dynamic_vertices = new_vertices
 	if mesh_mode == MeshMode.STYLISH :
-		update_stylish_hypercube()
+		update_stylish_hypercube_Vector3(dynamic_vertices)
 	else : 
 		update_hypercube()
+func get_projected_vertices(vertices : Array):
+	var projected_vertices = []
+	for vertice in vertices:
+		projected_vertices.append( apply_projection(vertice))
+	return projected_vertices
 func _process(delta):
-	if !is_up_to_date:
+	if inactive and initialized :
 		return
+	if !is_up_to_date and initialized:
+		return
+	initialized = true
 	# On incrémente l'angle de rotation pour avoir une figure qui tourne en continu
 	if is_rotate:
 		rotation_angle += delta
 		# La même chose si on a une double rotation
 		if is_double_rotate:
-			rotation_angle2 += delta
+			rotation_angle2 +=  delta
 	# On appel en continu la méthode update_hypercube pour que la rotation prenne effet et aussi pour la projection perspective
 	# Pour le mode STYLISH, on met à jour la position des nodes existants
 	#if mesh_mode == MeshMode.STYLISH:
 		#update_stylish_hypercube()
 	#else:
 		#update_hypercube()
-	if is_rotate or is_translate or hypercube_changed or projection_mode == ProjectionMode.PERSPECTIVE :
-		hypercube_changed = false 
-		if mesh_mode == MeshMode.STYLISH:
-			update_stylish_hypercube()
-		else:
-			update_hypercube()
 	if not camera and WorldInfo.camera : 
 		camera = WorldInfo.camera
-	if mesh_mode == MeshMode.STYLISH : 
-		update_stylish_hypercube()
+	if  is_rotate or is_translate or hypercube_changed or projection_mode ==0:
+		hypercube_changed = false 
+		if mesh_mode == MeshMode.STYLISH:
+			update_stylish_hypercube_Vector3(dynamic_vertices)
+			return
+		else:
+			update_hypercube()
+			return
+	if mesh_mode == MeshMode.STYLISH and not initialized :
+		initialized = true 
+		update_stylish_hypercube_Vector3(dynamic_vertices)
 func create_stylish_hypercube():
 	# Crée un conteneur pour l'hypercube en mode STYLISH
 	stylish_container = Node3D.new()
@@ -140,7 +175,7 @@ func create_stylish_hypercube():
 		stylish_spheres.append(sphere_instance)
 	
 	# Calcul des arêtes de l'hypercube (elles ne changent pas)
-	stylish_edges = object.EDGES
+	stylish_edges = dynamic_edges
 	
 	# Création des cylindres pour les arêtes
 	for edge in stylish_edges:
@@ -156,9 +191,9 @@ func create_stylish_hypercube():
 		cylinder_instance.mesh.material = material
 		stylish_container.add_child(cylinder_instance)
 		stylish_cylinders.append(cylinder_instance)
-func update_stylish_hypercube():
-	var new_vertices = []
+func update_stylish_hypercube_Vector3(new_vertices = []):
 	if is_point_of_view_fugue :
+		new_vertices = []
 		var axe_1 = DIMENSIONS[dimension_selected].x
 		var axe_2 = DIMENSIONS[dimension_selected].w
 		for vertex in dynamic_vertices :
@@ -168,6 +203,7 @@ func update_stylish_hypercube():
 		marker.transform.origin = apply_projection(get_global_center(dynamic_vertices))
 	elif is_point_of_view_point:
 		#is_double_rotate = true
+		new_vertices = []
 		var axe_1 = DIMENSIONS[dimension_selected].x
 		var axe_2 = DIMENSIONS[dimension_selected].w
 		var axe2_1 = DIMENSIONS[dimension_selected].y
@@ -181,6 +217,7 @@ func update_stylish_hypercube():
 	else:
 		# Calcul des nouvelles positions 4D en fonction des rotations / translations
 		if is_translate:
+			new_vertices = []
 			for vertex in dynamic_vertices:
 				new_vertices.append( translate_4d(vertex, vect_translate) )
 			# Mise à jour du vecteur de base et application de la translation sur le node concerné
@@ -189,17 +226,17 @@ func update_stylish_hypercube():
 			is_translate = false
 			marker.transform.origin = apply_projection(get_global_center(dynamic_vertices))
 		elif is_rotate:
+			new_vertices = []
 			for vertex in dynamic_vertices:
 				new_vertices.append( rotate_4d(vertex, rotation_angle, axe_a, axe_b, rotation_angle2, axe2_a, axe2_b) )
 				marker.transform.origin = apply_projection(get_global_center(new_vertices))
-		else:
-			for vertex in dynamic_vertices:	
-				new_vertices.append(vertex)
 	
 	# Vérifier si au moins un sommet est dans la zone d'affichage
 	var visible = false
 	for vertex in new_vertices:
-		var projected_point = apply_projection(vertex)
+		var projected_point = vertex
+		if projected_point is Vector4 : 
+			projected_point = apply_projection(vertex)
 		if area == null :
 			visible = true 
 			break
@@ -212,60 +249,20 @@ func update_stylish_hypercube():
 	
 	# --- Mise à jour des positions des sphères (sommets)
 	for i in range(new_vertices.size()):
-		var projected = apply_projection(new_vertices[i])
-		stylish_spheres[i].transform.origin = projected
-	
-	# --- Mise à jour des cylindres (arêtes)
-	# La liste stylish_edges contient des paires [i, j] indiquant les indices des sommets à relier
-	for index in range(stylish_edges.size()):
-		var edge = stylish_edges[index]
-		var p1 = apply_projection(new_vertices[ edge[0] ])
-		var p2 = apply_projection(new_vertices[ edge[1] ])
-		
-		# Calcul du milieu et de la direction
-		var mid_point = (p1 + p2) / 2.0
-		var direction = (p2 - p1).normalized()
-		var height = (p2 - p1).length()
-		
-		# Mise à jour du cylindre : sa hauteur et sa transformation
-		var cylinder_mesh = stylish_cylinders[index].mesh as CylinderMesh
-		cylinder_mesh.height = height
-		
-		# Calcul de la rotation nécessaire pour aligner le cylindre sur l'arête
-		var axis = Vector3.UP.cross(direction).normalized()
-		if axis.length() == 0:
-			axis = Vector3(1, 0, 0)
-		var angle = acos( Vector3.UP.dot(direction) )
-		
-		var cylinder_transform = Transform3D()
-		cylinder_transform.origin = mid_point
-		cylinder_transform.basis = Basis(axis, angle)
-		stylish_cylinders[index].transform = cylinder_transform
-
-func update_stylish_hypercube_Vector3(new_vertices):
-	# Vérifier si au moins un sommet est dans la zone d'affichage
-	var visible = false
-	for vertex in new_vertices:
-		var projected_point = vertex
-		if area.is_point_in_area(projected_point):
-			visible = true
-			break
-	stylish_container.visible = visible
-	if not visible:
-		return
-	
-	# --- Mise à jour des positions des sphères (sommets)
-	for i in range(new_vertices.size()):
 		var projected = new_vertices[i]
+		if projected is Vector4:
+			projected = apply_projection(new_vertices[i])
 		stylish_spheres[i].transform.origin = projected
 	
 	# --- Mise à jour des cylindres (arêtes)
 	# La liste stylish_edges contient des paires [i, j] indiquant les indices des sommets à relier
 	for index in range(stylish_edges.size()):
 		var edge = stylish_edges[index]
-		var p1 = new_vertices[ edge[0] ]
+		var p1 =new_vertices[ edge[0] ]
 		var p2 = new_vertices[ edge[1] ]
-		
+		if p1 is Vector4:
+			p1 = apply_projection(new_vertices[ edge[0] ])
+			p2 = apply_projection(new_vertices[ edge[1] ])
 		# Calcul du milieu et de la direction
 		var mid_point = (p1 + p2) / 2.0
 		var direction = (p2 - p1).normalized()
@@ -285,97 +282,71 @@ func update_stylish_hypercube_Vector3(new_vertices):
 		cylinder_transform.origin = mid_point
 		cylinder_transform.basis = Basis(axis, angle)
 		stylish_cylinders[index].transform = cylinder_transform
-
 # --- Pour les autres modes (FULL, WIREFRAME), on garde la méthode existante
 func update_hypercube():
-	# Pour FULL ou WIREFRAME, on reconstruit le mesh chaque frame (méthode actuelle)
-	for child in mesh_instance.get_children():
-		child.queue_free()
+	print("yes")
+	var projected_vertices = []
 	var new_vertices = []
-	if is_point_of_view_fugue :
+	var apply_change = false
+	# Gestion des transformations
+	if is_point_of_view_fugue or is_point_of_view_point:
 		var axe_1 = DIMENSIONS[dimension_selected].x
 		var axe_2 = DIMENSIONS[dimension_selected].w
-		for vertex in dynamic_vertices :
-			new_vertices.append(rotate_4d(vertex, 45, axe_1, axe_2, 25, axe2_a, axe2_b))
-		is_point_of_view_fugue = false
-		dynamic_vertices = new_vertices
-		marker.transform.origin = apply_projection(get_global_center(dynamic_vertices))
-		var mesh
-		if mesh_mode == MeshMode.STYLISH:
-			# Ce cas n'arrive normalement pas ici
-			mesh = apply_build(new_vertices)
-			mesh_instance.add_child(mesh)
-		else:
-			mesh = apply_build(new_vertices)
-			mesh_instance.mesh = mesh
-	elif is_point_of_view_point:
-		#is_double_rotate = true
-		var axe_1 = DIMENSIONS[dimension_selected].x
-		var axe_2 = DIMENSIONS[dimension_selected].w
-		var axe2_1 = DIMENSIONS[dimension_selected].y
-		var axe2_2 = DIMENSIONS[dimension_selected].w
-		for vertex in dynamic_vertices :
-			new_vertices.append(rotate_4d(vertex,-120,axe2_1,axe2_2,0,0,0))
-		is_point_of_view_point = false
-		dynamic_vertices = new_vertices
-		is_double_rotate = false
-		marker.transform.origin = apply_projection(get_global_center(dynamic_vertices))
-		var mesh
-		if mesh_mode == MeshMode.STYLISH:
-			# Ce cas n'arrive normalement pas ici
-			mesh = apply_build(new_vertices)
-			mesh_instance.add_child(mesh)
-		else:
-			mesh = apply_build(new_vertices)
-			mesh_instance.mesh = mesh
-	else:		
-	# /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	# /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-		if is_translate:
+		if is_point_of_view_fugue:
 			for vertex in dynamic_vertices:
-				new_vertices.append( translate_4d(vertex, vect_translate) )
-			
+				new_vertices.append(rotate_4d(vertex, 45, axe_1, axe_2, 25, axe2_a, axe2_b))
+			is_point_of_view_fugue = false
+		else: # is_point_of_view_point
+			var axe2_1 = DIMENSIONS[dimension_selected].y
+			var axe2_2 = DIMENSIONS[dimension_selected].w
+			for vertex in dynamic_vertices:
+				new_vertices.append(rotate_4d(vertex, -120, axe2_1, axe2_2, 0, 0, 0))
+			is_point_of_view_point = false
+			is_double_rotate = false
+
+		dynamic_vertices = new_vertices
+		apply_change = true
+
+	elif is_translate or is_rotate:
+		for vertex in dynamic_vertices:
+			if is_translate:
+				new_vertices.append(translate_4d(vertex, vect_translate))
+			elif is_rotate: # is_rotate
+				new_vertices.append(rotate_4d(vertex, rotation_angle , axe_a, axe_b, rotation_angle2, axe2_a, axe2_b))
+
+		if is_translate:
+			apply_translation(vect_translate)
+			is_translate = false
 			dynamic_vertices = new_vertices
-			marker.transform.origin = apply_projection(get_global_center(dynamic_vertices))
-			apply_translation(vect_translate)	
-			#print(marker.position)
-			is_translate = false
-		elif is_rotate:
-			for vertex in dynamic_vertices:
-				new_vertices.append( rotate_4d(vertex, rotation_angle, axe_a, axe_b, rotation_angle2, axe2_a, axe2_b) )
-			marker.transform.origin = apply_projection(get_global_center(new_vertices))
-		else:
-			for vertex in dynamic_vertices:
-				new_vertices.append(vertex)
-		
-		if not is_hypercube_visible(new_vertices):
-			mesh_instance.visible = false
-			return
-		else:
-			mesh_instance.visible = true
-		
-		var mesh
-		if mesh_mode == MeshMode.STYLISH:
-			# Ce cas n'arrive normalement pas ici
-			mesh = apply_build(new_vertices)
-			mesh_instance.add_child(mesh)
-		else:
-			mesh = apply_build(new_vertices)
-			mesh_instance.mesh = mesh
-		
-		if is_translate:
-			is_translate = false
-			
-			
+		apply_change = true
+
+	# Vérification de visibilité
+	if not is_hypercube_visible(dynamic_vertices):
+		mesh_instance.visible = false
+		return
+	mesh_instance.visible = true
+
+	# Construction du mesh (optimisation : évite la duplication de code)
+	marker.transform.origin = apply_projection(get_global_center(dynamic_vertices))
+	projected_vertices = get_projected_vertices(dynamic_vertices)
+	#Pour eviter des rotations instables
+	if is_rotate:
+		projected_vertices = get_projected_vertices(new_vertices)
+	var mesh = apply_build(projected_vertices)
+	if mesh_mode == MeshMode.STYLISH:
+		mesh_instance.add_child(mesh)
+	else:
+		mesh_instance.mesh = mesh
+
 			
 # Cette méthode return true si au moins une partie de l'hypercube est dans la zone
 # Elle utilise une méthode qui est dans zone_affichage
 func is_hypercube_visible(vertices: Array) -> bool:
 	for vertex in vertices:
-		var projected_point = apply_projection(vertex)
+		var new_vertices = apply_projection(vertex)
 		if area == null :
 			return true
-		if area.is_point_in_area(projected_point):
+		if area.is_point_in_area(new_vertices):
 			return true
 	return false
 
@@ -383,40 +354,13 @@ func is_hypercube_visible(vertices: Array) -> bool:
 func apply_build(vertices):
 	match mesh_mode:
 		MeshMode.FULL:
-			return build_solid_hypercube_mesh(vertices)
+			return build_solid_hypercube_mesh_projected(vertices)
 		MeshMode.WIREFRAME:
-			return build_wireframe_hypercube_mesh(vertices)
+			return build_wireframe_hypercube_mesh_Vector_3(vertices)
 		MeshMode.STYLISH:
 			return create_stylish_hypercube()
 		_:
-			return build_wireframe_hypercube_mesh(vertices)
-
-# Cette méthode build l'affichage wireframe
-func build_wireframe_hypercube_mesh(vertices) -> Mesh:
-	var mesh = ArrayMesh.new()
-	var surface_tool = SurfaceTool.new()
-	surface_tool.begin(Mesh.PRIMITIVE_LINES)
-
-	# Couleur vert clair
-	var edge_color = Color(0.5, 1.0, 0.5) 
-	surface_tool.set_color(edge_color) 
-
-	# Construction des arêtes
-	for edge in object.EDGES:
-		var p1 = apply_projection(vertices[edge[0]])
-		var p2 = apply_projection(vertices[edge[1]])
-
-		if area != null:
-			var clipped_points = area.clip_edge(p1, p2)
-			if clipped_points.size() == 2:
-				surface_tool.add_vertex(clipped_points[0])
-				surface_tool.add_vertex(clipped_points[1])
-		else:
-			surface_tool.add_vertex(p1)
-			surface_tool.add_vertex(p2)
-
-	surface_tool.commit(mesh)
-	return mesh
+			return build_wireframe_hypercube_mesh_Vector_3(vertices)
 
 	
 func build_wireframe_hypercube_mesh_Vector_3(vertices: Array) -> Mesh:
@@ -426,7 +370,7 @@ func build_wireframe_hypercube_mesh_Vector_3(vertices: Array) -> Mesh:
 	surface_tool.begin(Mesh.PRIMITIVE_LINES)
 	
 	# Pour chaque arête de l'hypercube (chaque edge est un tableau [index_sommet1, index_sommet2])
-	for edge in object.EDGES:
+	for edge in dynamic_edges:
 		# On récupère directement les positions 3D des sommets
 		var p1: Vector3 = vertices[edge[0]]
 		var p2: Vector3 = vertices[edge[1]]
@@ -480,7 +424,7 @@ func build_stylish_hypercube_mesh_projected(vertices) -> Node3D:
 	# Ici on créer un cylindre pour chaque arête
 	# Pour rappel, get_hypercube_edges est une méthodes qui renvoie les arêtes de l'hypercube
 	# donc edge est un tableau qui contient chaque segment --> [[sommet1, sommet2], [sommet4, sommet6], []]
-	for edge in object.EDGES:
+	for edge in dynamic_edges:
 		# On applique la projection aux sommets
 		var p1 = vertices[edge[0]]
 		var p2 = vertices[edge[1]]
@@ -536,64 +480,6 @@ func build_stylish_hypercube_mesh_projected(vertices) -> Node3D:
 			parent_node.add_child(cylinder)
 	return parent_node
 
-# Cette méthode build l'affichage full
-func build_solid_hypercube_mesh(vertices) -> Mesh:
-	var mesh = ArrayMesh.new()
-	var surface_tool = SurfaceTool.new() # SurfaceTool permet de générer et de modifier dynamiquement un maillage
-	surface_tool.begin(Mesh.PRIMITIVE_TRIANGLES) # Ici on initialise la construction avec des triangles
-
-	# On créer le matériau
-	var material = StandardMaterial3D.new()
-	material.cull_mode = BaseMaterial3D.CULL_DISABLED # On le désactive pour pas que les faces arrières soient cachées
-	material.albedo_color = Color(1, 1, 1, 0.3)
-	material.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED # On désactive l'effet de lumière
-	material.transparency = BaseMaterial3D.TRANSPARENCY_DISABLED
-	material.vertex_color_use_as_albedo = true
-	# On applique le matériau
-	surface_tool.set_material(material)
-	# On construit les faces de l'hypercube
-	# Donc on parcourt chaque cube
-	var iColor = 0;
-	for cube in CUBES:
-		if iColor >= FACE_COLORS.size():
-			iColor = 0
-		var face_color = FACE_COLORS[iColor]
-		iColor+=1
-		# Et chaque face du cube
-		for face in CUBE_FACES:
-
-			#surface_tool.set_material(material)
-			# On applique la projection à chaque sommet de la face
-			var projected_vertices = [
-				apply_projection(vertices[cube[face[0]]]),
-				apply_projection(vertices[cube[face[1]]]),
-				apply_projection(vertices[cube[face[2]]]),
-				apply_projection(vertices[cube[face[3]]])
-			]
-			
-			# On coupe les faces si elles sortent de la zone //// si vous souhaitez que la zone soit optionnel alors il ne faut pas oublier de modifier ces lignes
-			var clipped_face = []
-			for i in range(4):
-				if area != null :
-					var start = projected_vertices[i]
-					var end = projected_vertices[(i + 1) % 4]
-					clipped_face += area.clip_edge(start, end)
-				else : 
-					clipped_face += [projected_vertices[i],projected_vertices[(i + 1)%4]]
-
-			clipped_face = clipped_face.duplicate()
-			# On construit la face s'il y a au moins 3 points
-			if clipped_face.size() >= 3:
-				for i in range(1, clipped_face.size() - 1):
-					surface_tool.set_color(face_color)
-					surface_tool.add_vertex(clipped_face[0])
-					surface_tool.set_color(face_color)
-					surface_tool.add_vertex(clipped_face[i])
-					surface_tool.set_color(face_color)
-					surface_tool.add_vertex(clipped_face[i + 1])
-
-			surface_tool.commit(mesh)
-	return mesh
 func build_solid_hypercube_mesh_projected(vertices: Array) -> Mesh:
 	var mesh = ArrayMesh.new()
 	var surface_tool = SurfaceTool.new()
@@ -859,33 +745,26 @@ func lerp_vertices(start_vertices, end_vertices, t):
 
 
 func view_face():
-	dynamic_vertices = object.DEFAULT_VERTICES.duplicate((true))
+	dynamic_vertices = DEFAULT_VERTICES
 	hypercube_changed = true
 	#rotate_toward_camera()
 
 func fugue_view():
 	is_point_of_view_fugue = true
 	hypercube_changed = true
-	dynamic_vertices = object.DEFAULT_VERTICES.duplicate((true))
+	dynamic_vertices = DEFAULT_VERTICES
 	is_double_rotate = false
 	is_rotate = false
 	is_translate = false
 	#rotate_toward_camera()
 func point_view() :
 	hypercube_changed = true
-	dynamic_vertices = object.DEFAULT_VERTICES.duplicate((true))
+	dynamic_vertices = DEFAULT_VERTICES
 	is_double_rotate = false
 	is_rotate = false
 	is_translate = false
 	is_point_of_view_point = true
 	#rotate_toward_camera()
-
-func rotate_toward_camera():
-	var camera_global_pos = camera.global_transform.origin
-	var direction = (camera_global_pos - marker.global_transform.origin).normalized()
-	# Création d'une nouvelle rotation alignant le RayCast vers la Caméra
-	var new_basis = Basis.looking_at(direction, Vector3.UP)
-	$".".transform.basis = new_basis
 	
 func find_accessible_dimensions(current_dim: Dictionary, dimensions: Array) -> Array:
 	var accessible = []

@@ -1,18 +1,11 @@
-[gd_scene load_steps=18 format=3 uid="uid://cxhjscxefvj8g"]
+[gd_scene load_steps=11 format=3 uid="uid://cxhjscxefvj8g"]
 
 [ext_resource type="Script" path="res://Scripts/main_space_test.gd" id="1_741v3"]
 [ext_resource type="MeshLibrary" uid="uid://bvobp4fo1wvr6" path="res://Scenes/library/space_library.tres" id="2_wl4q0"]
 [ext_resource type="PackedScene" uid="uid://clc5dre31iskm" path="res://addons/godot-xr-tools/xr/start_xr.tscn" id="3_ecpoh"]
-[ext_resource type="PackedScene" path="res://Scenes/character_view.tscn" id="4_j1f33"]
+[ext_resource type="PackedScene" uid="uid://i2l7p16xiufn" path="res://Scenes/character_view.tscn" id="4_j1f33"]
 [ext_resource type="Script" path="res://Scripts/zone_affichage.gd" id="5_4j5xb"]
 [ext_resource type="PackedScene" uid="uid://cs3mpxmnuxmus" path="res://Scenes/zone_affichage.tscn" id="6_6bjvl"]
-[ext_resource type="PackedScene" uid="uid://clujaf3u776a3" path="res://addons/godot-xr-tools/objects/viewport_2d_in_3d.tscn" id="7_omv70"]
-[ext_resource type="PackedScene" uid="uid://cryorm2pf41vq" path="res://Scenes/ui.tscn" id="8_p7fm0"]
-[ext_resource type="PackedScene" uid="uid://cbx4dfctlo2pn" path="res://Scenes/welcome_sscreen.tscn" id="9_b7j0e"]
-[ext_resource type="PackedScene" uid="uid://bdytoss1tc7h2" path="res://Scenes/hypercube_screen.tscn" id="10_t32n0"]
-[ext_resource type="PackedScene" uid="uid://uk7c31uwtcjr" path="res://Scenes/perspective_screen.tscn" id="11_1xl1b"]
-[ext_resource type="PackedScene" uid="uid://dbkt5kp5sofd3" path="res://Scenes/orthogonal_screen.tscn" id="12_0411o"]
-[ext_resource type="PackedScene" uid="uid://ceyn36nf68sjy" path="res://Scenes/stereographique_screen.tscn" id="13_ms1hu"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_wrum2"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -56,7 +49,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.42857, 2.85714)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 72.857, 5.5, -52.857)
 script = ExtResource("5_4j5xb")
 mesh_mode = 2
-projection_mode = 1
 
 [node name="HypercubeOS" parent="." instance=ExtResource("6_6bjvl")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -80.272, 5.5, -53.955)
@@ -66,51 +58,3 @@ projection_mode = 2
 [node name="HypercubePF" parent="." instance=ExtResource("6_6bjvl")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.571, 5.5, -128.571)
 mesh_mode = 2
-
-[node name="CanvasLayerViewport" parent="." instance=ExtResource("7_omv70")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.85714, 1.42857, -117.143)
-screen_size = Vector2(2, 1.5)
-scene = ExtResource("8_p7fm0")
-scene_properties_keys = PackedStringArray("ui.gd", "object_controlled")
-
-[node name="CanvasLayerViewport2" parent="." instance=ExtResource("7_omv70")]
-transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -72.8571, 1.42857, -56)
-screen_size = Vector2(2, 1.5)
-scene = ExtResource("8_p7fm0")
-scene_properties_keys = PackedStringArray("ui.gd", "object_controlled")
-
-[node name="CanvasLayerViewport3" parent="." instance=ExtResource("7_omv70")]
-transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 65, 1.4, -54.2859)
-screen_size = Vector2(2, 1.5)
-scene = ExtResource("8_p7fm0")
-scene_properties_keys = PackedStringArray("ui.gd", "object_controlled")
-
-[node name="welcome_screen" parent="." instance=ExtResource("7_omv70")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.42857, 2.85714, 0)
-screen_size = Vector2(10, 5)
-scene = ExtResource("9_b7j0e")
-scene_properties_keys = PackedStringArray()
-
-[node name="hypercube_screen" parent="." instance=ExtResource("7_omv70")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.42857, 4.28571, -40)
-screen_size = Vector2(10, 5)
-scene = ExtResource("10_t32n0")
-scene_properties_keys = PackedStringArray()
-
-[node name="perspective_screen" parent="." instance=ExtResource("7_omv70")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.85714, 4.28571, -65.7143)
-screen_size = Vector2(10, 5)
-scene = ExtResource("11_1xl1b")
-scene_properties_keys = PackedStringArray()
-
-[node name="orthogonal_screen" parent="." instance=ExtResource("7_omv70")]
-transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -14.2857, 4.28571, -52.8571)
-screen_size = Vector2(10, 5)
-scene = ExtResource("12_0411o")
-scene_properties_keys = PackedStringArray()
-
-[node name="stereo_screen" parent="." instance=ExtResource("7_omv70")]
-transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 18.5714, 4.28571, -51.4286)
-screen_size = Vector2(10, 5)
-scene = ExtResource("13_ms1hu")
-scene_properties_keys = PackedStringArray()

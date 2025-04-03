@@ -63,7 +63,6 @@ func _ready():
 	transformation_tab.append($ReferenceRect/ColorRect/HBoxContainer/PointDeVue)
 	transformation_tab.append($ReferenceRect/ColorRect/HBoxContainer/Fez)
 	hide_and_show()
-@onready var tween = $Tween  # Assure-toi d'avoir un Tween dans ta scène
 
 func hide_and_show():
 	if object_controlled:

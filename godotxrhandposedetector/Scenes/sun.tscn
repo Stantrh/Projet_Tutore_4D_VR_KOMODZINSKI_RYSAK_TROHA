@@ -1,6 +1,6 @@
 [gd_scene load_steps=8 format=3 uid="uid://dyiw56dqs4jtb"]
 
-[ext_resource type="Texture2D" uid="uid://cjdw4hx6t3upu" path="res://8k_sun.jpg" id="1_aeq7j"]
+[ext_resource type="Texture2D" uid="uid://yv1mwavkk7p3" path="res://2k_neptune.jpg" id="1_ds6ms"]
 
 [sub_resource type="Shader" id="Shader_1u156"]
 code = "// NOTE: Shader automatically converted from Godot Engine 4.3.stable's StandardMaterial3D.
@@ -72,8 +72,8 @@ shader_parameter/uv1_scale = Vector3(1, 1, 1)
 shader_parameter/uv1_offset = Vector3(0, 0, 0)
 shader_parameter/uv2_scale = Vector3(1, 1, 1)
 shader_parameter/uv2_offset = Vector3(0, 0, 0)
-shader_parameter/texture_albedo = ExtResource("1_aeq7j")
-shader_parameter/texture_emission = ExtResource("1_aeq7j")
+shader_parameter/texture_albedo = ExtResource("1_ds6ms")
+shader_parameter/texture_emission = ExtResource("1_ds6ms")
 
 [sub_resource type="SphereMesh" id="SphereMesh_ch07j"]
 material = SubResource("ShaderMaterial_qwh41")

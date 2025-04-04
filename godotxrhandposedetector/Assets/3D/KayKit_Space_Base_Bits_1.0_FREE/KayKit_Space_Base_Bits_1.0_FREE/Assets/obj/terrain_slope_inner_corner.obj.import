@@ -1,0 +1,22 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://dp6jiybhc3og3"
+path="res://.godot/imported/terrain_slope_inner_corner.obj-9f9475290a1926e0e64037527e38a8f1.mesh"
+
+[deps]
+
+files=["res://.godot/imported/terrain_slope_inner_corner.obj-9f9475290a1926e0e64037527e38a8f1.mesh"]
+
+source_file="res://Assets/3D/KayKit_Space_Base_Bits_1.0_FREE/KayKit_Space_Base_Bits_1.0_FREE/Assets/obj/terrain_slope_inner_corner.obj"
+dest_files=["res://.godot/imported/terrain_slope_inner_corner.obj-9f9475290a1926e0e64037527e38a8f1.mesh", "res://.godot/imported/terrain_slope_inner_corner.obj-9f9475290a1926e0e64037527e38a8f1.mesh"]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+optimize_mesh=true
+force_disable_mesh_compression=false

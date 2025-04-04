@@ -1,0 +1,14 @@
+# Fichiers et dossiers générés par Godot
+.godot/
+.import/
+imported/
+shader_cache/
+
+# Fichiers spécifiques à l'éditeur
+*.cfg
+*.Node
+*.bin
+
+# Caches et logs
+*.log
+*.tmp

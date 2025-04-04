@@ -1,0 +1,43 @@
+[gd_scene load_steps=9 format=3 uid="uid://bulbhom26ubnd"]
+
+[ext_resource type="PackedScene" uid="uid://clujaf3u776a3" path="res://addons/godot-xr-tools/objects/viewport_2d_in_3d.tscn" id="1_6syep"]
+[ext_resource type="Script" path="res://Scripts/button_panel.gd" id="1_pjn46"]
+[ext_resource type="PackedScene" uid="uid://drhudqgjlbo12" path="res://Scenes/button_teleport.tscn" id="2_h73mx"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_0dusj"]
+size = Vector3(2.00525, 0.73999, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_dqm2y"]
+albedo_color = Color(0.729412, 0.352941, 0.0627451, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_56i4f"]
+material = SubResource("StandardMaterial3D_dqm2y")
+size = Vector3(5, 3, 3)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_epep8"]
+albedo_color = Color(0.255659, 0.255659, 0.255659, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_j38co"]
+material = SubResource("StandardMaterial3D_epep8")
+size = Vector3(5, 2, 3)
+
+[node name="button_panel" type="StaticBody3D"]
+script = ExtResource("1_pjn46")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00408936, 0.0032959, 0)
+shape = SubResource("BoxShape3D_0dusj")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_56i4f")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.49387, 0)
+mesh = SubResource("BoxMesh_j38co")
+
+[node name="Viewport2Din3D" parent="." instance=ExtResource("1_6syep")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0100538, 2.4482, 1.54271)
+screen_size = Vector2(4.75, 2)
+scene = ExtResource("2_h73mx")
+viewport_size = Vector2(1920, 1080)
+scene_properties_keys = PackedStringArray()

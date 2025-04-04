@@ -1,0 +1,607 @@
+[gd_scene load_steps=7 format=3 uid="uid://dik77har2dd4m"]
+
+[ext_resource type="Texture2D" uid="uid://cf0urlceo257r" path="res://Assets/UI/Button/replay.png" id="1_05trw"]
+[ext_resource type="Script" path="res://Scripts/ui.gd" id="1_wl4su"]
+[ext_resource type="Texture2D" uid="uid://da563yns2syxp" path="res://Assets/UI/Button/closs_cross.png" id="2_x0jtq"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_jygnu"]
+font_color = Color(0, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_aibw1"]
+font_color = Color(0, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_5e1nt"]
+font_size = 15
+
+[node name="UI" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+mouse_filter = 2
+script = ExtResource("1_wl4su")
+
+[node name="ReferenceRect" type="ReferenceRect" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.108
+anchor_top = 0.617
+anchor_right = 0.892
+anchor_bottom = 0.918
+offset_left = 0.0839996
+offset_top = 0.18396
+offset_right = -0.0839844
+offset_bottom = 0.135986
+grow_horizontal = 2
+grow_vertical = 0
+mouse_filter = 2
+border_color = Color(0, 0, 0, 1)
+border_width = 6.0
+editor_only = false
+
+[node name="ColorRect" type="ColorRect" parent="ReferenceRect"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Translation" type="Control" parent="ReferenceRect/ColorRect"]
+layout_mode = 1
+anchor_right = 0.354
+anchor_bottom = 1.0
+offset_right = 0.338013
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="ReferenceRect/ColorRect/Translation"]
+layout_mode = 2
+anchor_left = 0.105
+anchor_top = 0.077
+anchor_right = 0.548
+anchor_bottom = 0.287
+offset_left = -0.100002
+offset_top = -0.0150013
+offset_right = 0.139984
+offset_bottom = 0.0349998
+grow_horizontal = 2
+grow_vertical = 2
+text = "Translation
+"
+label_settings = SubResource("LabelSettings_jygnu")
+horizontal_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="ReferenceRect/ColorRect/Translation"]
+layout_mode = 2
+anchor_left = 0.011
+anchor_top = 0.231
+anchor_right = 0.22
+anchor_bottom = 0.349
+offset_left = 6.48
+offset_top = -0.045002
+offset_right = 159.12
+offset_bottom = 18.235
+size_flags_vertical = 0
+theme_override_constants/separation = 20
+
+[node name="Label" type="Label" parent="ReferenceRect/ColorRect/Translation/HBoxContainer"]
+custom_minimum_size = Vector2(16, 23)
+layout_mode = 2
+size_flags_horizontal = 4
+text = "X"
+label_settings = SubResource("LabelSettings_aibw1")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="ReferenceRect/ColorRect/Translation/HBoxContainer"]
+layout_mode = 2
+
+[node name="translation_x_slider" type="HSlider" parent="ReferenceRect/ColorRect/Translation/HBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(125, 0)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 4
+min_value = -10.0
+max_value = 10.0
+
+[node name="Panel" type="Panel" parent="ReferenceRect/ColorRect/Translation/HBoxContainer/HBoxContainer"]
+self_modulate = Color(0, 0, 0, 1)
+custom_minimum_size = Vector2(30, 20)
+layout_mode = 2
+size_flags_vertical = 4
+
+[node name="Label" type="Label" parent="ReferenceRect/ColorRect/Translation/HBoxContainer/HBoxContainer/Panel"]
+custom_minimum_size = Vector2(28, 23)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -14.0
+offset_top = -11.5
+offset_right = 14.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "0"
+label_settings = SubResource("LabelSettings_5e1nt")
+horizontal_alignment = 1
+
+[node name="x_translation_reset" type="TextureButton" parent="ReferenceRect/ColorRect/Translation/HBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(16, 24)
+layout_mode = 2
+texture_normal = ExtResource("1_05trw")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="ReferenceRect/ColorRect/Translation"]
+layout_mode = 2
+anchor_left = 0.011
+anchor_top = 0.39
+anchor_right = 0.22
+anchor_bottom = 0.508
+offset_left = 6.48
+offset_top = -0.0500031
+offset_right = 159.12
+offset_bottom = 18.23
+theme_override_constants/separation = 20
+
+[node name="Label" type="Label" parent="ReferenceRect/ColorRect/Translation/HBoxContainer2"]
+custom_minimum_size = Vector2(16, 23)
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Y"
+label_settings = SubResource("LabelSettings_aibw1")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="ReferenceRect/ColorRect/Translation/HBoxContainer2"]
+layout_mode = 2
+
+[node name="translation_y_slider" type="HSlider" parent="ReferenceRect/ColorRect/Translation/HBoxContainer2/HBoxContainer"]
+custom_minimum_size = Vector2(125, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+min_value = -10.0
+max_value = 10.0
+
+[node name="Panel" type="Panel" parent="ReferenceRect/ColorRect/Translation/HBoxContainer2/HBoxContainer"]
+self_modulate = Color(0, 0, 0, 1)
+custom_minimum_size = Vector2(30, 20)
+layout_mode = 2
+size_flags_vertical = 4
+
+[node name="Label" type="Label" parent="ReferenceRect/ColorRect/Translation/HBoxContainer2/HBoxContainer/Panel"]
+custom_minimum_size = Vector2(28, 23)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -14.0
+offset_top = -11.5
+offset_right = 14.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "0"
+label_settings = SubResource("LabelSettings_5e1nt")
+horizontal_alignment = 1
+
+[node name="y_translation_reset" type="TextureButton" parent="ReferenceRect/ColorRect/Translation/HBoxContainer2/HBoxContainer"]
+custom_minimum_size = Vector2(16, 24)
+layout_mode = 2
+texture_normal = ExtResource("1_05trw")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="HBoxContainer3" type="HBoxContainer" parent="ReferenceRect/ColorRect/Translation"]
+layout_mode = 2
+anchor_left = 0.011
+anchor_top = 0.549
+anchor_right = 0.162
+anchor_bottom = 0.667
+offset_left = 6.48
+offset_top = -0.0550079
+offset_right = 161.44
+offset_bottom = 18.225
+size_flags_horizontal = 0
+theme_override_constants/separation = 20
+
+[node name="Label" type="Label" parent="ReferenceRect/ColorRect/Translation/HBoxContainer3"]
+custom_minimum_size = Vector2(16, 23)
+layout_mode = 2
+size_flags_horizontal = 0
+text = "Z"
+label_settings = SubResource("LabelSettings_aibw1")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="ReferenceRect/ColorRect/Translation/HBoxContainer3"]
+layout_mode = 2
+
+[node name="translation_z_slider" type="HSlider" parent="ReferenceRect/ColorRect/Translation/HBoxContainer3/HBoxContainer"]
+custom_minimum_size = Vector2(125, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+min_value = -10.0
+max_value = 10.0
+
+[node name="Panel" type="Panel" parent="ReferenceRect/ColorRect/Translation/HBoxContainer3/HBoxContainer"]
+self_modulate = Color(0, 0, 0, 1)
+custom_minimum_size = Vector2(30, 20)
+layout_mode = 2
+size_flags_vertical = 4
+
+[node name="Label" type="Label" parent="ReferenceRect/ColorRect/Translation/HBoxContainer3/HBoxContainer/Panel"]
+custom_minimum_size = Vector2(28, 23)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -14.0
+offset_top = -11.5
+offset_right = 14.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "0"
+label_settings = SubResource("LabelSettings_5e1nt")
+horizontal_alignment = 1
+
+[node name="z_translation_reset" type="TextureButton" parent="ReferenceRect/ColorRect/Translation/HBoxContainer3/HBoxContainer"]
+custom_minimum_size = Vector2(16, 24)
+layout_mode = 2
+texture_normal = ExtResource("1_05trw")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="HBoxContainer4" type="HBoxContainer" parent="ReferenceRect/ColorRect/Translation"]
+layout_mode = 2
+anchor_left = 0.011
+anchor_top = 0.708
+anchor_right = 0.162
+anchor_bottom = 0.826
+offset_left = 6.48
+offset_top = -0.0599976
+offset_right = 161.44
+offset_bottom = 18.22
+size_flags_horizontal = 0
+theme_override_constants/separation = 20
+
+[node name="Label" type="Label" parent="ReferenceRect/ColorRect/Translation/HBoxContainer4"]
+layout_mode = 2
+size_flags_horizontal = 4
+text = "W"
+label_settings = SubResource("LabelSettings_aibw1")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="ReferenceRect/ColorRect/Translation/HBoxContainer4"]
+layout_mode = 2
+
+[node name="translation_w_slider" type="HSlider" parent="ReferenceRect/ColorRect/Translation/HBoxContainer4/HBoxContainer"]
+custom_minimum_size = Vector2(125, 0)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 4
+min_value = -10.0
+max_value = 10.0
+
+[node name="Panel" type="Panel" parent="ReferenceRect/ColorRect/Translation/HBoxContainer4/HBoxContainer"]
+self_modulate = Color(0, 0, 0, 1)
+custom_minimum_size = Vector2(30, 20)
+layout_mode = 2
+size_flags_vertical = 4
+
+[node name="Label" type="Label" parent="ReferenceRect/ColorRect/Translation/HBoxContainer4/HBoxContainer/Panel"]
+custom_minimum_size = Vector2(28, 23)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -14.0
+offset_top = -11.5
+offset_right = 14.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "0"
+label_settings = SubResource("LabelSettings_5e1nt")
+horizontal_alignment = 1
+
+[node name="w_translation_reset" type="TextureButton" parent="ReferenceRect/ColorRect/Translation/HBoxContainer4/HBoxContainer"]
+custom_minimum_size = Vector2(16, 24)
+layout_mode = 2
+texture_normal = ExtResource("1_05trw")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="Fez" type="Control" parent="ReferenceRect/ColorRect"]
+custom_minimum_size = Vector2(10, 10)
+layout_mode = 1
+anchor_left = 0.399
+anchor_right = 0.561
+anchor_bottom = 0.421
+offset_left = -11.7971
+offset_top = 6.10352e-05
+offset_right = -11.083
+offset_bottom = -0.0949707
+grow_horizontal = 2
+
+[node name="Label" type="Label" parent="ReferenceRect/ColorRect/Fez"]
+layout_mode = 2
+anchor_left = 0.235
+anchor_top = 0.183
+anchor_right = 0.806
+anchor_bottom = 0.463
+offset_left = -0.045002
+offset_top = -0.00594044
+offset_right = 0.0179901
+offset_bottom = 0.0340576
+text = "Dimension"
+label_settings = SubResource("LabelSettings_jygnu")
+horizontal_alignment = 1
+
+[node name="OptionButton" type="OptionButton" parent="ReferenceRect/ColorRect/Fez"]
+custom_minimum_size = Vector2(100, 15)
+layout_mode = 2
+anchor_left = 0.235
+anchor_top = 0.646
+anchor_right = 0.908
+anchor_bottom = 0.89
+offset_left = -0.545002
+offset_top = 0.0279961
+offset_right = 0.523987
+offset_bottom = 0.0199966
+
+[node name="Point_de_vue" type="Control" parent="ReferenceRect/ColorRect"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -131.0
+offset_top = -102.0
+offset_right = 89.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="Label" type="Label" parent="ReferenceRect/ColorRect/Point_de_vue"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.284
+anchor_top = 0.069
+anchor_right = 0.73
+anchor_bottom = 0.294
+offset_left = 0.0199966
+offset_top = -0.0379395
+offset_right = -0.100006
+offset_bottom = 0.0120602
+text = "Point de Vue"
+label_settings = SubResource("LabelSettings_jygnu")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="ReferenceRect/ColorRect/Point_de_vue"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = -0.216
+anchor_top = 0.348
+anchor_right = 1.206
+anchor_bottom = 0.652
+offset_left = 0.0200005
+offset_top = 0.0039978
+offset_right = 2.17999
+offset_bottom = -0.0039978
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="face_view_button" type="Button" parent="ReferenceRect/ColorRect/Point_de_vue/HBoxContainer"]
+custom_minimum_size = Vector2(92, 31)
+layout_mode = 2
+text = "Vue Face"
+
+[node name="fugue_vie_button" type="Button" parent="ReferenceRect/ColorRect/Point_de_vue/HBoxContainer"]
+custom_minimum_size = Vector2(92, 31)
+layout_mode = 2
+text = "Vue Fuite"
+
+[node name="point_view_button" type="Button" parent="ReferenceRect/ColorRect/Point_de_vue/HBoxContainer"]
+z_index = 3
+custom_minimum_size = Vector2(92, 32)
+layout_mode = 2
+text = "Vue Pointe"
+
+[node name="Rotation" type="Control" parent="ReferenceRect/ColorRect"]
+layout_mode = 1
+anchor_left = 0.547
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 47.059
+offset_right = 4.0
+offset_bottom = -6.10352e-05
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="close_button" type="TextureButton" parent="ReferenceRect/ColorRect/Rotation"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.881
+anchor_right = 0.989
+anchor_bottom = 0.205
+offset_left = 0.0539856
+offset_top = 6.10352e-05
+offset_right = 0.526001
+offset_bottom = 0.0250587
+grow_horizontal = 0
+texture_normal = ExtResource("2_x0jtq")
+texture_pressed = ExtResource("2_x0jtq")
+texture_hover = ExtResource("2_x0jtq")
+texture_focused = ExtResource("2_x0jtq")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="Label2" type="Label" parent="ReferenceRect/ColorRect/Rotation"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.439
+anchor_top = 0.077
+anchor_right = 0.563
+anchor_bottom = 0.195
+offset_left = -0.999008
+offset_top = -0.0150013
+offset_right = -1.08301
+offset_bottom = -0.0250015
+grow_horizontal = 2
+text = "Rotation"
+label_settings = SubResource("LabelSettings_jygnu")
+horizontal_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="ReferenceRect/ColorRect/Rotation"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.161
+anchor_top = 0.333
+anchor_right = 0.847
+anchor_bottom = 0.728
+offset_left = -0.101006
+offset_top = 0.0650024
+offset_right = -0.22702
+offset_bottom = -14.96
+theme_override_constants/separation = 34
+alignment = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ReferenceRect/ColorRect/Rotation/HBoxContainer"]
+layout_mode = 2
+
+[node name="HBoxContainer5" type="HBoxContainer" parent="ReferenceRect/ColorRect/Rotation/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 0
+theme_override_constants/separation = 20
+
+[node name="Label" type="Label" parent="ReferenceRect/ColorRect/Rotation/HBoxContainer/VBoxContainer/HBoxContainer5"]
+custom_minimum_size = Vector2(16, 23)
+layout_mode = 2
+size_flags_horizontal = 4
+text = "XY"
+label_settings = SubResource("LabelSettings_aibw1")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="ReferenceRect/ColorRect/Rotation/HBoxContainer/VBoxContainer/HBoxContainer5"]
+layout_mode = 2
+
+[node name="xy_rotation_button" type="CheckButton" parent="ReferenceRect/ColorRect/Rotation/HBoxContainer/VBoxContainer/HBoxContainer5/HBoxContainer"]
+layout_mode = 2
+
+[node name="HBoxContainer6" type="HBoxContainer" parent="ReferenceRect/ColorRect/Rotation/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 0
+theme_override_constants/separation = 20
+
+[node name="Label" type="Label" parent="ReferenceRect/ColorRect/Rotation/HBoxContainer/VBoxContainer/HBoxContainer6"]
+custom_minimum_size = Vector2(16, 23)
+layout_mode = 2
+size_flags_horizontal = 4
+text = "XZ"
+label_settings = SubResource("LabelSettings_aibw1")
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="ReferenceRect/ColorRect/Rotation/HBoxContainer/VBoxContainer/HBoxContainer6"]
+layout_mode = 2
+
+[node name="xz_rotation_button" type="CheckButton" parent="ReferenceRect/ColorRect/Rotation/HBoxContainer/VBoxContainer/HBoxContainer6/HBoxContainer2"]
+layout_mode = 2
+
+[node name="HBoxContainer7" type="HBoxContainer" parent="ReferenceRect/ColorRect/Rotation/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 0
+theme_override_constants/separation = 20
+
+[node name="Label" type="Label" parent="ReferenceRect/ColorRect/Rotation/HBoxContainer/VBoxContainer/HBoxContainer7"]
+custom_minimum_size = Vector2(16, 23)
+layout_mode = 2
+size_flags_horizontal = 4
+text = "YZ"
+label_settings = SubResource("LabelSettings_aibw1")
+
+[node name="HBoxContainer3" type="HBoxContainer" parent="ReferenceRect/ColorRect/Rotation/HBoxContainer/VBoxContainer/HBoxContainer7"]
+layout_mode = 2
+
+[node name="yz_rotation_button" type="CheckButton" parent="ReferenceRect/ColorRect/Rotation/HBoxContainer/VBoxContainer/HBoxContainer7/HBoxContainer3"]
+layout_mode = 2
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="ReferenceRect/ColorRect/Rotation/HBoxContainer"]
+layout_mode = 2
+
+[node name="HBoxContainer5" type="HBoxContainer" parent="ReferenceRect/ColorRect/Rotation/HBoxContainer/VBoxContainer2"]
+layout_mode = 2
+size_flags_vertical = 0
+theme_override_constants/separation = 20
+
+[node name="Label" type="Label" parent="ReferenceRect/ColorRect/Rotation/HBoxContainer/VBoxContainer2/HBoxContainer5"]
+custom_minimum_size = Vector2(16, 23)
+layout_mode = 2
+size_flags_horizontal = 4
+text = "XW"
+label_settings = SubResource("LabelSettings_aibw1")
+
+[node name="HBoxContainer4" type="HBoxContainer" parent="ReferenceRect/ColorRect/Rotation/HBoxContainer/VBoxContainer2/HBoxContainer5"]
+layout_mode = 2
+
+[node name="xw_rotation_button" type="CheckButton" parent="ReferenceRect/ColorRect/Rotation/HBoxContainer/VBoxContainer2/HBoxContainer5/HBoxContainer4"]
+layout_mode = 2
+
+[node name="HBoxContainer6" type="HBoxContainer" parent="ReferenceRect/ColorRect/Rotation/HBoxContainer/VBoxContainer2"]
+layout_mode = 2
+size_flags_vertical = 0
+theme_override_constants/separation = 20
+
+[node name="Label" type="Label" parent="ReferenceRect/ColorRect/Rotation/HBoxContainer/VBoxContainer2/HBoxContainer6"]
+custom_minimum_size = Vector2(16, 23)
+layout_mode = 2
+size_flags_horizontal = 4
+text = "YW"
+label_settings = SubResource("LabelSettings_aibw1")
+
+[node name="HBoxContainer5" type="HBoxContainer" parent="ReferenceRect/ColorRect/Rotation/HBoxContainer/VBoxContainer2/HBoxContainer6"]
+layout_mode = 2
+
+[node name="yw_rotation_button" type="CheckButton" parent="ReferenceRect/ColorRect/Rotation/HBoxContainer/VBoxContainer2/HBoxContainer6/HBoxContainer5"]
+layout_mode = 2
+
+[node name="HBoxContainer7" type="HBoxContainer" parent="ReferenceRect/ColorRect/Rotation/HBoxContainer/VBoxContainer2"]
+layout_mode = 2
+size_flags_vertical = 0
+theme_override_constants/separation = 20
+
+[node name="Label" type="Label" parent="ReferenceRect/ColorRect/Rotation/HBoxContainer/VBoxContainer2/HBoxContainer7"]
+custom_minimum_size = Vector2(16, 23)
+layout_mode = 2
+size_flags_horizontal = 4
+text = "ZW"
+label_settings = SubResource("LabelSettings_aibw1")
+
+[node name="HBoxContainer6" type="HBoxContainer" parent="ReferenceRect/ColorRect/Rotation/HBoxContainer/VBoxContainer2/HBoxContainer7"]
+layout_mode = 2
+
+[node name="zw_rotation_button" type="CheckButton" parent="ReferenceRect/ColorRect/Rotation/HBoxContainer/VBoxContainer2/HBoxContainer7/HBoxContainer6"]
+layout_mode = 2
+
+[connection signal="drag_ended" from="ReferenceRect/ColorRect/Translation/HBoxContainer/HBoxContainer/translation_x_slider" to="." method="_on_translation_x_slider_drag_ended"]
+[connection signal="value_changed" from="ReferenceRect/ColorRect/Translation/HBoxContainer/HBoxContainer/translation_x_slider" to="." method="_on_translation_x_slider_value_changed"]
+[connection signal="drag_ended" from="ReferenceRect/ColorRect/Translation/HBoxContainer2/HBoxContainer/translation_y_slider" to="." method="_on_translation_y_slider_drag_ended"]
+[connection signal="value_changed" from="ReferenceRect/ColorRect/Translation/HBoxContainer2/HBoxContainer/translation_y_slider" to="." method="_on_translation_y_slider_value_changed"]
+[connection signal="drag_ended" from="ReferenceRect/ColorRect/Translation/HBoxContainer3/HBoxContainer/translation_z_slider" to="." method="_on_translation_z_slider_drag_ended"]
+[connection signal="value_changed" from="ReferenceRect/ColorRect/Translation/HBoxContainer3/HBoxContainer/translation_z_slider" to="." method="_on_translation_z_slider_value_changed"]
+[connection signal="drag_ended" from="ReferenceRect/ColorRect/Translation/HBoxContainer4/HBoxContainer/translation_w_slider" to="." method="_on_translation_w_slider_drag_ended"]
+[connection signal="value_changed" from="ReferenceRect/ColorRect/Translation/HBoxContainer4/HBoxContainer/translation_w_slider" to="." method="_on_translation_w_slider_value_changed"]
+[connection signal="item_selected" from="ReferenceRect/ColorRect/Fez/OptionButton" to="." method="_on_option_button_item_selected"]
+[connection signal="pressed" from="ReferenceRect/ColorRect/Point_de_vue/HBoxContainer/face_view_button" to="." method="_on_face_view_button_pressed"]
+[connection signal="pressed" from="ReferenceRect/ColorRect/Point_de_vue/HBoxContainer/fugue_vie_button" to="." method="_on_fugue_vie_button_pressed"]
+[connection signal="pressed" from="ReferenceRect/ColorRect/Point_de_vue/HBoxContainer/point_view_button" to="." method="_on_point_view_button_pressed"]
+[connection signal="pressed" from="ReferenceRect/ColorRect/Rotation/close_button" to="." method="_on_close_button_pressed"]

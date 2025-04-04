@@ -1,0 +1,22 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://b8y4u5c7yt5ft"
+path="res://.godot/imported/cargo_A_stacked.obj-5f71342a81425e433e4892e8bf66357b.mesh"
+
+[deps]
+
+files=["res://.godot/imported/cargo_A_stacked.obj-5f71342a81425e433e4892e8bf66357b.mesh"]
+
+source_file="res://Assets/3D/KayKit_Space_Base_Bits_1.0_FREE/KayKit_Space_Base_Bits_1.0_FREE/Assets/obj/cargo_A_stacked.obj"
+dest_files=["res://.godot/imported/cargo_A_stacked.obj-5f71342a81425e433e4892e8bf66357b.mesh", "res://.godot/imported/cargo_A_stacked.obj-5f71342a81425e433e4892e8bf66357b.mesh"]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+optimize_mesh=true
+force_disable_mesh_compression=false

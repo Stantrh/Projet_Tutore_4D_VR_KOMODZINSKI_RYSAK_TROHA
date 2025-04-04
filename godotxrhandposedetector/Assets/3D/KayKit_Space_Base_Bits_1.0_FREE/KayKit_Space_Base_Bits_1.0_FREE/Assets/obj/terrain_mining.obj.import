@@ -1,0 +1,22 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://bw4rcbf2x67b8"
+path="res://.godot/imported/terrain_mining.obj-59e4bcfa67dd7f1bdeca8b1ad2980bdf.mesh"
+
+[deps]
+
+files=["res://.godot/imported/terrain_mining.obj-59e4bcfa67dd7f1bdeca8b1ad2980bdf.mesh"]
+
+source_file="res://Assets/3D/KayKit_Space_Base_Bits_1.0_FREE/KayKit_Space_Base_Bits_1.0_FREE/Assets/obj/terrain_mining.obj"
+dest_files=["res://.godot/imported/terrain_mining.obj-59e4bcfa67dd7f1bdeca8b1ad2980bdf.mesh", "res://.godot/imported/terrain_mining.obj-59e4bcfa67dd7f1bdeca8b1ad2980bdf.mesh"]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+optimize_mesh=true
+force_disable_mesh_compression=false

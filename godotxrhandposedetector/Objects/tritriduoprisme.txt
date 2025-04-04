@@ -1,0 +1,45 @@
+ply  
+format ascii 1.0  
+comment Fichier PLY pour DuoPrisme 3-3 : Sommets & Arêtes  
+
+element vertices 9  
+property float x  
+property float y  
+property float z  
+property float w  
+
+element edges 18  
+property int v1  
+property int v2  
+
+end_header  
+# --- Sommets (DEFAULT_VERTICES)  
+0 0.8660254 0 0.8660254  
+0 0.8660254 -1 -0.8660254  
+0 0.8660254 1 -0.8660254  
+-1 -0.8660254 0 0.8660254  
+-1 -0.8660254 -1 -0.8660254  
+-1 -0.8660254 1 -0.8660254  
+1 -0.8660254 0 0.8660254  
+1 -0.8660254 -1 -0.8660254  
+1 -0.8660254 1 -0.8660254  
+
+# --- Arêtes (EDGES)  
+0 1  
+1 2  
+2 0  
+3 4  
+4 5  
+5 3  
+6 7  
+7 8  
+8 6  
+0 3  
+3 6  
+6 0  
+1 4  
+4 7  
+7 1  
+2 5  
+5 8  
+8 2

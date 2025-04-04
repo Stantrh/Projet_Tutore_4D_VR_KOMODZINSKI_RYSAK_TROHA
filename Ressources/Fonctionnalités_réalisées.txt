@@ -1,0 +1,5 @@
+Fonctionnalités réalisées : 
+Environnement VR : Rysak Hugo
+Soutenance 1A : Troha Stanislas
+Optimisation du code : Rysak Hugo & Troha Stanislas
+Implémentation d'autres objets PLY : Rysak Hugo & Troha Stanislas

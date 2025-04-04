@@ -1,0 +1,22 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://co7jefr85yl7"
+path="res://.godot/imported/rock_B.obj-c635f82817549e642be91c046c5bab0f.mesh"
+
+[deps]
+
+files=["res://.godot/imported/rock_B.obj-c635f82817549e642be91c046c5bab0f.mesh"]
+
+source_file="res://Assets/3D/KayKit_Space_Base_Bits_1.0_FREE/KayKit_Space_Base_Bits_1.0_FREE/Assets/obj/rock_B.obj"
+dest_files=["res://.godot/imported/rock_B.obj-c635f82817549e642be91c046c5bab0f.mesh", "res://.godot/imported/rock_B.obj-c635f82817549e642be91c046c5bab0f.mesh"]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+optimize_mesh=true
+force_disable_mesh_compression=false
